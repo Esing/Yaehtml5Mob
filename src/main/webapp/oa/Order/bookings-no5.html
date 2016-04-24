@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+
+<!--bootstrap3日历-->
+<link rel="stylesheet" href="../CommonResources/bootstrap3/css/bootstrap.min.css">
+<link rel="stylesheet" href="../CommonResources/bootstrap3/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="../CommonResources/css/calendar.css">
+
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="hrefNode"></a>
+            <h4>预约时间</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell mui-text-center">
+            <div class="mui-pull-left" style="margin-top: 12px;"><i
+                    class="mui-icon mui--new-icon-calendar"></i>&nbsp;<span
+                    style="vertical-align: text-bottom;">预约时间</span></div>
+            <span id="calendar-today"
+                  class="mui-badge mui-badge-primary mui-pull-right page-user-account page-user-visit-state">今天</span>
+            <h4><span id="calendar-show-month">2016年3月</span><i id="calendar-next-month"
+                                                                class="mui-icon mui-icon-arrowdown page-color-blue"></i>
+            </h4>
+        </li>
+    </ul>
+    <!--日历-->
+    <div id="calendar" class="page-bg-white"></div>
+
+    <div class="page-time-row page-bg-white" style="margin-top: 20px;">
+        <div class="mui-pull-left" style="width: 25%;">
+            <i class="mui-icon mui--new-icon-time-blue-morning"></i>&nbsp;上午
+        </div>
+        <div class="mui-pull-left" style="width: 70%;">
+            <span class="page-time-box active">08:30</span>
+            <span class="page-time-box">09:00</span>
+            <span class="page-time-box">09:30</span>
+            <span class="page-time-box">10:00</span>
+            <span class="page-time-box">10:30</span>
+            <span class="page-time-box">11:00</span>
+            <span class="page-time-box">11:30</span>
+            <span class="page-time-box">12:00</span>
+        </div>
+        <div class="mui-clearfix"></div>
+    </div>
+    <div class="page-time-row page-bg-white">
+        <div class="mui-pull-left" style="width: 25%;">
+            <i class="mui-icon mui--new-icon-time-blue-afternoon"></i>&nbsp;下午
+        </div>
+        <div class="mui-pull-left" style="width: 70%;">
+            <span class="page-time-box">12:30</span>
+            <span class="page-time-box">13:00</span>
+            <span class="page-time-box">13:30</span>
+            <span class="page-time-box">14:00</span>
+            <span class="page-time-box">14:30</span>
+            <span class="page-time-box">15:00</span>
+            <span class="page-time-box">15:30</span>
+            <span class="page-time-box">16:00</span>
+            <span class="page-time-box">16:30</span>
+            <span class="page-time-box">17:00</span>
+        </div>
+        <div class="mui-clearfix"></div>
+    </div>
+
+    <div style="margin-top: 20px;padding:0 30px;" class="mui-text-center">
+        <button id="save" type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-new-blue">预 约</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<!--bootstrap3&日历-->
+<script type="text/javascript" src="../CommonResources/js/jquery.min.js"></script>
+<script type="text/javascript" src="../CommonResources/bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/jstimezonedetect/jstz.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/language/zh-TW.js"></script>
+<script type="text/javascript" src="../CommonResources/js/calendar.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var userID = getRequest()["userID"];
+var clinicID = getRequest()["clinicID"];
+var doctorID = getRequest()["doctorID"];
+$(document).ready(function () {
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    var url = "";
+    if(doctorID==0){
+    	url = "bookings-no4.html?clinicID="+clinicID;
+    }else{
+    	url = "bookings-no12.html?doctorID="+doctorID;
+    }
+    $("#hrefNode").attr("href",url);
+    
+    var options = {
+        events_source: '../CommonResources/events.json.php',//日历事件数据源
+        language: 'zh-TW',
+        views: {
+            day: {
+                enable: 0
+            }
+        },
+        onAfterEventsLoad: function (events) {
+            if (!events) {
+                return;
+            }
+            //日历事件数据
+        },
+        onAfterViewLoad: function (view) {
+            $('#calendar-show-month').text(this.getTitle());
+            $('.cal-month-day').click(function () {
+                $('.cal-month-day.active').removeClass('active');
+                $(this).addClass('active')
+            });
+        },
+    };
+
+    var calendar = $('#calendar').calendar(options);
+
+    //今天
+    $('#calendar-today').click(function () {
+        calendar.navigate('today');
+    });
+    //下个月
+    $('#calendar-next-month').click(function () {
+        calendar.navigate('next');
+    });
+    //时间(小时)
+    $('.page-time-box').click(function () {
+        $('.page-time-box.active').removeClass('active');
+        $(this).addClass('active')
+    });
+    $('#save').click(function () {
+    	var day = $(".cal-day-inmonth.active").children().attr("data-cal-date");//日期
+    	var time = $('.page-time-box.active').text()+":00";//时间
+    	if(day == undefined){
+    		mui.alert("请选择日期");
+    		return;
+    	}
+    	var orderBookedTime = day +" "+ time;//选择预约的事件
+    	var tempDate = getNowFormatDate(new Date());// 系统当前时间
+    	if(orderBookedTime < tempDate){
+    		mui.alert("预约时间不能小于当前时间");
+            return;
+    	}
+    	
+    	if(userID != 0){
+	        window.location.href = "bookings-no6.html?clinicID="+clinicID+"&doctorID="+doctorID+"&orderBookedTime="+encodeURIComponent(orderBookedTime);
+    	}else{
+    		window.location.href = "login.html?userID="+userID+"&clinicID="+clinicID+"&doctorID="+doctorID+"&orderBookedTime="+encodeURIComponent(orderBookedTime);
+    	}
+    });
+});
+
+function getNowFormatDate(date) {
+    var year = date.getFullYear();
+    var month = numberFormat(date.getMonth() + 1);
+    var strDate = numberFormat(date.getDate());
+    var hours = numberFormat(date.getHours());
+    var minutes = numberFormat(date.getMinutes());
+    var seconds = numberFormat(date.getSeconds());
+    var currentdate = year +"-"+ month +"-"+ strDate +" "+ hours +":"+ minutes +":"+ seconds;
+    return currentdate;
+}
+function numberFormat(number){
+    return number > -1 && number < 10?"0"+number:number;
+}
+</script>
+</body>
+</html>

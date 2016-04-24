@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" href="/my_account_password5.html"></a>找回登录密码</div>
+			<!--页面内容-->
+			<div class="app-form">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row mui-password">
+							<input type="password" class="mui-input-password" placeholder="请输入新密码">
+						</div>
+					</li>
+				</ul>
+				<p class="span_help" style="color:#f00;padding-left:20px;">密码由6-20位英文字母或者数字组成，区别大小写</p>
+				<div class="app-btns">
+					<button class="mui-btn mui-btn-primary">确定</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/zepto.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+
+<script>
+$(document).ready(function(){
+	var basePath = getContextPath();
+	$(".mui-btn-primary").click(function(){
+		var userPassword = $("input[type='password']").val().replace(/(^\s*)|(\s*$)/g,'');
+		if(userPassword){
+			var reg = /^[\da-zA-Z]{6,20}$/;
+			if(reg.test(userPassword)){
+				$.ajax({
+					type:"POST",
+					url:basePath+"/Account/mobileUserChangeLoginPassword.do",
+					dataType:"json",
+					data:{"userPassword":userPassword},
+					success: function(data){
+		    			 if(data.status == "0"){
+		    				 if(data.resultMSG.resultCode==0){
+		    					 mui.alert("修改新密码成功!<p style='color:#929292'>我们将以短信方式再次提醒你</p>",function(){
+		     						location.href = basePath+"/oa/Login/login.html";
+		     						});
+		    				 }else{
+		    					 mui.alert(data.resultMSG.resultValue);
+		    				 }
+		    	         }else if(data.status == "1"){
+		    	        	 mui.alert("登陆超时，请重新登陆!",function(){
+		    	        		 location.href = basePath + "/oa/Login/login.html";
+		    	        	 });
+		    	         }else if(data.status == "2"){
+		    	        	 mui.alert("系统异常",function(){
+		    	        		 location.href = basePath + "/oa/Login/login.html";
+		    	        	 });
+		    	         }
+		    		}
+				});
+			}else{
+				mui.alert("密码格式不正确!");
+			}
+		}else{
+			mui.alert("请输入新的登陆密码!");
+		}
+		
+		
+	});
+});
+
+</script>
+

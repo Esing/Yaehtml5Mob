@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" onclick="history.go(-1)"></a>交易记录
+			</div>
+			<!--页面内容-->
+			<div class="app-list page_transaction">
+				<!--本月-->
+				<ul id="currentMonth" class="mui-table-view mui-table-view-chevron page-bg-white">
+					<li class="mui-table-view-cell list_title_green" style="display:none">本月</li>
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction3.html?orderID=001"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">消费项目:黄锦 洗牙</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_red">-￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction3.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">消费项目:黄锦 洗牙</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_red">-￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction2.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">充值</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_blue">￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+				</ul>
+				<!--上个月-->
+				<ul id="lastMonth" class="mui-table-view mui-table-view-chevron page-bg-white" style="margin-top: 15px;">
+					<li class="mui-table-view-cell list_title_yellow" style="display:none">上个月</li>
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction3.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">消费项目:黄锦 洗牙</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_red">-￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction3.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">消费项目:黄锦 洗牙</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_red">-￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction2.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">充值</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_blue">￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+				</ul>
+				<!--更早-->
+				<ul id="history" class="mui-table-view mui-table-view-chevron page-bg-white" style="margin-top: 15px;">
+					<li class="mui-table-view-cell list_title_gray" style="display:none">更早</li>
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction3.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">消费项目:黄锦 洗牙</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_red">-￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction3.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">消费项目:黄锦 洗牙</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_red">-￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_transaction2.html"> -->
+<!-- 							<label class="mui-pull-left">2016-03-12 -->
+<!-- 								<br><span class="span_help">充值</span></label> -->
+<!-- 							<span class="mui-pull-right list_right color_blue">￥1500</span> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script>
+$(document).ready(function(){
+	var basePath = getContextPath();
+		$.ajax({
+			type:"POST",
+			url:basePath+"/Account/mobileAccountQueryBillsList.do",
+			dataType:"json",
+			success: function(data){
+    			 	if(data.status == "0"){
+    					var orderList = data.orderList;
+    					if(orderList.length>0){
+    						var dateType ;
+    						for(var i=0;i<orderList.length;i++){
+    							dateType = orderList[i].dateType;
+    							if(dateType==0){//本月
+    								$(".list_title_green").show();
+    								var div = '<li class="mui-table-view-cell">'+
+    											'<a class="mui-navigate-right" href="my_account_transaction3.html?orderID='+orderList[i].orderID+'">'+
+    											'<label class="mui-pull-left">'+orderList[i].treatBegin+
+    											'<br><span class="span_help">消费项目:'+orderList[i].treatSubjectName+'</span></label>'+
+    											'<span class="mui-pull-right list_right color_red">-￥'+orderList[i].payActualAmount+'</span>'+
+    											'</a>'+
+    										'</li>';
+    								$("#currentMonth").append(div);
+    							}else if(dateType==1){
+    								$(".list_title_yellow").show();
+    								var div = '<li class="mui-table-view-cell">'+
+									'<a class="mui-navigate-right" href="my_account_transaction3.html?orderID='+orderList[i].orderID+'">'+
+									'<label class="mui-pull-left">'+orderList[i].treatBegin+
+									'<br><span class="span_help">消费项目:'+orderList[i].treatSubjectName+'</span></label>'+
+									'<span class="mui-pull-right list_right color_red">-￥'+orderList[i].payActualAmount+'</span>'+
+									'</a>'+
+									'</li>';
+									$("#lastMonth").append(div);
+    							}else if(dateType==2){
+    								$(".list_title_gray").show();
+    								var div = '<li class="mui-table-view-cell">'+
+									'<a class="mui-navigate-right" href="my_account_transaction3.html?orderID='+orderList[i].orderID+'">'+
+									'<label class="mui-pull-left">'+orderList[i].treatBegin+
+									'<br><span class="span_help">消费项目:'+orderList[i].treatSubjectName+'</span></label>'+
+									'<span class="mui-pull-right list_right color_red">-￥'+orderList[i].payActualAmount+'</span>'+
+									'</a>'+
+									'</li>';
+									$("#history").append(div);
+    							}
+    						}
+    					}
+    	            }else if(data.status == "1"){
+    	            	mui.alert("登陆超时，请重新登陆!",function(){
+    	            		 location.href = basePath + "/oa/Login/login.html";
+    	            	});
+    	               
+    	            }else if(data.status == "2"){
+    	            	mui.alert("系统异常",function(){
+    	            		location.href = basePath + "/oa/Login/login.html";
+    	            	});
+    	            }
+    		}
+		});
+		
+});
+
+</script>

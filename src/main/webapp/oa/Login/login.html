@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>郎朗口腔</title>
+		<link href="../CommonResources/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+		<!-- <script src="../CommonResources/js/mui.min.js"></script> -->
+		<script src="../CommonResources/js/basePath.js"></script>
+		<script src="../CommonResources/js/zepto.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		var basePath = getContextPath();
+		var Request = new Object();
+		Request = getRequest();
+		var userAccount = Request["userAccount"];
+		$(document).ready(function () {
+			if(userAccount!=null && userAccount!=""){
+				$("input[name='username']").val(userAccount); 
+			}
+			$("#backReturn").click(function(){
+				var url = basePath+"/oa/Order/index.html";
+				location.href=url;
+			});
+			$("a[name='register']").click(function(){
+				var url = basePath+"/oa/Regiter/account_register.html";
+				location.href=url;
+			});
+			/* $("input[name='username']").blur(function(){
+				var userAccount = $("input[name='username']").val();
+			    if(userAccount!=null && userAccount!=""){
+			    	var myreg = /^[1][34578][0-9]{9}$/;  
+				  	if(!myreg.test(userAccount) || userAccount.length!=11){ 
+				  		mui.alert("手机号码格式不正确,必须为13、14、15、17、18开头的11位纯数字.");
+				  	}
+			    }
+			});
+			$("input[name='password']").blur(function(){
+				var password = $("input[name='password']").val();
+				var passText = /^[\da-zA-Z]{6,20}$/ ;
+			    if(!passText.test(password)){
+				   	mui.alert("密码必须为6-20位字母或数字或字母与数字组合的字符串."); 
+				}
+			}); */
+		});
+		
+		</script>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" id="backReturn"></a>登录</div>
+				<div class="login_avatar">
+					<img src="../CommonResources/images/user120.png" />
+				</div>				
+			<form class="app-form" action="/YaeyiMobile/user/Login.do" method="post">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label><span class="mui-icon mui-icon-phone"></span></label>
+							<input type="text" name="username" placeholder="手机" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label><span class="mui-icon mui-icon-locked"></span></label>
+							<input type="password" name="password" placeholder="密码">
+						</div>
+					</li>
+				</ul>
+				<div class="app-btns">
+					<button class="mui-btn mui-btn-primary">登录</button>
+				</div>
+			</form>
+		</div>
+		<nav class="mui-bar mui-bar-tab login_footer">
+			<a class="mui-tab-item" href="#../Regiter/my_account_password5.html">
+				找回密码
+			</a>
+			<a class="mui-tab-item">
+			</a>
+			<a class="mui-tab-item">
+			</a>
+			<a class="mui-tab-item" name="register">
+				注册
+			</a>
+		</nav>
+	</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-bars mui-pull-right"></a> <a
+			class="mui-icon mui-new-icon-left-nav mui-pull-left"
+			href="/oa/Order/index.html" id="index"></a>
+	</header>
+	<div class="mui-content">
+		<!--页面头部-->
+		<ul class="mui-table-view mui-table-view-chevron mui-page-header">
+			<li class="mui-table-view-cell mui-text-center"><a
+				class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="back_to"></a>
+				<h4>我的牙医</h4></li>
+		</ul>
+
+		<!--页面内容-->
+		<ul class="mui-table-view mui-table-view-chevron page-bg-white">
+			<li class="mui-table-view-cell mui-media"><a
+				class="mui-navigate-right" href="#account" id="myaccount"> <span
+					class="mui-badge mui-badge-warning mui-pull-right page-user-account">我的帐户</span>
+					<div class="mui-text-center page-user-info">
+						<img id="titleHead" class="page-user-img"
+							src=""><!-- http://img5.duitang.com/uploads/item/201410/03/20141003114818_n4mE5.jpeg -->
+
+						<p>
+							<b id="titleName"></b>
+						</p>
+					</div>
+			</a></li>
+			<!-- <li class="mui-table-view-cell"><a  id="treads" href=""
+				class="mui-navigate-right ">就诊记录</a></li> -->
+			<li class="mui-table-view-cell"><a id="cliList" href=""
+				class="mui-navigate-right ">看过的诊所</a></li>
+			<li class="mui-table-view-cell"><a id="lookdoctor" href=""
+				class="mui-navigate-right ">看过的医生</a></li>
+			<li class="mui-table-view-cell"><a id="treadList" href=""
+				class="mui-navigate-right ">就诊者</a></li>
+		
+		</ul>
+		<!-- 此处新加入Div一个标签，作为预约记录的数据填充处 -->
+		<div id="treadBody">
+		
+		</div>
+
+		<ul class="mui-table-view mui-table-view-chevron"
+			style="margin-top: 20px;">
+			<li
+				class="mui-table-view-cell mui-table-view-cell-title mui-text-center page-color-blue">
+				<a id="addOrder"><i class="mui-icon mui--new-icon-add"></i><span>&nbsp;新建预约</span></a>
+			</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+	<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+	<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+	<script type="text/javascript" src="../CommonResources/js/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			mui.init({
+				swipeBack : true
+			//启用右滑关闭功能
+			});
+		});
+	</script>
+	<script type="text/javascript" charset="utf-8">
+	  var basePath = getContextPath();
+	   var Request = new Object();
+		Request = getRequest();
+		var userID = Request["userID"];
+		$("#addOrder").click(function() {
+			var url =basePath +"/oa/Order/bookings-no2.html";
+			location.href=url;
+			
+		});
+		 $("#back_to").click(function() {
+				var url =basePath+"/oa/Order/index.html";
+				location.href=url;
+			});
+		$("#index").attr("href",basePath+"/oa/Order/index.html");
+		
+		//缺失我的账户的地址 已注释
+		$("#myaccount").attr("href",basePath+"/oa/account/my-account-no2.html");
+	  	$.ajax({   
+		     url:basePath+"/accountTooth/trearecords.do",   
+		     type:'POST',   
+		     data:"userid="+userID,
+		     async : true, //默认为true 异步   
+		     error:function(){   
+		        alert("error");   
+		     },   
+		     success:function(data){ 
+		    	 switch(data.code)
+		 	   {
+		 	   	case 0:{
+		 	   		$("#titleHead").attr("src", data.titleHead);
+					$("#titleName").html(data.titleName);
+					$("#treads").attr("href",basePath+"/oa/MyTooth/my-tooth-no8.html?patientID="+data.patientid+"&userID="+userID);
+					//$("#treads").attr("href",basePath+"/oa/MyTooth/my-tooth-no8.html?patientID="+data.patientid+"&userID="+userID);
+					$("#cliList").attr("href",basePath+"/oa/MyTooth/my-tooth-no3.html?patientID="+data.patientid+"&userID="+userID);
+					$("#lookdoctor").attr("href",basePath+"/oa/MyTooth/my-tooth-no4.html?patientID="+data.patientid+"&userID="+userID);
+					$("#treadList").attr("href",basePath+"/oa/MyTooth/my-tooth-no5.html?patientID="+data.patientid+"&userID="+userID);
+		 	   		initHtml(data.date);break;
+		 	   		   }
+		 	     case 1:{
+		 		  	 	 mui.alert("登陆超时.",back_to_index()); 
+		 		  	 	break;
+		 		  	 	
+	 	   			  }
+		 	   default:{
+		 	   	 		 mui.alert("系统异常."); 
+		 	   	     }	 
+		 	   }
+		     }
+		 });  
+
+	 	function initHtml(date) {
+			//此处是对数据的处理js
+			var treadbody = $("#treadBody"); 
+			
+		if(date!=undefined){
+			for (var i = 0; i < date.length; i++) {
+				 var html = "<ul class='mui-table-view mui-table-view-chevron' style='margin-top: 20px;'>";
+				//确认完后,后续根据页面跳转情况可以优化 这里需要确定后续跳转的页面。 10预约待确认，20已确认，30已挂号，40就诊咨询，50完成咨询，60就诊治疗，70就诊完成，80取消就诊
+				if (date[i].orderStatus==10) {	// /* 预约待确认 */
+					html += "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-green'><a class='mui-navigate-right page-color-white' href='"+basePath+"/oa/Order/bookings-no13.html?orderID="+date[i].orderID+"'><i class='mui-icon mui--new-icon-clinics'></i><span>预约中</span></a>";
+				} else if (date[i].orderStatus == 20){///* 预约以确认状态 */																//缺路径
+					html += "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-rad'><a class='mui-navigate-right page-color-white' href='"+basePath+"/oa/Order/bookings-no15.html?orderID="+date[i].orderID+"'><i class='mui-icon mui--new-icon-clinics'></i><span>已确认</span></a>";
+				}else if (date[i].orderStatus==30) {///* 30已挂号 */																	//缺路径
+					html += "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-green'><a class='mui-navigate-right page-color-white' href='"+basePath+"/oa/Order/bookings-no16.html?orderID="+date[i].orderID+"'><i class='mui-icon mui--new-icon-time'></i><span>已挂号</span></a>";
+				} //else if (date[i].orderStatus == 40)///* 40就诊咨询 */
+				//{																											//缺路径
+				//	html += "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-rad'><a class='mui-navigate-right page-color-white' href='"+basePath+"/"+date[i].orderID+"'><i class='mui-icon mui--new-icon-clinics'></i><span>就诊咨询</span></a>";
+				//}
+				else if (date[i].orderStatus == 60){ ///* 60就诊治疗 */																	//缺路径
+					html += "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-rad'><a class='mui-navigate-right page-color-white' href='"+basePath+"/oa/Order/bookings-no16.html?orderID="+date[i].orderID+"'><i class='mui-icon mui--new-icon-clinics'></i><span>就诊治疗</span></a>";
+				}
+				html += "<li class='mui-table-view-cell mui-table-view-cell-data' style='padding-top: 18px;'><label class='page-color-blue'>就诊者</label><span>"
+						+ date[i].patientName + "</span></li>";
+				html += "<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>预约时间</label><span>"
+						+ date[i].bookedTime + "</span></li>";
+				html += "<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>治疗项目</label><span>"
+						+ date[i].patientTreatSubject + "</span></li>";
+				html += "<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>诊所</label><span>"
+						+ date[i].clinicName + "</span></li>";
+				html += "<li class='mui-table-view-cell mui-table-view-cell-data' style='padding-bottom: 18px;'><label class='page-color-blue'>就诊医生</label><span>"
+						+ date[i].doctorName + "</span></li>";
+				treadbody.html(treadbody.html() + html);
+			}
+	 	}
+		}
+	 	
+	 function back_to_index()
+	 {
+		 location.href=basePath+"/client/Login/login.html";
+	 }	
+		
+	 	
+	 	/*
+		//赋予啊标签链接
+		$("#myaccount").attr("href",basePath+"/oa/MyTooth/my-tooth-no2.html?userid="+userID);
+		$("#treads").attr("href",basePath+"/oa/MyTooth/my-tooth-no11.html?userid="+userID);
+		$("#cliList").attr("href",basePath+"/oa/MyTooth/my-tooth-no12.html?userid="+userID);
+		$("#lookdoctor").attr("href",basePath+"/oa/MyTooth/my-tooth-no13.html?userid="+userID);
+		$("#treadList").attr("href",basePath+"/oa/MyTooth/my-tooth-no13.html?userid="+userID);
+		*/
+		</script>
+</body>
+</html>

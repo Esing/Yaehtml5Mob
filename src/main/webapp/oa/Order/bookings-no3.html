@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+    <style type="text/css">
+	html,body,.mui-content,#baiduMap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	<!-- 地图上的预约样式 -->
+	<style type="text/css">
+		.map_icon{
+			width:230px;
+			height:45px;
+			border-radius:4px 4px 4px 4px;
+			box-shadow:0px 0px 4px #001;
+			background-color: #EE5D5B;
+		}
+		.map_icon div{
+			float:left;
+			height:100%;
+		}
+		.map_icon_text{
+			width:78%;
+			background-color: #FBF7F7;
+		}
+		.map_icon_text span{
+			max-height: 50px;
+			display: block;
+			overflow: hidden; 
+			line-height: 23px;
+			font-size: 17px;
+			font-weight: 600;
+		}
+		.map_icon_text .distance{
+			font-size: 12px;
+			font-weight: 300;
+		}
+		.map_icon_button{
+			line-height:45px;
+			font-size: 14px;
+			color:#FFFFFF;
+			width:22%;
+		}
+		.map_icon_button span{
+			margin-left: 13px;
+		}
+		.map_icon_text span{
+		margin-left: 5px;
+		}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=HOXdHtFplGncFL75zhIpoOAI"></script>
+	<script type="text/javascript" src="../CommonResources/js/location.js"></script>
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header page-bg-gray">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <input type="text" class="page-input-search" placeholder="搜索内容"/>
+            <a class="mui-pull-right"><i class="mui-icon mui-new-icon-map-gray"></i></a>
+        </li>
+        
+        
+    </ul>
+    
+	<div id="baiduMap">
+	</div>
+</div>
+
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/location.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+    	 mui.init({
+             swipeBack: true //启用右滑关闭功能
+         });
+        mui('.mui-content .mui-switch').each(function () { //循环所有toggle
+            /**
+             * toggle 事件监听
+             */
+            this.addEventListener('toggle', function (event) {
+                //event.detail.isActive 可直接获取当前状态
+//            this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+//诊所坐标数据
+var clinicList = {};
+var userID = 0;
+var basePath = getContextPath();
+var longitudeAndlatitude ;
+//初始化页面的默认参数
+var parameter = {};
+//先获取定位，之后显示地图
+var options={
+       enableHighAccuracy:true,
+       maximumAge:1000
+ }
+ if(navigator.geolocation){
+     //浏览器支持geolocation
+  navigator.geolocation.getCurrentPosition(succFcn,erroFcn,options);
+ }else{
+     //浏览器不支持geolocation
+  mui.alert('您的浏览器不支持地理位置定位');
+ }
+function succFcn(position){
+	//经度
+    var longitude =position.coords.longitude;
+    //纬度
+    var latitude = position.coords.latitude;
+	longitudeAndlatitude = [longitude,latitude];
+	showMap();
+}
+function erroFcn(error){
+	 switch(error.code){
+	   case 1:
+		   mui.alert("位置服务被拒绝");
+	       break;
+	   case 2:
+		   mui.alert("暂时获取不到位置信息");
+		   break;
+	   case 3:
+		   mui.alert("获取信息超时");
+		   break;
+	   case 4:
+		   mui.alert("未知错误");
+	       break;
+	   }
+	 showMap();
+}
+
+//显示地图
+function showMap(){
+	
+	longitudeAndlatitude = longitudeAndlatitude||["N","N"];
+	parameter = {
+			"gpsLatitude":longitudeAndlatitude[0],
+			"gpsLongitude":longitudeAndlatitude[1],
+			"rangeLocation":"0",
+			"clinicType":"",
+			"keywords":"",
+			"clinicHistory":"0",
+			"activeFavorites":"0",
+			"activeSales":"0"
+	}
+
+	$.ajax({
+	     type: "POST",
+	     dataType:"json",
+	     async:false,
+	     data:{"parameter":JSON.stringify(parameter)},
+	     url: basePath+"/Order/mobileBookingQueryClinicList.do",
+	     success: function(data){
+	            if(data.status == "0"){
+	            	var userID = data.userID;
+	            	clinicList = data.clinicList;
+	            }
+	     }
+	});
+	//百度地图API功能
+	var mp = new BMap.Map("baiduMap");
+	if(longitudeAndlatitude[1]=='N'){
+	    mp.centerAndZoom(new BMap.Point(113.960802,22.544348), 15); 
+	}else{
+		mp.centerAndZoom(new BMap.Point(longitudeAndlatitude[0],longitudeAndlatitude[1]), 15);
+	
+		
+	}
+
+	mp.enableScrollWheelZoom();
+
+	//自定义覆盖物
+	function ComplexCustomOverlay(point, hisName, distance,clinicID){
+	  this._point = point;
+	  this._hisName = hisName;
+	  this._distance = distance;
+	  this._clinicID = clinicID;
+	}
+	ComplexCustomOverlay.prototype = new BMap.Overlay();
+	ComplexCustomOverlay.prototype.initialize = function(map){
+	  this._map = map;
+	  var div = this._div = getMapLayDiv(this._hisName,this._distance,this._clinicID);
+	  div.style.position = "absolute";
+	  div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+	  div.style.whiteSpace = "nowrap";
+	  div.style.MozUserSelect = "none";
+	  var that = this;
+	  var arrow = this._arrow = document.createElement("div");
+	  arrow.style.background = "url("+basePath+"/oa/CommonResources/images/mappoint.png) no-repeat";
+	  arrow.style.position = "absolute";
+	  arrow.style.width = "50px";
+	  arrow.style.height = "72px";
+	  arrow.style.top = "45px";
+	  arrow.style.left = "80px";
+	  arrow.style.overflow = "hidden";
+	  div.appendChild(arrow);
+	  mp.getPanes().labelPane.appendChild(div);
+	  return div;
+	}
+	ComplexCustomOverlay.prototype.draw = function(){
+	  var map = this._map;
+	  var pixel = map.pointToOverlayPixel(this._point);
+	  this._div.style.left = pixel.x - parseInt(this._arrow.style.left)-22 + "px";
+	  this._div.style.top  = pixel.y - 110 + "px";
+	}  
+	/**
+	 *  创建地图上约有控件
+	 *  hisName:医院名称;distance:距离;func:预约事件
+	 */
+	 function getMapLayDiv(hisName,distance,clinicID){
+			var icon_div = document.createElement("div");
+			icon_div.setAttribute("class", "map_icon");
+			var icon_text_div = document.createElement("div");
+			icon_text_div.setAttribute("class", "map_icon_text");
+			var hisSpan = document.createElement("span");
+			hisSpan.innerHTML= hisName;
+			var disSpan = document.createElement("span");
+			disSpan.setAttribute("class", "distance");
+			disSpan.innerHTML = distance+" 米";
+			icon_text_div.appendChild(hisSpan);
+			icon_text_div.appendChild(disSpan);
+			var buttDiv = document.createElement("div");
+			buttDiv.setAttribute("class", "map_icon_button");
+			//添加预约事件
+			/* buttDiv.touchstart = function(){
+				document.getElementById("map_icon").innerHTML = "取消";
+			}; */
+			tmpfun = mp.onclick;
+			mp.onclick = null;
+			buttDiv.addEventListener("touchstart", function() {    
+			    mp.onclick = tmpfun;
+			    window.location.href = basePath+"/oa/Order/bookings-no5.html?userID="+userID+"&clinicID="+clinicID+"&doctorID=0";
+			 });
+			
+			var bookSpan = document.createElement("span");
+			bookSpan.setAttribute("id", "map_icon");
+			bookSpan.innerHTML = "预约";
+			buttDiv.appendChild(bookSpan);
+			icon_div.appendChild(icon_text_div);
+			icon_div.appendChild(buttDiv);
+			return icon_div;
+	 }
+	 if(clinicList && clinicList.length>0){
+		 for(var i=0;i<clinicList.length;i++){
+			 var distance = getDistance({lng : longitudeAndlatitude[0], lat:longitudeAndlatitude[1]},{lng : clinicList[i].clinicLatitude,lat :clinicList[i].clinicLongitude}).toFixed(2);
+			 mp.addOverlay(new ComplexCustomOverlay(new BMap.Point(clinicList[i].clinicLatitude,clinicList[i].clinicLongitude), clinicList[i].clinicName,distance,clinicList[i].clinicID));
+		 }
+	 }
+}
+
+
+</script>

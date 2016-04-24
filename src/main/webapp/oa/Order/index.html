@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+</header>
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-new-tab-item" href="../MyTooth/my-tooth-no1.html" target="_self">
+        <span class="mui-icon mui--new-icon-tooth"></span>
+        <span class="mui-tab-label">我的牙医</span>
+    </a>
+    <a class="mui-new-tab-item" href="#" target="_self">
+        <span class="mui-icon mui--new-icon-gift"></span>
+        <span class="mui-tab-label">活动</span>
+    </a>
+    <a class="mui-new-tab-item" href="../account/my-account-no1.html" target="_self">
+        <span class="mui-icon mui--new-icon-user"></span>
+        <span class="mui-tab-label">我的帐户</span>
+    </a>
+</nav>
+<div class="mui-content">
+    <div id="slider" class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+            <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                    <img src="../CommonResources/images/banner01.jpg">
+                </a>
+            </div>
+            <!-- 第一张 -->
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="../CommonResources/images/banner02.jpg">
+                </a>
+            </div>
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="../CommonResources/images/banner03.jpg">
+                </a>
+            </div>
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="../CommonResources/images/banner01.jpg">
+                </a>
+            </div>
+            <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                    <img src="../CommonResources/images/banner03.jpg">
+                </a>
+            </div>
+        </div>
+        <div class="mui-slider-indicator">
+            <div class="mui-indicator mui-active"></div>
+            <div class="mui-indicator"></div>
+            <div class="mui-indicator"></div>
+        </div>
+    </div>
+
+    <div id="tabbar-01" class="mui-control-content mui-active">
+        <a href="bookings-no2.html"><img src="../CommonResources/images/img-home.jpg" style="width: 100%"/></a>
+    </div>
+    <div id="tabbar-02" class="mui-control-content">
+        <h1 class="mui-text-center">活动</h1>
+    </div>
+    <div id="tabbar-03" class="mui-control-content">
+        <h1 class="mui-text-center">我的帐户</h1>
+    </div>
+</div>
+
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+        mui("#slider").slider({
+            interval: 1000
+        });
+    });
+
+</script>
+
+
+</body>
+</html>

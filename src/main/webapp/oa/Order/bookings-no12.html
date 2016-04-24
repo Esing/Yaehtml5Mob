@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+<link rel="stylesheet" href="../CommonResources/css/app.css">
+<style>
+    .mui-bar-tab .mui-tab-item-mine{display: table-cell;
+    overflow: hidden;
+    width: 1%;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: #0d8ca7;
+    color: #6acee3;
+    padding: 5px 0;
+    }
+</style>
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+	<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+	<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+</header>
+<!--页面内容-->
+<div class="mui-content">
+	<!--诊所详情-->
+	<div class="page_clinic">
+		<ul class="mui-table-view" style="margin-top: 15px;" id="doctorInfo"></ul>
+	</div>
+	<ul class="mui-table-view" style="margin-top: 15px;">
+		<!-- <li class="mui-table-view-cell">
+			<a class="mui-navigate-right"><i class="icon_pen_blue"></i> 就诊记录</a>
+		</li> -->
+	</ul>
+	<!--机构列表-->
+	<ul class="mui-table-view" style="margin-top: 15px;" id="clinicList">
+		<li class="mui-table-view-cell"><i class="icon_home_blue"></i> 医生在以下诊所工作 </li>
+	</ul>
+</div>
+<nav class="mui-bar mui-bar-tab tab_horizontal">
+	<a class="mui-tab-item" style="background: #fff;">
+		<i class="icon_share_blue"></i>
+		<span class="mui-tab-label">分享</span>
+	</a>
+	<a class="mui-tab-item-mine mui-active" href="" style="width:2%" id="hrefNode">
+		<span class="mui-tab-label">预约</span>
+	</a>
+</nav>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/location.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var doctorID = getRequest()["doctorID"];
+$(document).ready(function() {
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    initData();
+    initCollectionBtn();//收藏按钮绑定事件
+});
+
+var initCollectionBtn = function(){
+    $("#collectionBtn").live("click",function(){
+        var favoriteStatus = $("#favoriteStatus").val();
+        if(favoriteStatus == 0){
+            collection();
+        }else if(favoriteStatus == 1){
+            cancelCollection();
+        }
+        
+    });
+}
+/* 收藏 */
+var collection = function(){
+    $.ajax({
+        type: "POST",
+        dataType:"json",
+        data:{"clinicID":"","doctorID":doctorID},
+        url: basePath+"/Order/mobileSaveFavoriteClinicOrDoctor.do",
+        success: function(data){
+            if(data.status == "0"){
+                // 成功之后刷新当前页面
+                if(data.resultMSG != undefined && data.resultMSG.resultCode == 0){
+                    mui.alert("收藏成功",function(){
+                        location.reload();
+                    });
+                }else{
+                    mui.alert("收藏失败");
+                }
+            }else if(data.status == "1"){
+                mui.alert("用户登录超时,请重新登录.", function(){
+                    window.location.href = basePath + "/oa/Login/login.html";
+                }); 
+            }else if(data.status == "2"){
+                mui.alert("系统异常");
+            }
+        }
+   });
+}
+/* 取消收藏 */
+var cancelCollection = function(){
+    $.ajax({
+        type: "POST",
+        dataType:"json",
+        data:{"clinicID":"","doctorID":doctorID},
+        url: basePath+"/Order/mobileDeleteFavoriteClinicOrDoctor.do",
+        success: function(data){
+            if(data.status == "0"){
+                // 成功之后刷新当前页面
+                if(data.resultMSG != undefined && data.resultMSG.resultCode == 0){
+                    mui.alert("取消成功",function(){
+                        location.reload();
+                    });
+                }else{
+                    mui.alert("取消失败");
+                }
+            }else if(data.status == "1"){
+                mui.alert("用户登录超时,请重新登录.", function(){
+                    window.location.href = basePath + "/oa/Login/login.html";
+                }); 
+            }else if(data.status == "2"){
+                mui.alert("系统异常");
+            }
+        }
+   });
+}
+
+var initData = function(){
+	
+	var longitudeAndlatitude = getLocation();
+    longitudeAndlatitude = longitudeAndlatitude||["N","N"];
+    var parameter = {
+    	"doctorID":doctorID,
+        "gpsLatitude":longitudeAndlatitude[1],
+        "gpsLongitude":longitudeAndlatitude[0]
+    }
+    
+    $.ajax({
+         type: "POST",
+         dataType:"json",
+         data:{"parameter":JSON.stringify(parameter)},
+         url: basePath+"/Order/mobileBookingQueryDoctorContent.do",
+         success: function(data){
+             if(data.status == "0"){
+            	 var userID = data.userID;
+            	 var initDoctorLi = "<li class='mui-table-view-cell mui-media'>" +
+            	 "<div class='mui-text-center page-user-info' style='margin-right: 0;'>";
+            	 var favoriteStatus = data.favoriteStatus;
+            	 if(userID != 0){
+	            	 if(favoriteStatus == 1){
+	            		 initDoctorLi += "<small class='page-bg-green page-color-white mui-pull-right page-hospital--collection-tag' style='position: absolute;right: 15px;' id='collectionBtn'>" +
+	                     "<i class='mui-icon mui--new-icon-collection'></i>已收藏" +
+	                     "<input type='hidden' id='favoriteStatus' value='1' />" +
+	                     "</small>";
+	            	 }else{
+	            		 initDoctorLi += "<small class='page-bg-gray page-color-white mui-pull-right page-hospital--collection-tag' style='position: absolute;right: 15px;' id='collectionBtn'>" +
+	                     "<i class='mui-icon mui--new-icon-collection'></i>收藏" +
+	                     "<input type='hidden' id='favoriteStatus' value='0' />" +
+	                     "</small>";
+	            	 }
+            	 }
+            	 initDoctorLi += "<img class='page-user-img' src='"+data.doctorICON+"'>" +
+            	 "<p><b>"+data.doctorName+"</b> "+data.doctorLevel+"</p>" +
+            	 "</div>" +
+            	 "</li>" +
+            	 "<li class='mui-table-view-cell no_bgcolor'>" +
+            	 "<a class='mui-navigate-right'>" +
+            	 "<i class='icon_tooth_yellow'></i> 专业技术能力" +
+            	 "</a>" +
+            	 "</li>" +
+            	 "<li class='mui-table-view-cell color_gray'>" +
+            	 "<div class='clinic_info'>";
+            	 
+            	 var doctorProperty = data.doctorProperty;
+            	 if(doctorProperty != null && doctorProperty != ""){
+            		 doctorProperty = doctorProperty.split(",");
+            		 for(var i=0;i<doctorProperty.length;i++){
+            			 initDoctorLi += "<span class='span_radius_gray'>"+doctorProperty[i]+"</span>";
+            		 }
+            	 }
+            	 initDoctorLi += "</div>" +
+            	 "</li>" +
+            	 "<li class='mui-table-view-cell'>" +
+            	 "<a class='mui-navigate-right'><i class='icon_map_orange'></i> 距离 <span class='mui-pull-right' style='padding:0 50px 0 0;'>"+data.distance+"m</span></a>" +
+            	 "</li>" +
+            	 "<li class='mui-table-view-cell no_bgcolor'>" +
+            	 "<a class='mui-navigate-right'>" +
+            	 "<i class='icon_user'></i> 医生简介" +
+            	 "</a>" +
+            	 "</li>" +
+            	 "<li class='mui-table-view-cell color_gray'>" +
+            	 "<div class='clinic_info'>"+data.doctorAbstract+"</div>" +
+            	 "</li>";
+            	 $("#doctorInfo").append(initDoctorLi);// 渲染医生信息
+            	
+                 var clinicList = data.clinicList;
+                 if(clinicList != undefined){
+                	 var initClinicList = "";
+                	 var clinicListLength = clinicList.length;
+                	 for(var j=0;j<clinicListLength;j++){
+                		 initClinicList += "<li class='mui-table-view-cell mui-media'>" +
+                         "<a href='bookings-no4.html?clinicID="+clinicList[j].clinicID+"'>" +
+                         "<img class='mui-media-object mui-pull-left' src='"+clinicList[j].clinicICON+"'>" +
+                         "<div class='mui-media-body'>" +
+                         "<h4 class='page-color-black'>" +clinicList[j].clinicName;
+                         
+                         var activeCoupon = clinicList[j].activeCoupon;
+                         var activeInsurance = clinicList[j].activeInsurance;
+                         var activeMember = clinicList[j].activeMember;
+                         var clinicProperty = clinicList[j].clinicProperty;
+                         var clinicFavoriteStatus = clinicList[j].favoriteStatus;
+                         
+                         if(activeCoupon == 1){
+                        	 initClinicList += "<small class='page-bg-yellow page-color-white page-hospital-title-tag'>券</small>";
+                         }
+                         if(activeInsurance == 1){
+                        	 initClinicList += "<small class='page-bg-blue page-color-white page-hospital-title-tag'>保</small>";
+                         }
+                         if(activeMember == 1){
+                        	 initClinicList += "<small class='page-bg-green page-color-white page-hospital-title-tag'>会</small>";
+                         }
+                         if(clinicFavoriteStatus == 1){
+                        	 initClinicList += "<small class='page-bg-green page-color-white mui-pull-right page-hospital--collection-tag'>" +
+	                         "<i class='mui-icon mui--new-icon-collection'></i>已收藏" +
+	                         "</small>";
+                        	 
+                         }
+                         
+                         initClinicList += "</h4>" +
+                         "<p class='mui-ellipsis page-color-black'>"+clinicList[j].clinicLevel+"</p>" +
+                         "<div class='page-hospital-tag page-color-blue'>" +
+                         "<p class='mui-pull-right page-color-black'><i class='mui-icon mui--new-icon-map'></i>距离 "+clinicList[j].distance+"m</p>";
+                         
+                         if(clinicProperty != null && clinicProperty != ""){
+                        	 clinicProperty = clinicProperty.split(",");
+                             for(var k=0;k<clinicProperty.length;k++){
+                            	 initClinicList += "<span>"+clinicProperty[k]+"</span>";
+                             }
+                         }
+                         initClinicList += "</div>" +
+                         "<p class='page-hospital-hr'></p>" +
+                         "<p class='mui-ellipsis page-color-black'>地址："+clinicList[j].clinicAddress+"</p>" +
+                         "<p class='page-hospital-hr' style='margin: 10px 0 5px 0;'></p>" +
+                         "<p class='mui-ellipsis color_red'><i class='icon_location'></i>当前医生位置定位诊所</p>" +
+                         "</div>" +
+                         "</a>" +
+                         "</li>";
+                	 }
+                	 $("#clinicList").append(initClinicList);
+                 }
+                 $("#hrefNode").attr("href","bookings-no5.html?userID="+userID+"&clinicID="+clinicList[0].clinicID+"&doctorID="+data.doctorID);
+             }else if(data.status == "1"){
+                 mui.alert("用户登录超时,请重新登录.", function(){
+                     window.location.href = basePath + "/oa/Login/login.html";
+                 }); 
+             }else if(data.status == "2"){
+                 mui.alert("系统异常."); 
+             }
+         }
+    });
+}
+</script>
+</body>
+
+</html>

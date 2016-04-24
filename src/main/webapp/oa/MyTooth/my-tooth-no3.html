@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-bars mui-pull-right" href="/oa/MyTooth/my-tooth-no1.html"></a> <a
+			class="mui-icon mui-new-icon-left-nav mui-pull-left"
+			href="" id="index"></a>
+	</header>
+	<div class="mui-content" id="contenBoy">
+
+		<!--页面头部-->
+		<ul class="mui-table-view mui-table-view-chevron mui-page-header">
+			<li class="mui-table-view-cell mui-text-center"><a
+				class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="back_to"></a>
+				<h4>看过的诊所</h4></li>
+		</ul>
+
+	</div>
+	<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+	<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+	<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+	<script type="text/javascript" src="../CommonResources/js/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			mui.init({
+				swipeBack : true
+			//启用右滑关闭功能
+			});
+		});
+	</script>
+	<script type="text/javascript" charset="utf-8">
+
+	
+
+		 var basePath = getContextPath();
+		var Request = new Object();
+	         Request = getRequest();
+	     var patientID = Request["patientID"];
+	     var userID=Request["userID"];
+	 	$("#index").attr("href",basePath+"/oa/Order/index.html");
+	 	 $("#back_to").click(function() {
+				var url =basePath+"/oa/MyTooth/my-tooth-no1.html";
+				location.href=url;
+			});
+	     $.ajax({   
+		     url:basePath+"/accountTooth/treatmeclinics.do",  
+		     type:'POST',   
+		     data:"patientID="+patientID, 
+		     async : true, //默认为true 异步   
+		     error:function(){   
+		    	 mui.alert("系统异常."); 
+		     },   
+		     success:function(data){  
+
+		    	  switch(data.code)
+		    	 {
+		    		 case 0:{
+		    			 	initHtml(data.date); break;
+		    		 }
+		    		 case 1:{
+		    			 mui.alert("登陆超时.",back_to_index());   break;
+	 	   			  }
+		    	 	default:{
+		    	 		 	mui.alert("系统异常."); 
+		    	 	}	 
+		    	 }
+		     } 
+		 }); 
+	
+		
+ 		//此处是加载数据到html页面中
+
+		//封装解析数据的方法。
+ 		function initHtml(date) {
+		//获取到加入数据的标示标签。并往标签中解析数据到页面中显示
+ 		var contenBoy = $("#contenBoy");
+		for (var i = 0; i < date.length; i++) {																	//缺到达诊所页面的路径
+			var html = "<ul class='mui-table-view' style='margin-top: 20px;'><li class='mui-table-view-cell mui-media'><a href='"+basePath+"/oa/Order/bookings-no4.html?clinicID="+date[i].clinicID+"'>";
+			html += "<img class='mui-media-object mui-pull-left' src='"+date[i].clinicICON+"'><div class='mui-media-body'>";
+			html += "<h4 class='page-color-black'>" + date[i].clinicName;
+			if (date[i].activeCoupon==0) {
+				html += "<small class='page-bg-yellow page-color-white page-hospital-title-tag'>券</small>";
+			}
+			if (date[i].activeInsurance==0) {
+				html += "<small class='page-bg-blue page-color-white page-hospital-title-tag'>保</small>";
+			}
+			if (date[i].activeMember==0) {
+				html += "<small class='page-bg-green page-color-white page-hospital-title-tag'>会</small>";
+			}
+			if (date[i].favoriteStatus==1) {
+				html += "<small class='page-bg-green page-color-white mui-pull-right page-hospital--collection-tag'><i class='mui-icon mui--new-icon-collection'></i>已收藏</small>";
+			}
+			html += "</h4><p class='mui-ellipsis page-color-black'>"
+					+ date[i].clinicLevel + "医院</p>";
+			html += "<div class='page-hospital-tag page-color-blue'><p class='mui-pull-right page-color-black'><i class='mui-icon mui--new-icon-map'></i>距离 "
+					+ date[i].distance + "m</p>";
+				var item=date[i].clinicProperty==""?[]:date[i].clinicProperty.split(",");
+			for (var s = 0; s <item.length; s++) {
+				html += "<span>" + item[s] + "</span>";
+			}
+			html += "</div><p class='page-hospital-hr'></p><p class='mui-ellipsis page-color-black'>地址："
+					+ date[i].clinicAddress + "</p></div></a></li></ul>";
+			contenBoy.html(contenBoy.html() + html);
+		}} 
+ 		 function back_to_index()
+ 		 {
+ 			 location.href=basePath+"/client/Login/login.html";
+ 		 }
+	</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" id="returnBack"></a>添加就诊者</div>
+			<!--页面内容-->
+			<div class="app-list">
+				<ul class="mui-table-view mui-table-view-chevron page-bg-white">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<img src="../CommonResources/images/user120.png" width="50" height="50" />
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+                    	<div class="mui-input-row">
+							<label>姓名<span class="page-color-rad">*</span></label>
+							<input type="text" placeholder="" name="patientName" />
+						</div>
+					</li>
+					<li class=" mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>性别<span class="page-color-rad">*</span></label>
+							<input type="text" placeholder="" name="patientGender">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+                    	<div class="mui-input-row">
+							<label>生日</label>
+							<input type="text" placeholder="" name="patientBirthday" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>年龄</label>
+							<input type="text" placeholder="" name="patientAge" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>身份证号</label>
+							<input type="text" placeholder="" name="patientCitizenID" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>联系电话</label>
+							<input type="text" placeholder="" name="patientPhone" />
+						</div>
+					</li>
+				</ul>
+
+				<ul class="mui-table-view mui-table-view-chevron page-bg-white" style="margin-top: 20px;">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>QQ</label>
+							<input type="text" placeholder="" name="patientQQ" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>邮箱</label>
+							<input type="text" placeholder="" name="patientEmail" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>联系地址</label>
+							<input type="text" placeholder="" name="patientAddress" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>备用联系人</label>
+							<input type="text" placeholder="" name="contactName" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>备用联系人电话</label>
+							<input type="text" placeholder="" name="contactPhone" />
+						</div>
+					</li>
+				</ul>
+
+				<ul class="mui-table-view mui-table-view-chevron page-bg-white" style="margin-top: 20px;">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>重大病史</label>
+							<input type="text" placeholder="" name="diseaseHostory" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>过敏药物</label>
+							<input type="text" placeholder="" name="allergicDrug" />
+						</div>
+					</li>
+				</ul>
+				<div class="app-btns">
+					<button type="button" class="mui-btn mui-btn-primary mui-btn-new-blue" id="alertBtn">确定</button>
+				</div>
+
+			</div>
+		</div>
+	</body>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/zepto.min.js"></script>
+<script src="../CommonResources/js/jquery.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+	var basePath = getContextPath();
+	/* document.getElementById("alertBtn").addEventListener('tap', function() {
+		mui.alert("成功添加就诊者信息！");
+	}); */
+	$(document).ready(function() { 
+		initPatient();
+	});
+	$("#returnBack").click(function() {
+		var url =basePath +"/oa/MyTooth/my-tooth-no5.html";
+		location.href=url;
+	});
+	var initPatient = function(){
+		var Request = new Object();
+		Request = getRequest();
+		var userAccount = Request["MSISDN"];
+		$("input[name='patientName']").val(Request["patientName"]);
+		$("input[name='patientGender']").val(Request["patientGender"]);
+		$("input[name='patientBirthday']").val(Request["patientBirthday"]);
+		$("input[name='patientAge']").val(Request["patientAge"]);
+		$("input[name='patientCitizenID']").val(Request["patientCitizenID"]);
+		$("input[name='patientPhone']").val(Request["patientPhone"]);
+		$("input[name='diseaseHostory']").val(Request["diseaseHostory"]);
+		$("input[name='allergicDrug']").val(Request["allergicDrug"]);
+		
+	}
+	/*保存新就诊者*/
+	$("#alertBtn").click(function(){
+		var patientICON = "" ;
+		var patientName = $("input[name='patientName']").val().replace(/(^\s*)|(\s*$)/g,'');
+		var patientGender = $("input[name='patientGender']").val().replace(/(^\s*)|(\s*$)/g,'');
+		var patientBirthday = $("input[name='patientBirthday']").val();
+		var patientAge = $("input[name='patientAge']").val();
+		var patientCitizenID = $("input[name='patientCitizenID']").val();
+		var patientPhone = $("input[name='patientPhone']").val();
+		var patientQQ = $("input[name='patientQQ']").val();
+		var patientEmail = $("input[name='patientEmail']").val();
+		var patientAddress = $("input[name='patientAddress']").val().replace(/(^\s*)|(\s*$)/g,'');
+		var contactName = $("input[name='contactName']").val().replace(/(^\s*)|(\s*$)/g,'');
+		var contactPhone = $("input[name='contactPhone']").val();
+		var diseaseHostory = $("input[name='diseaseHostory']").val().replace(/(^\s*)|(\s*$)/g,'');
+		var allergicDrug = $("input[name='allergicDrug']").val().replace(/(^\s*)|(\s*$)/g,'');
+		
+		//获取当前时间判断出生日期
+	  	var date = new Date(); 
+	  	var year = date.getFullYear();
+	  	var month = date.getMonth() + 1;
+	  	var day = date.getDate();
+	  	if(month<10){
+	  		month = "0"+month;
+	  	}
+	  	if(day<10){
+	  		day = "0"+day;
+	  	}
+	  	var nowTime = year+""+month+""+day;
+		
+		if(patientName==null || patientName==""){
+		   	mui.alert("姓名不能为空和空格."); 
+		   	return;
+		}
+	    if(patientName.length>10){
+		   	mui.alert("姓名长度不能超过10个字符."); 
+		   	return;
+		}
+		var nameText = /^[\u4e00-\u9fa5a-z]+$/gi;
+		if(!nameText.test(patientName)){
+			mui.alert("姓名不能包含特殊字符，只能是汉字与英文字母."); 
+		   	return;
+		}
+		if(patientGender==null || patientGender==""){
+		   	mui.alert("请输入性别."); 
+		   	return;
+		}
+	    if(patientGender.length==1){
+	    	if(patientGender!="男" && patientGender!="女"){
+	    		mui.alert("性别只能是'男'或者'女'."); 
+	    	   	return;
+	    	}
+	    }else{
+	    	mui.alert("性别只能是'男'或者'女'."); 
+		   	return;
+	    }
+	    /* if(patientBirthday==null || patientBirthday==""){
+	    	mui.alert("请输入生日."); 
+		   	return;
+	    } */
+	    
+	    var number = /^(0|[1-9][0-9]*)$/;
+	    if(patientBirthday!=null && patientBirthday!=""){
+	    	if(!number.test(patientBirthday) || patientBirthday.length!=8){ 
+		  		mui.alert("出生日期为8位数的纯数字."); 
+		  		return;
+		  	}else{
+		  		if(parseInt(patientBirthday.substring(4,6))>12 || parseInt(patientBirthday.substring(4,6))==0){
+		  			mui.alert("出生日期月份输入不合理."); 
+			  		return;
+		  		}else if(parseInt(patientBirthday.substring(6,8))>31 ||parseInt(patientBirthday.substring(6,8))==0){
+		  			mui.alert("出生日期出生日输入不合理."); 
+			  		return;
+		  		}else if(parseInt(patientBirthday.substring(4,6))==2 && parseInt(patientBirthday.substring(6,8))>29){
+		  			mui.alert("出生日期出生日输入不合理."); 
+			  		return;
+		  		}else{
+		  			if(parseInt(patientBirthday)>parseInt(nowTime)){
+		  				mui.alert("出生日期大于当前时间."); 
+				  		return;
+		  			}
+		  		}
+		  	}
+	    }
+	    if(patientAge!=null && patientAge!=""){
+	    	if(!number.test(patientAge) || patientAge.length>2 || patientAge==0){ 
+		  		mui.alert("年龄应为0-99岁."); 
+		  		return;
+		  	}
+	    }
+	    if(patientCitizenID!=null && patientCitizenID!=""){
+			var reIDCard = /^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;
+			if(!reIDCard.test(patientCitizenID) || patientCitizenID.length<18){ 
+			 	mui.alert("请输入正确的身份证号."); 
+		  		return;
+			}
+		}
+	    var myreg = /^[1][34578][0-9]{9}$/;  
+	    if(patientPhone!=null && patientPhone!=""){
+		  	if(!myreg.test(patientPhone) || patientPhone.length<11){ 
+		  		mui.alert("手机号码格式不正确."); 
+		  		return;
+		  	}
+	    }
+	    if(patientQQ!=null && patientQQ!=""){
+			if(!number.test(patientQQ) || patientQQ.length>20){ 
+			 	mui.alert("QQ号码必须是小于20位数的纯数字."); 
+		  		return;
+			}
+		}
+	    
+	    if(patientEmail!=null && patientEmail!=""){
+	    	var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			   if(!filter.test(patientEmail) || patientEmail.length>30){ 
+				   mui.alert("请输入正确的邮箱地址."); 
+			  		return;
+			   }
+		}
+	    
+	    if(patientAddress!=null && patientAddress!=""){
+			if(patientAddress.length>100){ 
+			 	mui.alert("联系地址不能大于100位数."); 
+		  		return;
+			}
+		}
+	    
+	    if(contactName!=null && contactName!=""){
+	    	if(contactName.length>10){
+			   	mui.alert("联系人姓名长度不能超过10个字符."); 
+			   	return;
+			}
+			var nameText = /^[\u4e00-\u9fa5a-z]+$/gi;
+			if(!nameText.test(contactName)){
+				mui.alert("联系人姓名不能包含特殊字符，只能是汉字与英文字母."); 
+			   	return;
+			}
+		}
+	    if(contactPhone!=null && contactPhone!=""){
+		  	if(!myreg.test(contactPhone) || contactPhone.length<11){ 
+		  		mui.alert("联系人手机号码格式不正确."); 
+		  		return;
+		  	}
+	    }
+	    if(diseaseHostory!=null && diseaseHostory!=""){
+			if(diseaseHostory.length>200){ 
+			 	mui.alert("过敏病史显示输入长度为200."); 
+		  		return;
+			}
+		}
+	    if(allergicDrug!=null && allergicDrug!=""){
+			if(allergicDrug.length>100){ 
+			 	mui.alert("过敏药物输入长度为100."); 
+		  		return;
+			}
+		}
+	    
+	    $.ajax({
+			   type: "POST",
+			   url: basePath+"/Regiter/mobileSaveUserContactPatient.do",
+			   dataType:"json",
+			   async: false,
+			   data:{"patientName":patientName,"patientICON":patientICON,"patientGender":patientGender,"patientBirthday":patientBirthday,
+				    "patientAge":patientAge,"patientCitizenID":patientCitizenID,"patientPhone":patientPhone,
+				    "patientQQ":patientQQ,"patientEmail":patientEmail,"patientAddress":patientAddress,"contactName":contactName,
+				    "contactPhone":contactPhone,"allergicDrug":allergicDrug,"diseaseHostory":diseaseHostory},
+			   success: function(data){
+				   if(data!=null){
+					   if(data.status==1){
+						   mui.alert("登录超时，请重新登录！",function(){
+							   var url =basePath +"/oa/Login/login.html";
+							   location.href=url;
+						   });
+				   	   }else if(data.status==2){
+				   			mui.alert("系统异常."); 
+				   			
+				   	   }else if(data.status==3){
+				   		    mui.alert("接口返回数据为空."); 
+				   	   }else{
+				   			if(data.status==0 && data.resultMSG!=null){
+				   				if(data.resultMSG.resultCode!=0){
+				   					mui.alert("保存失败，原因："+data.resultMSG.resultValue); 
+				   				}else{
+				   					mui.alert("保存成功",function(){
+				   						var url = basePath+"/oa/MyTooth/my-tooth-no5.html";
+									   	location.href=url; 
+								   });
+				   				}
+				   			}
+				   		}
+				   }  
+			   }
+		});
+	    
+	});
+</script>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" href="my-account-no1.html"></a>设置</div>
+			<!--页面内容-->
+			<div class="app-list">
+				<ul class="mui-table-view mui-table-view-chevron page-bg-white">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="payPasswordSet" href="#">支付密码设置</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" href="my_account_setting_pwd.html">修改登录密码</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" href="my_account_authorization.html">授权设置</a>
+					</li>
+<!-- 					<li class="mui-table-view-cell"> -->
+<!-- 						<a class="mui-navigate-right" href="my_account_version.html">版本更新</a> -->
+<!-- 					</li> -->
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">关于牙医易</a>
+					</li>
+				</ul>
+				<div class="app-btns">
+					<button class="mui-btn mui-btn-danger">退出登录</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/zepto.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script>
+	var basePath = getContextPath(); 
+	$("#payPasswordSet").click(function(){
+		$.ajax({
+			type:"POST",
+			url:basePath+"/Account/commonCheckPaySecurityIsExist.do",
+			dataType:"json",
+			success: function(data){
+				if(data.status=="0"){
+					if(data.paySecurity ==0){
+    					location.href = basePath + "/oa/account/my_account_password6.html";
+    			 	}else{
+    					 location.href = basePath + "/oa/account/my_account_password.html";
+    			 	}
+				}else if(data.status=="1"){
+					mui.alert("登陆超时,请重新登陆!",function(){
+						location.href = basePath + "/oa/Login/login.html";
+					});
+				}
+    			 
+    		}
+		});
+	});
+	
+	$(".mui-btn-danger").click(function(){
+		$.ajax({
+			type:"POST",
+			url:basePath+"/Account/mobileUserLogout.do",
+			dataType:"json",
+			success: function(data){
+    			 if(data.status == "0"){
+    				location.href = basePath + "/oa/Login/login.html";
+    	         }else if(data.status == "1"){
+    	        	 mui.alert("登陆超时,请重新登陆!",function(){
+ 						location.href = basePath + "/oa/Login/login.html";
+ 					});
+    	         }else if(data.status == "2"){
+    	        	 mui.alert("系统异常",function(){
+    	        		 location.href = basePath + "/oa/Login/login.html";
+    	        	 });
+    	         }
+    		}
+		});
+	});
+	
+	
+	
+</script>

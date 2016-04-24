@@ -1,0 +1,127 @@
+userAge<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" id="returnBack"></a>生日 <a class="input_save">存储</a></div>
+			<!--页面内容-->
+			<div class="app-form">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<input type="text" placeholder="19930305" name="patientBirthday"/> 
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/jquery.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript">
+var basePath = getContextPath();
+var Request = new Object();
+Request = getRequest();
+var patientID = Request["patientID"];
+$("input[name='patientBirthday']").val(Request["patientBirthday"]);
+$("#returnBack").click(function() {
+	var url =basePath +"/oa/Regiter/account_add_patient2.html?patientID="+patientID;
+	location.href=url;
+});
+//发送短信验证码
+$(".input_save").click(function() {
+	var patientBirthday = $("input[name='patientBirthday']").val();
+	if(patientID==null && patientID==""){
+	  	mui.alert("获取不到用户编号，请联系管理员."); 
+	  	return;
+    }
+	//获取当前时间判断出生日期
+  	var date = new Date(); 
+  	var year = date.getFullYear();
+  	var month = date.getMonth() + 1;
+  	var day = date.getDate();
+  	if(month<10){
+  		month = "0"+month;
+  	}
+  	if(day<10){
+  		day = "0"+day;
+  	}
+  	var nowTime = year+""+month+""+day;
+  	
+  	var number = /^(0|[1-9][0-9]*)$/;
+    if(patientBirthday!=null && patientBirthday!=""){
+    	if(!number.test(patientBirthday) || patientBirthday.length!=8){ 
+	  		mui.alert("出生日期为8位数的纯数字."); 
+	  		return;
+	  	}else{
+	  		if(parseInt(patientBirthday.substring(4,6))>12 || parseInt(patientBirthday.substring(4,6))==0){
+	  			mui.alert("出生日期月份输入不合理."); 
+		  		return;
+	  		}else if(parseInt(patientBirthday.substring(6,8))>31 ||parseInt(patientBirthday.substring(6,8))==0){
+	  			mui.alert("出生日期出生日输入不合理."); 
+		  		return;
+	  		}else if(parseInt(patientBirthday.substring(4,6))==2 && parseInt(patientBirthday.substring(6,8))>29){
+	  			mui.alert("出生日期出生日输入不合理."); 
+		  		return;
+	  		}else{
+	  			if(parseInt(patientBirthday)>parseInt(nowTime)){
+	  				mui.alert("出生日期大于当前时间."); 
+			  		return;
+	  			}
+	  		}
+	  	}
+    }
+	$.ajax({
+		   type: "POST",
+		   url: basePath+"/Regiter/mobileUpdateUserContactPatient.do",
+		   dataType:"json",
+		   async: false,
+		   data:{"patientID":patientID,"patientBirthday":patientBirthday},
+		   success: function(data){
+			   if(data!=null){
+				   if(data.status==1){
+					   mui.alert("登录超时，请重新登录！",function(){
+						   var url =basePath +"/oa/Login/login.html";
+						   location.href=url;
+					   });
+			   	   }else if(data.status==2){
+			   			mui.alert("系统异常."); 
+			   			
+			   	   }else if(data.status==3){
+			   		    mui.alert("保存数据不成功."); 
+			   	   }else{
+			   			if(data.status==0 && data.resultMSG!=null){
+			   				if(data.resultMSG.resultCode!=0){
+			   					mui.alert("保存失败原因："+data.resultMSG.resultValue); 
+			   				}else{
+		   				 		var url = basePath+"/oa/Regiter/account_add_patient2.html?patientID="+patientID;
+		   						location.href=url;
+			   				}
+			   			}
+			   		}
+			   }  
+		   }
+	});
+});
+</script>
+</html>

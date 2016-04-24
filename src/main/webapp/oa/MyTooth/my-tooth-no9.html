@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="" id="index"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="back_to"></a>
+            <h4>就诊记录</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell mui-media">
+            <a>
+                <img class="mui-media-object mui-pull-left page-user-img" src="../CommonResources/images/img-hospital-logo-1.png" id="doctorImgOne">
+
+                <div class="mui-media-body">
+                    <h4 class="page-color-black page-color-blue" style="padding-top: 15px;" id="doctorName"></h4>
+
+                    <p class="mui-ellipsis page-color-black" id="genderAge"></p>
+                </div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell" >
+            <a>治疗项目<span class="mui-pull-right" id="treaItem"><!-- 正畸 --></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a>预约时间<span class="mui-pull-right" id="bookingTime"><!--  2016年03月22日 10:30 --></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a>就诊时间<span class="mui-pull-right" id="treaTime"><!-- 2016年03月22日 11:30 --></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="#" class="mui-navigate-right " style="line-height: 45px;" id="clinicName"><!-- 郎朗口腔旗舰店（三甲医院）
+                <small class="page-bg-yellow page-color-white page-hospital-title-tag" id="volume">券</small>
+                <small class="page-bg-blue page-color-white page-hospital-title-tag" id="protect">保</small>
+                <small class="page-bg-green page-color-white page-hospital-title-tag" id="meeting">会</small>
+                <img class="mui-media-object mui-pull-right" src="../CommonResources/images/img-hospital-logo-1.png"
+                     style="margin-right: 15px;" id="clinicImg">--></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="#" id="doctorNameTow" class="mui-navigate-right " style="line-height: 45px;">
+                <img id="doctorImgTow" class="mui-media-object mui-pull-right" src="../CommonResources/images/img-hospital-logo-1.png"
+                     style="margin-right: 15px;"></a>
+        </li>
+    </ul>
+
+    <ul class="mui-table-view" style="margin-top: 20px;">
+        <li class="mui-table-view-cell">
+            <a href="#"><i class="mui-icon mui--new-icon-treat"></i>&nbsp;治疗结果</a>
+        </li>
+    </ul>
+    <div class="page-table-title">诊疗费</div>
+    <ul class="mui-table-view" id="treadmoney">
+       
+    </ul>
+
+    <div class="page-table-title">材料费</div>
+    <ul class="mui-table-view" id="material">
+      
+        <li class="mui-table-view-cell">
+            <a><span class="mui-pull-right">合计：<span style="color: #f00; font-size: 20px;" id="sumMoney"></span></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="#" class="mui-navigate-right"><i class="mui-icon mui--new-icon-case"></i>&nbsp;病例</a>
+        </li>
+    </ul>
+
+    <ul class="mui-table-view" style="margin-top: 20px;">
+        <li class="mui-table-view-cell">
+            <a href="#"><i class="mui-icon mui--new-icon-msg"></i>&nbsp;沟通记录</a>
+        </li>
+        <li class="mui-table-view-cell" id="msgList">
+        
+        </li>
+    </ul>
+
+    <ul class="mui-table-view" style="margin-top: 20px;">
+        <li class="mui-table-view-cell">
+            <a href="#" class="mui-navigate-right" id="lookclicent">查看授权</a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="#" class="mui-navigate-right">相关就诊记录</a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+/*     $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+    });
+	 */
+</script>
+<script>	
+var basePath = getContextPath();
+var Request = new Object();
+	Request = getRequest();
+var orderID = Request["orderID"];
+var patientID = Request["patientID"];
+$("#index").attr("href",basePath+"/oa/Order/index.html");
+$.ajax({   
+	    url:basePath+"/accountTooth/querytreadOrderDesc.do",   
+	    type:'POST',   
+	    data:"patientID="+patientID+"&orderID="+orderID, 
+	    async : true, //默认为true 异步   
+	    error:function(){   
+	   	 mui.alert("系统异常."); 
+	    },   
+	    success:function(data){  
+	   	 switch(data.code)
+	   	 {
+	   		 case 0:{
+	   			 initHtml(data.date);break;
+	   			 }
+	   	 	case 1:{
+	   	 	 	mui.alert("登陆超时.",back_to_index()); 
+		  		break;
+			  	}
+	   	 	default:{
+	   	 		 mui.alert("系统异常."); 
+	   	 	}	 
+	   	 }
+	    }
+	}); 
+	  
+ // 数据封装解析到html 的元素中
+ function initHtml(bean)
+ {
+		 $("#doctorImgOne").attr("src",bean.patientICON);
+		 $("#doctorName").html(bean.patientName); 
+		 $("#genderAge").html(bean.patientGender+"/"+bean.patientAge+"");
+		 $("#treaItem").html(bean.patientTreatSubject);
+
+		 $("#bookingTime").html(bean.bookedTime);
+		 $("#treaTime").html(bean.treatBegin); //却少就诊时间
+		 $("#clinicName").html(bean.clinicName); 
+		 $("#clinicName").attr("href",(basePath+"/oa/Order/bookings-no4.html?clinicID="+bean.clinicID));	 
+		 if(bean.activeCoupon==0){$("#clinicName").html($("#clinicName").html()+"<small class='page-bg-yellow page-color-white page-hospital-title-tag' id='volume'>券</small>")};
+		 if(bean.activeInsurance==0){$("#clinicName").html($("#clinicName").html()+"<small class='page-bg-blue page-color-white page-hospital-title-tag' id='protect'>保</small>")};
+		 if(bean.activeMember==0){$("#clinicName").html($("#clinicName").html()+"<small class='page-bg-green page-color-white page-hospital-title-tag' id='meeting'>会</small>")};
+		 $("#clinicName").html($("#clinicName").html()+"<img class='mui-media-object mui-pull-right' src='"+bean.clinicICON+"' style='margin-right: 15px;' id='clinicImg'></a>");
+		 $("#doctorImgTow").attr("src",bean.doctorICON); 
+		 $("#doctorNameTow").html(bean.doctorName+$("#doctorImgTow").html());
+		 $("#doctorNameTow").attr("href",basePath+"/oa/Order/bookings-no12.html?doctorID="+bean.doctorID);
+		 var material= $("#material");
+		 var treadmoney= $("#treadmoney");
+		 var mateHtml="";
+		 var treadmoneyhtml="";
+		   for(var i=0;i<bean.pricinList.length;i++)
+		 {
+			 if(bean.pricinList[i].treatSubjectType==1)
+			 {
+				 mateHtml+="<li class='mui-table-view-cell'><a>"+bean.pricinList[i].treatComplexName+"<span class='mui-pull-right'>￥"+bean.pricinList[i].treatAmount+"</span></a></li>";
+			 }else if(bean.pricinList[i].treatSubjectType==2)
+			 {
+				 treadmoneyhtml+="<li class='mui-table-view-cell'><a>"+bean.pricinList[i].treatComplexName+"<span class='mui-pull-right'>￥"+bean.pricinList[i].treatAmount+"</span></a></li>";
+			 }
+		 }
+		 treadmoney.html(treadmoneyhtml);
+		 material.html(mateHtml+material.html());
+		 $("#sumMoney").html("￥"+bean.treatTotalAmount);
+		 	var msgList=$("#msgList");
+		for(var i=0;i<bean.msgList.length;i++)
+		 {
+			 var html="";
+			 var classhtml=bean.msgList[i].msgSenderRole==20?"mui-pull-right":"mui-pull-left";
+			 html+="<img class='mui-media-object "+classhtml+"' src='"+bean.msgList[i].msgSenderICON+"'>";
+			 html+="<div class='page-msg-box page-bg-white "+classhtml+"'><div class='page-msg-triangle'></div><div class='page-msg-content'>"+bean.msgList[i].msgContent+"</div>";
+		      html+="<p class='"+classhtml+"'>"+bean.msgList[i].msgSendTime+"</p></div><div class='mui-clearfix'></div>";
+		      msgList.html(msgList.html()+html);
+		 }
+		$("#lookclicent").attr("href",basePath+"/oa/MyTooth/my-tooth-no10.html?clinicID="+bean.clinicID+"&patientID="+patientID);  
+ } 
+ 
+ function back_to_index()
+ {
+	 location.href=basePath+"/client/Login/login.html";
+ }
+</script>
+</body>
+</html>

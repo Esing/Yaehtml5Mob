@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+		</header>
+		<div class="mui-content">
+
+			<!--页面内容-->
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<a>
+						<div class="booking_info">
+							<img class="page-user-img" src="../CommonResources/images/avatar.png">
+							<span>预约时间</span>
+							<label class="color_blue">2016年3月17日 11:42:37</label>
+							<span>离我的预约还有</label>
+							<label class="span_time"><em>2</em>天<em>29</em>时<em>30</em>分</label>
+							<div class="alert_error">
+								<p>诊所已将预约时间修改</p>
+								<span>提示：如需换其他时间，请与诊所沟通</span>
+							<button class="mui-btn btn_yes">同意</button>
+							<button class="mui-btn btn_no">取消预约</button>
+						</div>
+
+		</div>
+		</a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a>就诊者<span class="mui-pull-right">林嘉怡</span></a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a>性别<span class="mui-pull-right">女</span></a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a>备用联系人<span class="mui-pull-right">林嘉怡</span></a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a>备用联系电话<span class="mui-pull-right">13333333333</span></a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a href="#" style="line-height: 45px;">
+				<img class="mui-media-object" src="../CommonResources/images/img-hospital-logo-1.png" style="vertical-align: middle;">
+				<span>郎朗口腔旗舰店（三甲医院）</span>
+				<span class="mui-pull-right">
+                    <small class="page-bg-yellow page-color-white page-hospital-title-tag">券</small>
+                    <small class="page-bg-blue page-color-white page-hospital-title-tag">保</small>
+                    <small class="page-bg-green page-color-white page-hospital-title-tag">会</small>
+                </span>
+			</a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a>预约项目<span class="mui-pull-right">正畸</span></a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a>症状描述<span class="mui-pull-right">牙齿不能正常</span></a>
+		</li>
+
+		</ul>
+		<ul class="mui-table-view" style="margin-top: 20px;">
+			<li class="mui-table-view-cell">
+				<a href="#"><i class="mui-icon mui--new-icon-msg"></i>&nbsp;诊所沟通</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<img class="mui-media-object mui-pull-right" src="../CommonResources/images/avatar.png">
+
+				<div class="page-msg-box page-bg-white mui-pull-right">
+					<div class="page-msg-triangle"></div>
+					<div class="page-msg-content">
+						可以帮我把预约时间改成后天的 吗，时间点不变
+					</div>
+					<p class="mui-pull-right">2016年2月28日 10:30</p>
+				</div>
+				<div class="mui-clearfix"></div>
+				<img class="mui-media-object mui-pull-left" src="../CommonResources/images/img-hospital-logo-1.png">
+
+				<div class="page-msg-box page-bg-white mui-pull-left">
+					<div class="page-msg-triangle"></div>
+					<div class="page-msg-content">
+						可以帮我把预约时间改成后天的 吗，时间点不变
+					</div>
+					<p class="mui-pull-left">2016年2月28日 10:30</p>
+				</div>
+				<div class="mui-clearfix"></div>
+				<img class="mui-media-object mui-pull-right" src="../CommonResources/images/avatar.png">
+
+				<div class="page-msg-box page-bg-white mui-pull-right">
+					<div class="page-msg-triangle"></div>
+					<div class="page-msg-content">
+						可以帮我把预约时间改成后天的 吗，时间点不变
+					</div>
+					<p class="mui-pull-right">2016年2月28日 10:30</p>
+				</div>
+				<div class="mui-clearfix"></div>
+
+			</li>
+		</ul>
+		<form class="form_message">
+			<textarea placeholder="请输入..."></textarea>
+			<div class="form_message_bottom">
+				<button class="mui-btn mui-btn-new-blue mui-pull-right">发送</button>
+				<a class="icon_face mui-pull-right"></a>
+			</div>
+			<div class="clear"></div>
+		</form>
+		<div class="app-btns">
+			<button type="button" class="mui-btn mui-btn-primary btn_no">取消预约</button>
+		</div>
+		</div>
+		<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+		<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				mui.init({
+					swipeBack: true //启用右滑关闭功能
+				});
+				$(".btn_no").click(function() {
+					var btnArray = ['取消', '确认'];
+					mui.confirm('<p style="color:#f00;font-size:17px;font-weight:bold">确认要取消预约吗？</p><textarea placeholder="取消预约原因，请说明"></textarea><p style="font-size:13px">温馨提示：<br/>为了保证服务质量，每天最多可取消2次</p><p>您还有<b style="color:#f00;font-size:17px">2</b>次机会</p>', '', btnArray, function(e) {})
+				});
+			});
+		</script>
+	</body>
+
+</html>

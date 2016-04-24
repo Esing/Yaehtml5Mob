@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" onclick="history.go(-1)"></a>我的消息<a onclick="history.go(-1)" class="input_save">取消</a></div>
+			<!--页面内容-->
+			<div class="app-article-list">
+				<ul id="msgList" class="mui-table-view mui-table-view-striped mui-table-view-condensed article_list_edit">
+<!-- 					<li class="mui-table-view-cell" style="padding-left: 5px;"> -->
+<!-- 						<div class="mui-checkbox"> -->
+<!-- 							<input name="checkbox" value="202" type="checkbox" > -->
+<!-- 						</div> -->
+<!-- 						<div class="mui-pull-right" style="width:90%"> -->
+<!-- 							<a class="mui-navigate-right"><h4 class="mui-ellipsis">消息标题消息标题<i class="span_new">new</i></h4></a> -->
+<!-- 							<h5 class="color_green">现在</h5> -->
+<!-- 							<p class="mui-h6">Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿，</p> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+					
+				</ul>
+				<nav class="mui-bar mui-bar-tab no_border no_bgcolor">
+					<div class="app-btns">
+						<button type="button" class="mui-btn-success" style="width: 45%;">全部已读</button>
+						<button type="button" class="mui-btn-danger" style="width: 45%;">删除</button>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script>
+$(document).ready(function(){
+	var basePath = getContextPath();
+	$.ajax({
+		type:"POST",
+		url:basePath+"/Account/mobileQueryMyMessageList.do",
+		dataType:"json",
+		success: function(data){
+			 if(data.status == "0"){
+				var msgList = data.msgList;
+				var div ='';
+				for(var i=0;i<msgList.length;i++){
+					div = '<li class="mui-table-view-cell" style="padding-left: 5px;">'+
+						'<div class="mui-checkbox">'+
+						'<input name="checkbox" value="'+msgList[i].msgID+'" type="checkbox" >'+
+						'</div>'+
+						'<div class="mui-pull-right" style="width:90%">'+
+						'<a class="mui-navigate-right" href="my_account_message3.html?msgID='+msgList[i].msgID+'"><h4 class="mui-ellipsis">'+msgList[i].msgName+'<i class="span_new">new</i></h4></a>'+
+						'<h5 class="color_green">'+msgList[i].msgSendTime+'</h5>'+
+						'<p class="mui-h6">'+msgList[i].msgContent+'</p>'+
+						'</div>'+
+						'</li>';
+					$("#msgList").append(div);
+				}
+	         }else if(data.status == "1"){
+	        	 mui.alert("登陆超时，请重新登陆!",function(){
+	        		 location.href = basePath + "/oa/Login/login.html";
+	        	 });
+	         }else if(data.status == "2"){
+	        	 mui.alert("系统异常",function(){
+	        		 location.href = basePath + "/oa/Login/login.html";
+	        	 });
+	         }
+		}
+	});
+	
+	//已读按钮
+	$(".mui-btn-success").click(function(){
+		var msgIDs = getmsgIDs();
+		if(msgIDs){
+			$.ajax({
+				type:"POST",
+				url:basePath+"/Account/mobileChangeMyMessagesStatus.do",
+				dataType:"json",
+				data:{"msgIDs":JSON.stringify(msgIDs),"changeType":1},
+				success: function(data){
+	    			 if(data.status == "0"){
+	    				if(data.resultMSG.resultCode==0){
+	    					$("input[type='checkbox']").each(function(){
+	    						$(this).attr("checked","checked");
+	    					});
+	    				}else{
+	    					mui.alert(data.resultMSG.resultValue);
+	    				}
+	    	         }else if(data.status == "1"){
+	    	        	 mui.alert("登陆超时，请重新登陆!",function(){
+	    	        		 location.href = basePath + "/oa/Login/login.html";
+	    	        	 });
+	    	         }else if(data.status == "2"){
+	    	        	 mui.alert("系统异常",function(){
+	    	        		 location.href = basePath + "/oa/Login/login.html";
+	    	        	 });
+	    	         }
+	    		}
+			});
+		}
+	});
+	
+	//删除按钮
+	$(".mui-btn-danger").click(function(){
+		var msgIDs = getmsgIDs();
+		if(msgIDs){
+			if(msgIDs.length>0){
+				$.ajax({
+					type:"POST",
+					url:basePath+"/Account/mobileChangeMyMessagesStatus.do",
+					dataType:"json",
+					data:{"msgIDs":JSON.stringify(msgIDs),"changeType":2},
+					success: function(data){
+		    			 if(data.status == "0"){
+		    				if(data.resultMSG.resultCode==0){
+		    					$("input[type='checkbox']").each(function(){
+		    						var val = $(this).attr("checked");
+		    						if(val){
+		    							$(this).parent().parent().remove();
+		    						}
+		    					});
+		    				}else{
+		    					mui.alert(data.resultMSG.resultValue);
+		    				}
+		    	         }else if(data.status == "1"){
+		    	        	 mui.alert("登陆超时，请重新登陆!",function(){
+		    	        		 location.href = basePath + "/oa/Login/login.html";
+		    	        	 });
+		    	         }else if(data.status == "2"){
+		    	        	 mui.alert("系统异常",function(){
+		    	        		 location.href = basePath + "/oa/Login/login.html";
+		    	        	 });
+		    	         }
+		    		}
+				});
+			}else{
+				mui.alert("请先选择要删除的消息!");
+			}
+		}
+		
+	});
+});
+
+var getmsgIDs = function(){
+	var msgIDs = "";
+	$("input[type='checkbox']").each(function(){
+		var attr = $(this).attr("checked");
+		if(attr){
+			msgIDs =$(this).val()+","+msgIDs ;
+		}
+	});
+	return msgIDs;
+}
+</script>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+<link rel="stylesheet" href="../CommonResources/css/app.css">
+<style>
+	.mui-bar-tab .mui-tab-item-mine{display: table-cell;
+    overflow: hidden;
+    width: 1%;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: #0d8ca7;
+    color: #6acee3;
+    padding: 5px 0;
+    }
+</style>
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+	<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+	<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+</header>
+<div class="mui-content">
+	<div class="app-header" style="margin-bottom: 0;">
+				<a class="mui-icon mui-icon-back mui-pull-left" href="my-account-no1.html"></a>我的收藏
+	</div>
+	<!--页面头部-->
+	<ul class="mui-table-view mui-table-view-chevron mui-page-header page-bg-gray">
+				<li class="mui-table-view-cell mui-text-center">
+					<input type="text" class="page-input-search" placeholder="请输入医生姓名" style="font-size: 13px;" />
+					<a class="mui-pull-right" href="bookings-no3.html"><i class="mui-icon mui-new-icon-map-gray"></i></a>
+				</li>
+	</ul>
+
+	<div id="content" style="position: relative">
+	<!--页面内容-->
+<!-- 	<ul class="mui-table-view" style="margin-top: 20px;"> -->
+<!-- 		<li class="mui-table-view-cell mui-media"> -->
+<!-- 			<a> -->
+<!-- 				<img class="mui-media-object mui-pull-left" src="../CommonResources/images/avatar1.png"> -->
+
+<!-- 				<div class="mui-media-body"> -->
+<!-- 					<h4 class="page-color-black">张医生</h4> -->
+<!-- 					<p class="mui-ellipsis page-color-black">主任医师</p> -->
+<!-- 					<div class="page-hospital-tag page-color-blue"> -->
+<!-- 						<p class="mui-pull-right page-color-black"><i class="mui-icon mui--new-icon-map"></i>距离 366m</p> -->
+<!-- 						<span>老年活动牙</span> -->
+<!-- 						<span>正畸</span> -->
+<!-- 						<span>拔牙</span> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</a> -->
+<!-- 		</li> -->
+<!-- 		<li class="mui-table-view-cell"> -->
+<!-- 			<a href="#" class="mui-navigate-right">朗朗口腔旗舰店</a> -->
+<!-- 		</li> -->
+<!-- 		<li class="mui-table-view-cell"> -->
+<!-- 			<a href="#" class="mui-navigate-right">新爱齿科</a> -->
+<!-- 		</li> -->
+<!-- 	</ul> -->
+
+<!-- 	<ul class="mui-table-view" style="margin-top: 20px;"> -->
+<!-- 		<li class="mui-table-view-cell mui-media"> -->
+<!-- 			<a> -->
+<!-- 				<img class="mui-media-object mui-pull-left" src="../CommonResources/images/avatar2.png"> -->
+<!-- 				<div class="mui-media-body"> -->
+<!-- 					<h4 class="page-color-black">张医生</h4> -->
+<!-- 					<p class="mui-ellipsis page-color-black">主任医师</p> -->
+<!-- 					<div class="page-hospital-tag page-color-blue"> -->
+<!-- 						<p class="mui-pull-right page-color-black"><i class="mui-icon mui--new-icon-map"></i>距离 366m</p> -->
+<!-- 						<span>老年活动牙</span> -->
+<!-- 						<span>正畸</span> -->
+<!-- 						<span>拔牙</span> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</a> -->
+<!-- 		</li> -->
+<!-- 		<li class="mui-table-view-cell"> -->
+<!-- 			<a href="#" class="mui-navigate-right">朗朗口腔旗舰店</a> -->
+<!-- 		</li> -->
+<!-- 		<li class="mui-table-view-cell"> -->
+<!-- 			<a href="#" class="mui-navigate-right">新爱齿科</a> -->
+<!-- 		</li> -->
+<!-- 	</ul> -->
+</div>
+<nav class="mui-bar mui-bar-tab tab_horizontal">
+	<a class="mui-tab-item-mine " href="my_account_favorites2.html" >
+		<span class="mui-icon icon_home"></span>
+		<span class="mui-tab-label">诊所</span>
+	</a>
+	<a class="mui-tab-item mui-active" href="my_account_favorites3.html">
+		<span class="mui-icon mui--new-icon-tooth"></span>
+		<span class="mui-tab-label">医生</span>
+	</a>
+</nav>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/location.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+$(document).ready(function() {
+	var longitudeAndlatitude = getLocation();
+	longitudeAndlatitude = longitudeAndlatitude||["N","N"];
+	mui.init({
+		swipeBack: true //启用右滑关闭功能
+	});
+	mui('.mui-content .mui-switch').each(function() { //循环所有toggle
+		/**
+		 * toggle 事件监听
+		 */
+		this.addEventListener('toggle', function(event) {
+			//event.detail.isActive 可直接获取当前状态
+			//            this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
+		});
+	});
+	
+	
+
+	//查询收藏的所有医生列表
+    $.ajax({
+        type: "POST",
+        dataType:"json",
+        url: basePath+"/Account/mobileQueryFavoriteDoctorList.do",
+        data:{"gpsLongitude":longitudeAndlatitude[0],"gpsLatitude":longitudeAndlatitude[1],"doctorName":""},
+        success: function(data){
+            if(data.status == "0"){
+                var doctorList = data.doctorList;
+                var html='',doctorProperty,clinicList;
+                for(var i=0;i<doctorList.length;i++){
+                	doctorProperty = doctorList[i].doctorProperty.split(",");
+                	clinicList = doctorList[i].clinicList;
+                	if(i==0){
+                		html ='<ul class="mui-table-view" style="margin-top: 0px;">';
+                	}else{
+                		html ='<ul class="mui-table-view" style="margin-top: 20px;">'
+                	}
+                		html +=	'<li class="mui-table-view-cell mui-media">'+
+        					'<a href="../Order/bookings-no12.html?doctorID='+doctorList[i].doctorID+'">'+
+        					'<img class="mui-media-object mui-pull-left" src="../CommonResources/images/avatar1.png">'+
+        					'<div class="mui-media-body">'+
+        					'<h4 class="page-color-black">'+doctorList[i].doctorName+'</h4>'+
+        					'<p class="mui-ellipsis page-color-black">'+doctorList[i].doctorLevel+'</p>'+
+        					'<div class="page-hospital-tag page-color-blue">';
+        			//处理定位失败情况下的距离显示问题
+        			if(doctorList[i].distance==-1){
+        				html += '<p class="mui-pull-right page-color-black"><i class="mui-icon mui--new-icon-map"></i>距离未知</p>';
+        			}else{
+        				html += '<p class="mui-pull-right page-color-black"><i class="mui-icon mui--new-icon-map"></i>距离'+doctorList[i].distance+'</p>';
+        			}
+        			for(var j=0;j<doctorProperty.length;j++){
+        				html += '<span>'+doctorProperty[j]+'</span>';
+        			}
+        			html +='</div></div></a></li>';
+        			for(var k=0;k<clinicList.length;k++){
+        				html += '<li class="mui-table-view-cell">'+
+    							'<a href="../Order/bookings-no4.html?clinicID='+clinicList[k].clinicID+'" class="mui-navigate-right">'+clinicList[k].clinicName+'</a>'+
+    							'</li>';
+        			}
+        					
+        			html +=	'</ul>';
+                    $("#content").append(html);
+                }
+                
+            }else if(data.status == "1"){
+                mui.alert("用户登录超时,请重新登录.", function(){
+                    window.location.href = basePath + "/oa/Login/login.html";
+                }); 
+            }else if(data.status == "2"){
+                mui.alert("系统异常."); 
+            }
+        }
+    });
+	
+	//根据条件查询收藏的医生列表
+	$(".page-input-search").bind("input oninput",function(){
+		  $("#content").empty();
+		  var doctorName = $(this).val().replace(/(^\s*)|(\s*$)/g,'');
+		 $.ajax({
+		        type: "POST",
+		        dataType:"json",
+		        url: basePath+"/Account/mobileQueryFavoriteDoctorList.do",
+		        data:{"gpsLongitude":longitudeAndlatitude[0],"gpsLatitude":longitudeAndlatitude[1],"doctorName":doctorName},
+		        success: function(data){
+		            if(data.status == "0"){
+		                var doctorList = data.doctorList;
+		                var html='',doctorProperty,clinicList;
+		                for(var i=0;i<doctorList.length;i++){
+		                	doctorProperty = doctorList[i].doctorProperty.split(",");
+		                	clinicList = doctorList[i].clinicList;
+		                	if(i==0){
+		                		html ='<ul class="mui-table-view" style="margin-top: 0px;">';
+		                	}else{
+		                		html ='<ul class="mui-table-view" style="margin-top: 20px;">'
+		                	}
+		                		html +=	'<li class="mui-table-view-cell mui-media">'+
+		        					'<a href="../Order/bookings-no12.html?doctorID='+doctorList[i].doctorID+'">'+
+		        					'<img class="mui-media-object mui-pull-left" src="../CommonResources/images/avatar1.png">'+
+		        					'<div class="mui-media-body">'+
+		        					'<h4 class="page-color-black">'+doctorList[i].doctorName+'</h4>'+
+		        					'<p class="mui-ellipsis page-color-black">'+doctorList[i].doctorLevel+'</p>'+
+		        					'<div class="page-hospital-tag page-color-blue">';
+		        			//处理定位失败情况下的距离显示问题
+		        			if(doctorList[i].distance==-1){
+		        				html += '<p class="mui-pull-right page-color-black"><i class="mui-icon mui--new-icon-map"></i>距离未知</p>';
+		        			}else{
+		        				html += '<p class="mui-pull-right page-color-black"><i class="mui-icon mui--new-icon-map"></i>距离'+doctorList[i].distance+'</p>';
+		        			}
+		        			for(var j=0;j<doctorProperty.length;j++){
+		        				html += '<span>'+doctorProperty[j]+'</span>';
+		        			}
+		        			html +='</div></div></a></li>';
+		        			for(var k=0;k<clinicList.length;k++){
+		        				html += '<li class="mui-table-view-cell">'+
+		    							'<a href="../Order/bookings-no4.html?clinicID='+clinicList[k].clinicID+'" class="mui-navigate-right">'+clinicList[k].clinicName+'</a>'+
+		    							'</li>';
+		        			}
+		        					
+		        			html +=	'</ul>';
+		        			$("#content").append(html);
+		                }
+		              
+		            }else if(data.status == "1"){
+		                mui.alert("用户登录超时,请重新登录.", function(){
+		                    window.location.href = basePath + "/oa/Login/login.html";
+		                }); 
+		            }else if(data.status == "2"){
+		                mui.alert("系统异常."); 
+		            }
+		        }
+		    });
+	});
+	
+});
+
+var initData = function(mui){
+	
+}
+</script>
+
+</body>
+
+</html>

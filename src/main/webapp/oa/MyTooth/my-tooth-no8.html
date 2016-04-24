@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+</head>
+
+<body>
+ <header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right" href="oa/MyTooth/my-tooth-no1.html"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="" id="index"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h4>就诊记录</h4>
+        </li>
+    </ul>
+    
+   
+
+    <!--页面内容-->
+    <ul class="mui-table-view mui-table-view-chevron page-bg-white">
+        <li class="mui-table-view-cell mui-media">
+            <a id="patientid" >
+                <div class="mui-text-center page-user-info">
+                    <img id="titlehead" class="page-user-img"
+                         src="">
+                    <h4 id="titlename"></h4>
+                </div>
+            </a>
+        </li>
+    </ul>
+
+	<div id="contentBody">
+
+</div>
+    <!--页面内容-->
+    <ul class="mui-table-view mui-table-view-chevron" style="margin-top: 20px;">
+        <li class="mui-table-view-cell mui-table-view-cell-title mui-text-center page-color-blue">
+            <a id="addOrder"><i class="mui-icon mui--new-icon-add"></i><span>&nbsp;新建预约</span></a>
+        </li>
+    </ul>
+    <p class="mui-text-center" style="position: fixed; width: 100%;top: 48%; display: none;">还没有就诊过哟～</p>
+</div>
+
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+    });
+	
+</script>
+<script type="text/javascript" charset="utf-8">
+
+		 var basePath = getContextPath();
+		 var Request = new Object();
+		 Request = getRequest();
+		 var userID = Request["userID"];
+		 var patientID = Request["patientID"];
+		 $("#index").attr("href",basePath+"/oa/Order/index.html");
+		 $("#addOrder").click(function() {
+				var url =basePath +"/oa/Order/bookings-no2.html";
+				location.href=url;
+			});
+	 	  $.ajax({   
+		 	    url:basePath+"/accountTooth/querytreadLists.do",   
+		 	    type:'POST',   
+		 	    data:"patientID="+patientID, 
+		 	    async : true, //默认为true 异步   
+		 	    error:function(){   
+		 	   	 mui.alert("系统异常."); 
+		 	    },   
+		 	    success:function(data){  
+		 	   	 switch(data.code)
+		 	   	 {
+		 	   		 case 0:{
+		 	   			$("#titlehead").attr("src", data.date.patientICON);
+		 	   			$("#titlename").html(data.date.patientName);
+		 	   			$("#patientid").attr("href",basePath+"/oa/Regiter/account_add_patient1.html?patientID="+data.date.patientID+"&userID="+userID);
+		 	   			 initHtml(data.date.orderList);
+		 	   			break;
+		 	   			 }
+		 	   	 	case 1:{
+		 	   	 	 	mui.alert("登陆超时.",back_to_index()); 
+		 		  		break;
+	 	   			  }
+		 	   	 	default:{
+		 	   	 		 mui.alert("系统异常."); 
+		 	   	 	}	 
+		 	   	 }
+		 	    }
+		 	}); 
+		  		 
+		 
+		 
+		 
+ function initHtml(bean)
+{
+	
+	var contentBody=$("#contentBody");
+	 //此处应该解析添加就诊记录中的单条记录。
+	// alert(bean.length);
+	 if(bean.length<=0 ){
+		 $("#tips").show();
+	 }
+	for(var i=0;i<bean.length;i++)
+	{																																												
+		var html="<ul class='mui-table-view mui-table-view-chevron' style='margin-top: 20px;'><li class='mui-table-view-cell mui-table-view-cell-title page-bg-yellow'><a class='mui-navigate-right page-color-white' href='"+basePath+"/oa/MyTooth/my-tooth-no9.html?orderID="+bean[i].orderID+"&patientID="+bean[i].patientID+"'><i class='mui-icon mui--new-icon-complete'></i><span>就诊完成</span> </a></li>";
+		html+="<li class='mui-table-view-cell mui-table-view-cell-data' style='padding-top: 18px;'><label class='page-color-blue'>就诊者</label><span>"+bean[i].patientName+"</span></li>"
+		html+="<li class='mui-table-view-cell mui-table-view-cell-data'> <label class='page-color-blue'>预约时间</label><span>"+bean[i].bookedTime+"</span></li>";
+		html+="<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>治疗项目</label><span>"+bean[i].treatSubjectName+"</span></li>";
+		html+="<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>诊所</label><span>"+bean[i].clinicName+"</span></li>";
+		html+="<li class='mui-table-view-cell mui-table-view-cell-data'  style='padding-bottom: 18px;'><label class='page-color-blue'>就诊医生</label><span>"+bean[i].doctorName+"</span></li></ul>";
+	 	contentBody.html(contentBody.html()+html);
+	} 
+}  
+ 
+ function back_to_index()
+ {
+	 location.href=basePath+"/client/Login/login.html";
+ }
+</script>
+</body>
+</html>

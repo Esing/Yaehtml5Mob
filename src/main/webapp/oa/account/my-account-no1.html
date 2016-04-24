@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html" id="hrefDom"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back-mine mui-icon mui-icon-left-nav mui-pull-left" onclick="goIndex()"></a>
+            <h4>我的账户</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+    <ul class="mui-table-view mui-table-view-chevron page-bg-white">
+        <li class="mui-table-view-cell mui-media">
+            <!--<div class="page-bg-yellow page-color-white page-user-account">个人信息</div>-->
+            <a href="my-account-no2.html">
+                <span class="mui-badge mui-badge-warning mui-pull-right page-user-account">个人信息</span>
+                <div class="mui-text-center page-user-info">
+                    <img class="page-user-img"
+                         src="">
+
+                    <p class="page-color-black"><b></b></p>
+                </div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell">
+            <div class="mui-text-center page-user-info" style="padding: 0px 25px;">
+                <span>账户余额</span>
+
+                <a href="my_account_transaction1.html"><h3 class="page-color-rad"></h3></a>
+                <button type="button" class="mui-btn mui-btn-success mui-btn-block">充 值</button>
+            </div>
+        </li>
+    </ul>
+
+    <ul class="mui-table-view mui-table-view-chevron " style="margin-top: 20px;">
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right" href="my_account_message.html">
+                <i class="mui-icon mui--new-icon-news"></i>
+                <span>我的消息</span>
+<!--                 <span class="mui-badge mui-badge-danger mui-pull-right" style="margin-right: 0px;">8</span> -->
+            </a>
+        </li>
+<!--         <li class="mui-table-view-cell"> -->
+<!--             <a class="mui-navigate-right" href="my_account_coupon.html"> -->
+<!--                 <i class="mui-icon mui--new-icon-discount"></i> -->
+<!--                 <span>优惠券</span> -->
+<!--             </a> -->
+<!--         </li> -->
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="goCollection()">
+                <i class="mui-icon mui--new-icon-collection-red"></i>
+                <span>我的收藏</span>
+            </a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right" href="my_account_setting.html">
+                <i class="mui-icon mui--new-icon-setup"></i>
+                <span>设置</span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/location.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var temp = false;
+    $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+       
+        $.ajax({
+			type:"POST",
+			url:basePath+"/Account/mobileAccountQueryBalance.do",
+			dataType:"json",
+			success: function(data){
+    			 if(data.status == "0"&&data.resultMSG.resultCode=="0"){
+    				 $(".page-color-black").text(data.userName);
+    				$(".page-color-rad").text(data.resultMSG.resultValue);
+    				$(".page-user-img").attr("src",data.userIcon)
+    				var orderFalg = data.orderFalg;// 订单列表标志位，用于确定返回到那个页面
+    				temp = orderFalg;
+    				if(orderFalg){
+	    				$("#hrefDom").attr("href","../Order/bookings-no1.html");
+    				}
+    				
+    	         }else if(data.status == "1"){
+    	        	 location.href = basePath + "/oa/Login/login.html";
+    	         }else if(data.status == "2"){
+    	        	 mui.alert("系统异常",function(){
+    	        		 location.href = basePath + "/oa/Login/login.html";
+    	        	 });
+    	         }
+    		}
+		});
+    });
+
+    var goIndex = function(){
+    	if(temp){
+    	     location.href=basePath + "/oa/Order/bookings-no1.html";
+    	}else{
+    	     location.href=basePath + "/oa/Order/index.html";
+    	}
+    }
+    
+    var goCollection = function(){
+    	var latitudeAndlongitude =  getLocation();
+    	latitudeAndlongitude = latitudeAndlongitude||["N","N"];
+    	//查询诊所收藏列表
+    	 $.ajax({
+ 			type:"POST",
+ 			url:basePath+"/Account/mobileQueryFavoriteClinicList.do",
+ 			dataType:"json",
+ 			data:{"gpsLongitude":latitudeAndlongitude[0],"gpsLatitude":latitudeAndlongitude[1],"clinicName":""},
+ 			success: function(data){
+     			 if(data.status == "0"){
+     				var clinicList = data.clinicList;
+     				if(clinicList.length==0){
+     					location.href = basePath +"/oa/account/my_account_favorites1.html";
+     				}else{
+     					location.href = basePath +"/oa/account/my_account_favorites2.html";
+     				}
+     	         }else if(data.status == "1"){
+     	        	 mui.alert("登陆超时，请重新登陆!",function(){
+     	        		 location.href = basePath + "/oa/Login/login.html";
+     	        	 });
+     	         }else if(data.status == "2"){
+     	        	 mui.alert("系统异常",function(){
+     	        		 location.href = basePath + "/oa/Login/login.html";
+     	        	 });
+     	         }
+     		}
+ 		});
+    }
+    
+    
+</script>
+
+
+</body>
+</html>

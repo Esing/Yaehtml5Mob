@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>郎朗口腔</title>
+		<link href="../CommonResources/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" id="returnBack"></a>完善个人资料</div>
+			<div class="app-form">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label><span class="mui-icon mui-icon-person"></span></label>
+							<input type="text" placeholder="姓名" name="userName" />
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label><span class="mui-icon icon_sex" ></span></label>
+							<input type="text" placeholder="性别（男/女）" name="userGender">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label><span class="mui-icon mui-icon-locked"></span></label>
+							<input type="password" placeholder="新密码" name="userPassword">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label><span class="mui-icon mui-icon-locked"></span></label>
+							<input type="password" placeholder="请重复输入新密码" name="userPassword2">
+						</div>
+					</li>
+				</ul>
+				<div class="app-btns">
+					<button class="mui-btn mui-btn-primary" id="alertBtn">提交</button>
+				</div>
+			</div>
+		</div>
+		<div id="info">
+		</div>
+		
+</body>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/jquery.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var Request = new Object();
+Request = getRequest();
+var userID = getRequest()["userID"];
+var clinicID = getRequest()["clinicID"];
+var doctorID = getRequest()["doctorID"];
+var orderBookedTime = getRequest()["orderBookedTime"];
+$("#returnBack").click(function() {
+	window.location.href = "account_register.html?userAccount="+Request["MSISDN"]+"userID="+userID+"&clinicID="+clinicID+"&doctorID="+doctorID+"&orderBookedTime="+encodeURIComponent(orderBookedTime);
+});
+//校验短信验证码
+$(".mui-btn-primary").click(function() {
+	var userAccount = Request["MSISDN"];
+	var userPassword = $("input[name='userPassword']").val();
+	var userPassword2 = $("input[name='userPassword2']").val();
+	var userName = $("input[name='userName']").val().replace(/(^\s*)|(\s*$)/g,'');
+	var userGender = $("input[name='userGender']").val().replace(/(^\s*)|(\s*$)/g,'');
+	if(userAccount==null || userAccount==""){
+		mui.alert("手机号码获取不到，请退货原来界面校验手机."); 
+		return;
+	}
+	var myreg = /^[1][34578][0-9]{9}$/;  
+    if(userAccount!=null && userAccount!=""){
+	  	if(!myreg.test(userAccount) || userAccount.length!=11){ 
+	  		mui.alert("手机号码格式不正确，请退货原来界面校验手机."); 
+	  		return;
+	  	}
+    }
+    if(userName==null || userName==""){
+	   	mui.alert("姓名不能为空和空格."); 
+	   	return;
+	}
+    if(userName.length>10){
+	   	mui.alert("姓名长度不能超过10个字符."); 
+	   	return;
+	}
+	var nameText = /^[\u4e00-\u9fa5a-z]+$/gi;
+	if(!nameText.test(userName)){
+		mui.alert("姓名不能包含特殊字符，只能是汉字与英文字母."); 
+	   	return;
+	}
+	if(userGender==null || userGender==""){
+	   	mui.alert("请输入性别."); 
+	   	return;
+	}
+    if(userGender.length==1){
+    	if(userGender!="男" && userGender!="女"){
+    		mui.alert("性别只能是'男'或者'女'."); 
+    	   	return;
+    	}
+    }else{
+    	mui.alert("性别只能是'男'或者'女'."); 
+	   	return;
+    }
+	if(userPassword==null || userPassword==""){
+	   	mui.alert("密码不能为空."); 
+	   	return;
+	}
+	var passText = /^[\da-zA-Z]{6,20}$/ ;
+    if(!passText.test(userPassword)){
+	   	mui.alert("密码必须为6-20位字母或数字或字母与数字组合的字符串."); 
+	   	return;
+	}
+    if(userPassword2==null || userPassword2==""){
+	   	mui.alert("请再次确认密码."); 
+	   	return;
+	}
+    if(userPassword2!=userPassword){
+    	mui.alert("两次输入密码不一致，请重新输入."); 
+	   	return;
+    }
+    $.ajax({
+		   type: "POST",
+		   url: basePath+"/Regiter/mobileUserSupplyRegister.do",
+		   dataType:"json",
+		   async: false,
+		   data:{"userAccount":userAccount,"userPassword":userPassword,"userName":userName,"userGender":userGender},
+		   success: function(data){
+			   if(data!=null){
+				   if(data.status==1){
+					   mui.alert("登录超时，请重新登录！",function(){
+						   window.location.href = "login.html?userID="+userID+"&clinicID="+clinicID+"&doctorID="+doctorID+"&orderBookedTime="+encodeURIComponent(orderBookedTime);
+					   });
+			   		}else if(data.status==2){
+			   			mui.alert("系统异常."); 
+					}else if(data.status==3){
+					    mui.alert("接口返回数据为空."); 
+					}else{
+				   	    if(data.status==0 && data.resultMSG!=null){
+				   			if(data.resultMSG.resultCode!=0){
+				   				mui.alert("注册失败原因："+data.resultMSG.resultValue); 
+				   			}else{
+				   				mui.alert("注册成功",function(){
+								   window.location.href = "login.html?userAccount="+userAccount+"&userID="+userID+"&clinicID="+clinicID+"&doctorID="+doctorID+"&orderBookedTime="+encodeURIComponent(orderBookedTime);
+							   });
+				   			}
+				   		}
+			   		}
+			   }  
+		   }
+	});
+});
+</script>
+</html>

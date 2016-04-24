@@ -1,0 +1,197 @@
+/* 公共样式 */
+.clear{clear: both;}
+.color_green,a.color_green{color:#0ab556}
+.color_white,a.color_white{color:#fff}
+.color_red,a.color_red{color:#f00}
+.color_black,a.color_black{color:#000}
+.color_blue,a.color_blue{color:#6acee3}
+.color_gray,a.color_gray{color:#888}
+.span_new{display:inline-block;background-color:#f00;color: #fff;border-radius: 8px;font-size: 13px;padding: 0 5px;line-height:normal;margin: 0 2px;font-weight: normal;}
+.no_border{-webkit-box-shadow:none;box-shadow:none;border-width: 0;}
+.no_bgcolor,.no_bgcolor:after{background-color:transparent ;}
+.center{text-align: center;}
+.bg_color_white{background-color: #fff;}
+
+/* icon 图标*/
+.icon_sex{background: url(../images/icon-sex.png) no-repeat center center;width: 24px;height: 24px;}
+.icon_home{background: url(../images/icon_home_white.png) no-repeat center center;width: 24px;height: 24px;background-size: 100%;}
+.icon_home_blue{display: inline-block; background: url(../images/icon-home-blue.png) no-repeat 50% 50%; background-size:110%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_span_quan{font-style: normal;display: inline-block;background-color: #fe9a01;padding: 2px 3px;border-radius: 3px;color: #fff;font-size: 14px;line-height:normal;}
+.icon_span_bao{font-style: normal;display: inline-block;background-color: #23ac38;padding: 2px 3px;border-radius: 3px;color: #fff;font-size: 14px;line-height:normal;}
+.icon_span_hui{font-style: normal;display: inline-block;background-color: #00a0e9;padding: 2px 3px;border-radius: 3px;color: #fff;font-size: 14px;line-height:normal;}
+.icon_logo{display: inline-block; background: url(../images/icon_logo.png) no-repeat 50% 50%; background-size:100%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_pen{display: inline-block; background: url(../images/icon_pen.png) no-repeat 50% 50%; background-size:80%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_pen_blue{display: inline-block; background: url(../images/icon-edit.png) no-repeat 50% 50%; background-size:80%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_book{display: inline-block; background: url(../images/icon_book.png) no-repeat 50% 50%; background-size:100%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_users{display: inline-block; background: url(../images/icon-users.png) no-repeat 50% 50%; background-size:100%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_user{display: inline-block; background: url(../images/icon_user.png) no-repeat 50% 50%; background-size:80%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_mechanism{display: inline-block; background: url(../images/icon_mechanism.png) no-repeat 50% 50%; background-size:70%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_location{display: inline-block; background: url(../images/icon_location.png) no-repeat 50% 50%; background-size:80%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_map_blue{display: inline-block; background: url(../images/icon-map-blue.png) no-repeat 50% 50%; background-size:120%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_map_orange{display: inline-block; background: url(../images/icon_map_orange.png) no-repeat 50% 50%; background-size:90%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_tooth_yellow{display: inline-block; background: url(../images/icon_tooth_yellow.png) no-repeat 50% 50%; background-size:90%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_share_blue{display: inline-block; background: url(../images/icon_share_blue.png) no-repeat 50% 50%; background-size:90%;width: 24px;height: 24px;vertical-align: bottom;}
+.icon_face{display: inline-block; background: url(../images/icon_face.png) no-repeat 50% 50%; background-size:100%;width: 24px;height: 24px;vertical-align: bottom;}
+/* 基本样式重写 */
+.mui-btn-success{background-color:#00AD39;border-color: #00AD39;}
+.mui-btn-danger{background-color:#f00;border-color: #f00}
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{color:#6acee3}
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{border-radius: 0;}
+
+/* 头部 */
+.app-header {
+	display: block;
+	background-color: #6acee3;
+	color: #ffffff;
+	font-size: 17px;
+	text-align: center;
+	padding: 12px 15px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-indent: -10px;
+	margin-bottom: 15px;
+	border: 0;
+	text-align: center;
+}
+.app-header .mui-icon{color:#fff;position: relative;}
+.app-header .input_save{color:#005982;position:absolute; letter-spacing: 0;font-size: 16px;right: 10px;}
+/* form表单样式重写 */
+.app-form{}
+.app-form .mui-icon,.mui-input-row .mui-input-password~.mui-icon-eye{color:#6acee3;}
+.app-form .mui-table-view-cell{padding: 0;}
+.app-form .mui-table-view-cell:after{left:0;}
+.app-form input,.app-form select,.app-form textarea{font-size: 16px;padding: 23px 15px;border: none;margin-bottom: 0;}
+.app-form .mui-input-row label{width: 20%;}
+.app-form .mui-input-row label~input,.app-form .mui-input-row label~select,.app-form .mui-input-row label~textarea{width: 80%;}
+/* list表单样式重写 */
+.app-list .mui-icon{color:#6acee3;}
+.app-list .mui-table-view-cell{padding: 11px 65px 11px 15px;font-size: 15px;}
+.app-list .mui-table-view-cell:after{left:0;}
+.app-list .list_title_green{background:#0ab556;color:#fff;text-align:center;padding:11px 0;}
+.app-list .list_title_yellow{background:#f1c049;color:#fff;text-align:center;padding:11px 0;}
+.app-list .list_title_gray{background:#c9caca;color:#fff;text-align:center;padding:11px 0;}
+/* 按钮部分 */
+.app-btns{text-align: center;margin: 30px 0;}
+.app-btns button{width: 90%;padding: 8px 0 5px 0;letter-spacing: 2px;font-size: 17px;font-weight: bold;border-radius:0;}
+.app-btns button.mui-btn-primary{background-color: #6acee3;border: 1px solid #6acee3;}
+.app-bottom-span{color:#6acee3;text-align: center;display:block;margin: 30px 0 0 0;font-size: 15px;}
+.mui-bar-tab .app-btns{margin: 0;}
+
+/*注册*/
+.reg_btn_code{border:1px solid #6acee3;color:#6acee3;border-radius: 15px;margin:9px 0 0 0;padding: 3px 5px;}
+.app-form .mui-input-row input.reg_input_mobile{width:50%;float:left;}
+
+/* 登陆 */
+.login_avatar{width: 80px;height: 80px;margin: 10px auto 20px auto;border:1px solid #efefef;border-radius: 30px;}
+.login_footer{background: none;box-shadow:none;-webkit-box-shadow:none;}
+.login_footer .mui-tab-item,.login_footer .mui-tab-item.mui-active{background: none;color:#929292}
+
+/* 交易详情 */
+.transaction{}
+.transaction .datetime{color: #3e3a39;font-size: 18px;}
+.transaction .money{font-size: 25px;padding:13px 0;}
+.transaction a.recharge{font-size: 13px;}
+.transaction a.recharge span{display: inline-block;border: 1px solid #6acee3; padding:2px;border-radius: 10px;line-height: 13px;color:#6acee3;margin: 0 0 0 5px;}
+/* 更改手机号 */
+.span_help{font-size: 13px;padding: 10px 0;color:#929292}
+.span_radius{display: inline-block;border: 1px solid #6acee3; padding:3px;border-radius: 10px;line-height: 13px;color:#6acee3;margin: 0 5px 0 0;}
+.span_radius_gray{display: inline-block;border: 1px solid #727171; padding:3px;border-radius: 10px;line-height: 13px;color:#727171;margin: 0 5px 0 0;}
+/* 我的优惠券 */
+.page_coupon{}
+.page_coupon ul,.page_coupon li{padding: 0;margin: 0;color:#fff;list-style: none;}
+.page_coupon p{color:#fff;font-size: 15px;padding: 15px 0 0 0;}
+.page_coupon .list_coupon li{position: relative; background:#fe9a01 url(../images/coupon_bg.png) no-repeat;height: 100px;overflow: hidden; margin: 10px 0; padding:0 5px 0 30px;}
+.page_coupon .list_coupon .coupon_left{width: 70%;float: left;padding:18px 0 0 0;word-break:keep-all;white-space:nowrap;overflow: hidden;}
+.page_coupon .list_coupon .coupon_left label{display: inline-block;font-weight: bold;width: 78%;}
+.page_coupon .list_coupon .coupon_left span{display: inline-block;font-weight: bold;}
+.page_coupon .list_coupon .coupon_right{width: 27%;float: right;padding:4% 0;text-align: right;}
+.page_coupon .list_coupon .coupon_right label{background: #f00;display: inline-block;border-radius: 10px;font-size: 12px;padding:1px;}
+.page_coupon .list_coupon .coupon_right a{color:#fe9a01;border-radius: 12px;padding: 2px 8px;margin: 25px 0 0 0;border:none;font-weight: bold;}
+.page_coupon .list_coupon .i_quan{position:absolute;top:16px;left: 6px;border-radius: 3px; background-color: #fff;display: inline-block;color: #fe9a01;font-style: normal;padding:0 3px;font-size: 13px;}
+.page_coupon .list_coupon .li_coupon_green{background-color: #23ac38;}
+.page_coupon .list_coupon .li_coupon_green .i_quan{color:#23ac38}
+.page_coupon .list_coupon .li_coupon_green .coupon_right a{color:#23ac38}
+.page_coupon .list_coupon .li_coupon_orange{background-color: #ff6800;}
+.page_coupon .list_coupon .li_coupon_orange .i_quan{color:#ff6800}
+.page_coupon .list_coupon .li_coupon_orange .coupon_right a{color:#ff6800}
+/* 交易详情 */
+.page_transaction{}
+.page_transaction .list_right{margin: 12px -30px 0 0;font-size: 20px;}
+
+/*底部tab切换*/
+.tab_horizontal{-webkit-box-shadow: none;box-shadow:none;}
+.tab_horizontal .mui-tab-item .mui-icon~.mui-tab-label{display: inline-block;font-size: 14px;font-weight: bold;letter-spacing: 3px;line-height: 16px;}
+.tab_horizontal .icon_home{opacity: 0.3;}
+.tab_horizontal .mui-active .icon_home{opacity: 1;}
+
+/* 文章列表 */
+.app-article-list{margin-top: -15px;}
+.app-article-list a{color:#000;}
+.app-article-list .mui-table-view-cell{padding: 10px 12px;font-size: 14px;}
+.app-article-list .mui-table-view-cell h4{font-size: 16px;white-space:nowrap;-webkit-line-clamp:1;line-height: 20px;width:96%;display: inline-block;margin:5px 0 0 0; }
+.app-article-list .mui-table-view-cell .mui-checkbox{float: left;width: 28px;height: 26px;}
+.app-article-list .mui-table-view-cell .mui-checkbox input[type='checkbox']{top:0;right:0;}
+.app-article-list .article_list_edit .mui-navigate-right:after{top:22%; }
+
+/* 版本更新 */
+.page_version{text-align:center;}
+.page_version img{width: 25%;margin-top: 10%;}
+.page_version span{color:#000;display: block;padding: 10px 0 20px 0;}
+.page_version label{color:#6acee3}
+
+/* 支付密码 */
+.page_changepwd{text-align: center;}
+.page_changepwd input[type="password"]{background:#fff url(../images/password_bg.jpg) center center;background-size: 100%;font-size:200%;width: 288px;letter-spacing: 36px; }
+
+/* 诊所详情 */
+.page_clinic{}
+.page_clinic .mui-table-view-cell{padding: 12px}
+.page_clinic .mui-table-view-cell p{padding: 3px 0;color:#000;}
+.page_clinic .mui-table-view-cell .address{display:inline-block;float: left;width:78%;border-right: 1px solid #efefef;padding-right: 5px;}
+.page_clinic .mui-table-view-cell .call_phone{display:inline-block;background:url(../images/icon_phone.png) no-repeat;background-size: 100%;float: right;width: 35px;height: 35px;margin: 2px 0 0 0;}
+.icon-list{position: relative;}
+.icon-list .icon_logo,.icon-list .icon_pen,.icon-list .icon_book,.icon-list .icon_user{position: absolute;left: 0px;top:10px}
+.icon-list .mui-table-view-cell {padding-left: 30px;}
+.page_clinic .clinic_info{width:97%;border-top: 1px solid #E4E3E6;float: right;padding: 10px 5px 0 0;margin: -12px -10px 0 0;font-size:14px;}
+
+/* 聊天输入框 */
+.form_message{background: #fff;padding-bottom: 10px;}
+.form_message textarea{border: 0;font-size: 14px;}
+.form_message button{background: #fff;border-radius: 30px;color:#6acee3;padding: 2px 10px;}
+.form_message button{background: #fff;border-radius: 30px;color:#6acee3;padding: 2px 10px;}
+.form_message .form_message_bottom{padding-right: 20px;}
+.form_message .form_message_bottom .icon_face{margin-right: 20px;}
+
+/* 预约情况 */
+.booking_info{text-align: center;line-height: 25px;}
+.booking_info span{display: block;color:#888;}
+.booking_info label{display: block;margin-bottom: 10px;}
+.booking_info .span_time{color: #000;font-weight: bold;}
+.booking_info .span_time em{color:#6acee3;font-style: normal;font-size: 30px;}
+.booking_info button{border-radius: 0;}
+
+.alert_error{background: #DF193C;padding: 15px 0;text-align: center;line-height: 30px;}
+.alert_error .btn_yes{background: #fff;border:1px solid #fff;color:#DF193C;width: 40%;border-radius: 3px;}
+.alert_error .btn_no{background: #B5B5B7;border:1px solid #B5B5B7;color:#fff;width: 40%;border-radius: 3px;}
+.alert_error p{color:#fff;font-size:17px;}
+.alert_error span{color:#fff;font-size:13px}
+
+.alert_warning{background: #FE9D00;padding: 15px 0;text-align: center;line-height: 30px;color:#fff;}
+.alert_warning p{color:#fff;font-size:17px;}
+
+.mui-popup-button{background:#B5B5B7;color:#fff}
+.mui-popup-button.mui-popup-button-bold{background: #6ACDE2;color:#fff}
+.mui-popup-text textarea{padding: 6px;font-size: 15px;background: #F8F8F8;height:80px ;}
+
+
+/*bug更新*/
+.page_clinic .mui-table-view-cell .call_phone{
+	width: 18%;
+	height: 100%;
+	margin: 0;
+	background-size: 30px;
+	background-position: 55% 50%;
+	position: absolute;
+	right: 0%;
+	top: 0%;
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+</header>
+<div class="mui-content">
+
+
+    <div class="mui-segmented-control mui-segmented-control-primary page-tab">
+        <a class="mui-control-item mui-active" href="#item1"> 治疗 </a>
+        <a class="mui-control-item" href="#item2"> 美容 </a>
+    </div>
+    <div id="item1" class="mui-control-content page-bg-white mui-active" style="padding: 15px;">
+        <span class="page-item-tag">咀嚼痛</span>
+        <span class="page-item-tag">冷热痛</span>
+        <span class="page-item-tag">夜间痛</span>
+        <span class="page-item-tag">牙外伤</span>
+        <span class="page-item-tag">智齿</span>
+        <span class="page-item-tag">乳牙松动</span>
+        <span class="page-item-tag">种植牙</span>
+        <span class="page-item-tag">固定烤瓷牙</span>
+        <span class="page-item-tag">老年活动牙</span>
+        <span class="page-item-tag">刷牙出血</span>
+        <span class="page-item-tag">口腔异味</span>
+        <span class="page-item-tag">到诊所请医生给我建议</span>
+    </div>
+    <div id="item2" class="mui-control-content page-bg-white" style="padding: 15px;">
+        <span class="page-item-tag">洗牙</span>
+        <span class="page-item-tag">黄牙</span>
+        <span class="page-item-tag">黑牙</span>
+        <span class="page-item-tag">氟斑牙</span>
+        <span class="page-item-tag">四环素牙</span>
+        <span class="page-item-tag">牙齿不齐</span>
+        <span class="page-item-tag">地包牙</span>
+        <span class="page-item-tag">歪牙</span>
+        <span class="page-item-tag">龅牙</span>
+        <span class="page-item-tag">到诊所请医生给我建议</span>
+    </div>
+    <!--页面内容-->
+    <ul class="mui-table-view" style="margin-top: 20px;">
+        <li class="mui-table-view-cell">
+            <i class="mui-icon mui--new-icon-edit"></i>&nbsp;&nbsp;症状描述
+        </li>
+        <li class="mui-table-view-cell">
+            <textarea id="textarea" rows="5" placeholder="请输入" style="border: none;"></textarea>
+        </li>
+    </ul>
+
+    <!-- <div style="margin-top: 20px;padding:0 30px;" class="mui-text-center">
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-new-blue" id="diagnosedBtn">复诊预约</button>
+    </div> -->
+    <div style="margin-top: 20px;padding:0 30px;" class="mui-text-center">
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-new-blue" id="confirmBtn">提 交</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var clinicID = getRequest()["clinicID"];
+var doctorID = getRequest()["doctorID"];
+var orderBookedTime = getRequest()["orderBookedTime"];
+$(document).ready(function () {
+
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+
+        $('.page-item-tag').each(function () {
+            $(this).click(function () {
+        $('.page-item-tag.active').removeClass('active');
+        $(this).addClass('active');
+    });
+	})
+    
+    // initData();
+    initConfirmBtn();
+});
+
+var initConfirmBtn = function(){
+	$("#confirmBtn").click(function(){
+		// var patientTreatSubject = $(".active").attr("val");
+		var patientTreatSubjectName = $(".active").text();
+		var patientSymptom = $("#textarea").val();
+		if( patientTreatSubjectName == undefined){
+			mui.alert("请选择治疗项目");
+			return;
+		}
+		window.location.href = "bookings-no7.html?clinicID="+clinicID+"&doctorID="+doctorID+"&orderBookedTime="+orderBookedTime+
+				"&patientTreatSubjectName="+encodeURIComponent(patientTreatSubjectName)+
+				"&patientSymptom="+encodeURIComponent(patientSymptom);
+	});
+}
+
+var initData = function(){
+   $.ajax({
+        type: "POST",
+        dataType:"json",
+        data:{"clinicID":clinicID},
+        url: basePath+"/Order/commonQueryTreatSubjectList.do",
+        success: function(data){
+            if(data.status == "0"){
+                var subjectList = data.subjectList;
+                if(subjectList != undefined){
+                    var initLi = "";
+                    var subjectListLength = subjectList.length;
+                    for(var i=0;i<subjectListLength;i++){
+                    	var treatType = subjectList[i].treatType;
+                    	if(treatType == "9005"){
+                    		$("#item1").append("<span class='page-item-tag' val='"+subjectList[i].treatID+"'>"+subjectList[i].treatName+"</span>");
+                    		
+                    	}else if(treatType == "9006"){
+                    		$("#item2").append("<span class='page-item-tag' val='"+subjectList[i].treatID+"'>"+subjectList[i].treatName+"</span>");
+                    	}
+                    }
+                }else{
+                    mui.alert("暂时无法治疗项目"); 
+                }
+            }else if(data.status == "1"){
+                mui.alert("用户登录超时,请重新登录.", function(){
+                    window.location.href = basePath + "/oa/Login/login.html";
+                }); 
+            }else if(data.status == "2"){
+                mui.alert("系统异常."); 
+            }
+        }
+    });
+}
+</script>
+
+
+</body>
+</html>

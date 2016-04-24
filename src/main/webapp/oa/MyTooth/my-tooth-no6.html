@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-bars mui-pull-right"></a> <a
+			class="mui-icon mui-new-icon-left-nav mui-pull-left"
+			href="/oa/Order/index.html" id="index"></a>
+	</header>
+	<div class="mui-content">
+		<!--页面头部-->
+		<ul class="mui-table-view mui-table-view-chevron mui-page-header">
+			<li class="mui-table-view-cell mui-text-center"><a
+				class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="back_to"></a>
+				<h4>就诊者</h4></li>
+		</ul>
+
+		<!--页面内容-->
+		<ul class="mui-table-view mui-table-view-chevron page-bg-white">
+			<li class="mui-table-view-cell mui-media"><a
+				class="mui-navigate-right" id="queryPatient"
+				href="">
+					<div class="mui-text-center page-user-info">
+						<img class="page-user-img" id="titleImage"
+							src="">
+
+						<h4 id="titleName"></h4>
+					</div>
+			</a></li>
+			<!-- <li class="mui-table-view-cell"><a id="historyAttendance" 
+				class="mui-navigate-right ">就诊记录</a></li> -->
+			<li class="mui-table-view-cell"><a id="historySeenClinic"
+				class="mui-navigate-right ">看过的诊所</a></li>
+			<li class="mui-table-view-cell"><a id="historySeenDoctor" 
+				class="mui-navigate-right ">看过的医生</a></li>
+		</ul>
+
+		<div id="contBody">
+		<!--  
+			<ul class="mui-table-view mui-table-view-chevron"
+				style="margin-top: 20px;">
+				<li
+					class="mui-table-view-cell mui-table-view-cell-title page-bg-green ">
+					<a class="mui-navigate-right page-color-white" id="orderHref">
+						
+						<i class="mui-icon mui--new-icon-clinics"></i> <span>诊疗中</span>
+				</a>
+				</li>
+				<li class="mui-table-view-cell mui-table-view-cell-data"
+					style="padding-top: 18px;"><label class="page-color-blue">就诊者</label>
+				
+				<li class="mui-table-view-cell mui-table-view-cell-data"><label
+					class="page-color-blue">预约时间</label> <span>2016年02月29日
+						10:22:15</span></li>
+				<li class="mui-table-view-cell mui-table-view-cell-data"><label
+					class="page-color-blue">治疗项目</label> <span>成人隐形正畸</span></li>
+				<li class="mui-table-view-cell mui-table-view-cell-data"><label
+					class="page-color-blue">诊所</label> <span>深圳富诚旗舰店</span></li>
+				<li class="mui-table-view-cell mui-table-view-cell-data"
+					style="padding-bottom: 18px;"><label class="page-color-blue">就诊医生</label>
+					<span>刘医生</span></li>
+			</ul>
+			-->
+		</div>
+
+		<ul class="mui-table-view mui-table-view-chevron"
+			style="margin-top: 20px;">
+			<li
+				class="mui-table-view-cell mui-table-view-cell-title mui-text-center page-color-blue">
+				<a id="addOrder"><i class="mui-icon mui--new-icon-add"></i><span>&nbsp;新建预约</span></a>
+			</li>
+		</ul>
+	</div>
+</body>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/jquery.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+	var basePath = getContextPath();
+	var Request = new Object();
+	Request = getRequest();
+	var userID = Request["userID"];
+	var patientID = Request["patientID"]; 
+	$("#index").attr("href",basePath+"/oa/Order/index.html");
+	 $("#back_to").click(function() {
+			var url =basePath+"/oa/MyTooth/my-tooth-no5.html?patientID="+patientID+"&userID="+userID;
+			location.href=url;
+		});
+	$("#addOrder").click(function() {
+		var url =basePath +"/oa/Order/bookings-no2.html";
+		location.href=url;
+	});
+	
+	/*  $(document).ready(function () {
+	 mui.init({
+	 swipeBack: true //启用右滑关闭功能
+	 });
+	 }); */
+	/* $("#historyAttendance").click(function() {
+		var url = basePath + "/oa/MyTooth/my-tooth-no8.html?userID=" + userID;
+		location.href = url;
+	});
+	$("#historySeenClinic").click(function() {
+		var url = basePath + "/oa/MyTooth/my-tooth-no3.html?userID=" + userID;
+		location.href = url;
+	});
+	$("#historySeenDoctor").click(function() {
+		var url = basePath + "/oa/MyTooth/my-tooth-no4.html?userID=" + userID;
+		location.href = url;
+	});
+	$("#orderHref").click(
+			function() {
+				var orderID = $("input[name='orderID']").val();
+				var url = basePath + "/oa/Visit/users-visit-no2.html?userID="
+						+ userID + "&orderID=" + orderID;
+				location.href = url;
+			}); */
+</script>
+<script type="text/javascript">
+var basePath = getContextPath();
+var Request = new Object();
+Request = getRequest();
+var userID = Request["userID"];
+var patientID = Request["patientID"];
+$("#historyAttendance").attr("href",basePath+"/oa/MyTooth/my-tooth-no8.html?patientID="+patientID);
+$("#historySeenClinic").attr("href",basePath+"/oa/MyTooth/my-tooth-no3.html?patientID="+patientID);
+$("#historySeenDoctor").attr("href",basePath+"/oa/MyTooth/my-tooth-no4.html?patientID="+patientID);
+  
+  
+	 $.ajax({   
+	     url:basePath+"/accountTooth/querytreadOrder.do",   
+	     type:'POST',   
+	     data:"patientID="+patientID,
+	     async : true, //默认为true 异步   
+	     error:function(){   
+	    	 			mui.alert("系统异常.");  
+	     },   
+	     success:function(data){ 
+	    	 switch(data.code)
+	 	   {
+	 	   	case 0:{
+	 	   			$("#titleImage").attr("src", data.date.patientICON);
+					$("#titleName").html(data.date.patientName);
+					$("#queryPatient").attr("href",basePath+"/oa/Regiter/account_add_patient1.html?patientID="+ data.date.patientID);
+	 	   			initHtml(data.date.orderList);
+	 	   			break;
+	 	   		   }
+	 	     case 1:{
+	 	    	 		mui.alert("登陆超时.",back_to_index()); 
+	 		  		break;
+	   			  }
+	 	   default:{
+	 	   	 		 mui.alert("系统异常."); 
+	 	   	     }	 
+	 	   }
+	     }
+	 }); 
+  
+
+	  function initHtml(date) {
+		
+		var contBody = $("#contBody");
+		if(date.orderList!=undefined){
+		for (var i = 0; i < date.orderList.length; i++) {
+			var html = "<ul class='mui-table-view mui-table-view-chevron' style='margin-top: 20px;'>";
+			html += "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-green '><a class='mui-navigate-right page-color-white' src='"
+					+ basePath
+					+ "/oa/Visit/users-visit-no2.html?userID="
+					+ userID
+					+ "&orderID="
+					+ date.orderList[i].orderID
+					+ "'><i class='mui-icon mui--new-icon-clinics'></i>";
+			/* if (date.tread[i].treadStatus == 0) {
+				html += "<span>预约中</span></a></li>"
+			} else */
+			if (date.tread[i].treadStatus == 10) {
+				html += "<span>就诊中</span></a></li>"
+			}
+			html += "<li class='mui-table-view-cell mui-table-view-cell-data' style='padding-top: 18px;'><label class='page-color-blue'>就诊者</label><span>"
+					+ date.orderList[i].patientName + "</span></li>";
+			html += "<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>预约时间</label><span>"
+					+ date.orderList[i].bookedTime + "</span></li>";
+			html += "<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>治疗项目</label><span>"
+					+ date.orderList[i].treatSubjectName + "</span> </li>";
+			html += "<li class='mui-table-view-cell mui-table-view-cell-data'><label class='page-color-blue'>诊所</label><span>"
+					+ date.orderList[i].clinicName + "</span></li>";
+			html += "<li class='mui-table-view-cell mui-table-view-cell-data'  style='padding-bottom: 18px;'><label class='page-color-blue'>就诊医生</label><span>"
+					+ date.orderList[i].doctorName + "</span></li></ul>";
+			contBody.html(contBody.html() + html);
+		}
+	  }
+	} 
+	  
+		 function back_to_index()
+		 {
+			 location.href=basePath+"/client/Login/login.html";
+		 } 
+	 		  
+</script>
+</html>

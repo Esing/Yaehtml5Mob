@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+<link rel="stylesheet" href="../CommonResources/css/app.css">
+<style>
+    .mui-bar-tab .mui-tab-item-mine{display: table-cell;
+    overflow: hidden;
+    width: 1%;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: #0d8ca7;
+    color: #6acee3;
+    padding: 5px 0;
+    }
+</style>
+</head>
+<body>
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+		<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+	</header>
+	<div class="mui-content">
+
+		<!--页面头部-->
+	<ul class="mui-table-view mui-table-view-chevron mui-page-header page-bg-gray">
+		<li class="mui-table-view-cell mui-text-center">
+			<a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<input type="text" class="page-input-search" placeholder="搜索内容" id="keywords" style="border-radius: 100px;"/>
+			<a class="mui-pull-right"><i class="mui-icon mui-new-icon-map-gray"></i></a>
+		</li>
+	</ul>
+
+	<div style="position: relative">
+		<div class="mui-segmented-control mui-segmented-control-primary page-screen">
+			<a class="mui-control-item" href="#item1">
+              距离<i class="page-arrow-down mui-pull-right"></i>
+          </a>
+			<a class="mui-control-item" href="#item2">
+              齿科类型<i class="page-arrow-down mui-pull-right"></i>
+          </a>
+			<a class="mui-control-item" href="#item3">
+              筛选<i class="page-arrow-down mui-pull-right"></i>
+          </a>
+		</div>
+		<div id="item1" class="mui-control-content page-screen-content page-bg-white">
+			<ul class="mui-table-view mui-table-view-radio">
+				<li class="mui-table-view-cell" name="item1" val="1">
+					<a class="mui-navigate-right">一公里</a>
+				</li>
+				<li class="mui-table-view-cell" name="item1" val="2">
+					<a class="mui-navigate-right">二公里</a>
+				</li>
+				<li class="mui-table-view-cell" name="item1" val="3">
+					<a class="mui-navigate-right">三公里</a>
+				</li>
+				<li class="mui-table-view-cell mui-selected" name="item1" val="0">
+					<a class="mui-navigate-right">更远</a>
+				</li>
+			</ul>
+			<div style="height: 100%;" class="search"></div>
+		</div>
+		<div id="item2" class="mui-control-content page-screen-content page-bg-white">
+			<ul class="mui-table-view mui-table-view-radio">
+				<li class="mui-table-view-cell" name="item2" val="1">
+					<a class="mui-navigate-right">专科医院</a>
+				</li>
+				<li class="mui-table-view-cell" name="item2" val="2">
+					<a class="mui-navigate-right">公立医院</a>
+				</li>
+			</ul>
+			<div style="height: 100%;" class="search"></div>
+		</div>
+		<div id="item3" class="mui-control-content page-screen-content page-bg-white">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<span>只看去过</span>
+					<div class="mui-switch mui-switch-blue mui-switch-mini">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<span>只看收藏</span>
+					<div class="mui-switch mui-switch-blue mui-switch-mini">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<span>只看有活动</span>
+					<div class="mui-switch mui-switch-blue mui-switch-mini">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+			</ul>
+			<div style="height: 100%;" class="search"></div>
+		</div>
+	</div>
+    <div id="clinicList">
+	</div>
+</div>
+<nav class="mui-bar mui-bar-tab tab_horizontal">
+	<a class="mui-tab-item mui-active" href="#tabbar-01">
+		<span class="mui-icon icon_home"></span>
+		<span class="mui-tab-label">诊所</span>
+	</a>
+	<a class="mui-tab-item-mine" href="bookings-no11.html">
+		<span class="mui-icon mui--new-icon-tooth"></span>
+		<span class="mui-tab-label">医生</span>
+	</a>
+</nav>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/location.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+$(document).ready(function() {
+	mui.init({
+		swipeBack: true //启用右滑关闭功能
+	});
+	
+	var longitudeAndlatitude = getLocation();
+    longitudeAndlatitude = longitudeAndlatitude||["N","N"];
+	
+	// 初始化页面的默认参数
+	var parameter = {
+		"gpsLatitude":longitudeAndlatitude[1],
+		"gpsLongitude":longitudeAndlatitude[0],
+		"rangeLocation":"0",
+		"clinicType":"",
+		"keywords":"",
+		"clinicHistory":"0",
+		"activeFavorites":"0",
+		"activeSales":"0"
+	}
+	initData(parameter);
+	initQueryCondition();
+	
+	$(".search").click(function(){
+		$(".mui-control-item").removeClass("mui-active");
+		$(".mui-control-content").removeClass("mui-active");
+	});
+	//跳转地图页
+	$(".mui-new-icon-map-gray").click(function(){
+		location.href = basePath+"/oa/Order/bookings-no3.html";
+	});
+});
+// 初始化查询条件部分的数据
+var initQueryCondition = function(){
+	// 筛选条件部分的事件
+	mui('.mui-content .mui-switch ').each(function() {
+        this.addEventListener('toggle', function(event) {
+        	initCondition();
+        });
+    });
+    // 距离和诊所级别部分的事件
+	$(".mui-table-view-radio li").click(function(){
+		   initCondition();
+	});
+    
+    $("#keywords").keyup(function(){
+    	initCondition();
+    });
+}
+// 拼装查询参数
+var initCondition = function(){
+	var rangeLocation = "0";
+    var clinicType = "";
+    $(".mui-selected").each(function(){
+        var type = $(this).attr("name");
+        var value = $(this).attr("val");
+        if(type == "item1"){
+            rangeLocation = value;
+        }else if(type == "item2"){
+            clinicType = value;
+        }
+    });
+    var clinicHistory = "0";
+    var activeFavorites = "0";
+    var activeSales = "0";
+    $("#item3").find(".mui-active").each(function(){
+        var type = $(this).attr("data-switch");
+        if(type == "1"){
+            clinicHistory = "1";
+        }else if(type == "2"){
+            activeFavorites = "1";
+        }else if(type == "3"){
+            activeSales = "1";
+        }
+    });
+    
+    var keywords = $("#keywords").val();
+    var longitudeAndlatitude = getLocation();
+    longitudeAndlatitude = longitudeAndlatitude||["N","N"];
+    
+    // 初始化页面的默认参数
+    var parameter = {
+        "gpsLatitude":longitudeAndlatitude[1],
+        "gpsLongitude":longitudeAndlatitude[0],
+        "rangeLocation":rangeLocation,
+        "clinicType":clinicType,
+        "keywords":keywords,
+        "clinicHistory":clinicHistory,
+        "activeFavorites":activeFavorites,
+        "activeSales":activeSales
+    }
+    initData(parameter);
+}
+
+var initData = function(parameter){
+	$("#clinicList").empty();//先清空列表
+	$.ajax({
+        type: "POST",
+        dataType:"json",
+        data:{"parameter":JSON.stringify(parameter)},
+        url: basePath+"/Order/mobileBookingQueryClinicList.do",
+        success: function(data){
+            if(data.status == "0"){
+            	var userID = data.userID;
+            	var clinicList = data.clinicList;
+                if(clinicList != undefined){
+                	var clinicListLength = clinicList.length;
+                	var ulDom = "";
+                	for(var i=0;i<clinicListLength;i++){
+	                	ulDom += "<ul class='mui-table-view' style='margin-top: 20px;'>" +
+	                	"<li class='mui-table-view-cell mui-media'>" +
+	                	"<a href='bookings-no4.html?clinicID="+clinicList[i].clinicID+"'>" +
+	                	"<img class='mui-media-object mui-pull-left' src='"+clinicList[i].clinicICON+"'>" +
+	                	"<div class='mui-media-body'>" +
+	                	"<h4 class='page-color-black'>" + clinicList[i].clinicName;
+	                	var activeCoupon = clinicList[i].activeCoupon;// 是否有优惠活动
+	                	var activeInsurance  = clinicList[i].activeInsurance;// 是否是医保店
+	                	var activeMember = clinicList[i].activeMember;// 是否是会员
+	                	var favoriteStatus = clinicList[i].favoriteStatus;// 是否已收藏
+	                	if(activeCoupon == 1){
+	                		ulDom += "<small class='page-bg-yellow page-color-white page-hospital-title-tag'>券</small>";
+	                	}
+	                	if(activeInsurance == 1){
+	                		ulDom += "<small class='page-bg-blue page-color-white page-hospital-title-tag'>保</small>";
+	                	}
+	                	if(activeMember == 1){
+	                		ulDom += "<small class='page-bg-green page-color-white page-hospital-title-tag'>会</small>";
+	                	} 
+	                	
+	                	if(favoriteStatus == 1 && userID != 0){
+	                		ulDom += "<small class='page-bg-green page-color-white mui-pull-right page-hospital--collection-tag'>" +
+	                          "<i class='mui-icon mui--new-icon-collection'></i>已收藏" +
+	                          "</small>";
+	                	}
+	                	ulDom += "</h4>" +
+	                	"<p class='mui-ellipsis page-color-black'>"+clinicList[i].clinicLevel+"</p>" +
+	                	"<div class='page-hospital-tag page-color-blue'>" +
+	                	"<p class='mui-pull-right page-color-black'><i class='mui-icon mui--new-icon-map'></i>距离 "+clinicList[i].distance+"m</p>";
+	                	var clinicProperty = clinicList[i].clinicProperty;
+	                	if(clinicProperty != null && clinicProperty != ""){
+	                		clinicProperty = clinicProperty.split(",");
+	                		for(var j=0;j<clinicProperty.length;j++){
+	                			ulDom += "<span>"+clinicProperty[j]+"</span>";
+	                		}
+	                	}
+	                	ulDom += "</div>" +
+	                	"<p class='page-hospital-hr'></p>" +
+	                	"<p class='mui-ellipsis page-color-black'>地址："+clinicList[i].clinicAddress+"</p>" +
+	                	"</div>" +
+	                	"</a>" +
+	                	"</li>" +
+	                	"</ul>";
+                	}
+                	$("#clinicList").append(ulDom);
+                }//else{
+                //	mui.alert("暂时无法获取医院列表"); 
+                //}
+            }//else if(data.status == "2"){
+            //	mui.alert("系统异常."); 
+            //}
+        }
+    });
+}
+</script>
+
+</body>
+
+</html>

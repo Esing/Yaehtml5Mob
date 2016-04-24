@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+<link rel="stylesheet" href="../CommonResources/css/app.css">
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+	<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+	<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+</header>
+<!--页面内容-->
+<div class="mui-content">
+
+    <div class="page_clinic" id="clinicInfo1"></div>
+	<!--轮播-->
+	<div id="slider" class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="#">
+					<img src="../CommonResources/images/banner01.jpg">
+				</a>
+			</div>
+			<!-- 第一张 -->
+			<div class="mui-slider-item">
+				<a href="#">
+					<img src="../CommonResources/images/banner02.jpg">
+				</a>
+			</div>
+			<div class="mui-slider-item">
+				<a href="#">
+					<img src="../CommonResources/images/banner03.jpg">
+				</a>
+			</div>
+			<div class="mui-slider-item">
+				<a href="#">
+					<img src="../CommonResources/images/banner01.jpg">
+				</a>
+			</div>
+			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="#">
+					<img src="../CommonResources/images/banner03.jpg">
+				</a>
+			</div>
+		</div>
+		<div class="mui-slider-indicator">
+			<div class="mui-indicator mui-active"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+		</div>
+	</div>
+
+	<!--诊所详情-->
+	<div class="page_clinic" id="clinicInfo2"></div>
+	<!--医生列表-->
+	<ul class="mui-table-view" style="margin-top: 20px;" id="chainList">
+		<li class="mui-table-view-cell"><i class="icon_mechanism"></i> 旗下口腔机构</li>
+	</ul>
+</div>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/location.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var clinicID = getRequest()["clinicID"];
+$(document).ready(function() {
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    mui("#slider").slider({
+        interval: 1000
+    });
+    
+    initData();
+});
+var initData = function(){
+	
+	var longitudeAndlatitude = getLocation();
+    longitudeAndlatitude = longitudeAndlatitude||["N","N"];
+    var parameter = {
+        "clinicID":clinicID,
+        "gpsLatitude":longitudeAndlatitude[1],
+        "gpsLongitude":longitudeAndlatitude[0]
+    }
+    $.ajax({
+        type: "POST",
+        dataType:"json",
+        data:{"parameter":JSON.stringify(parameter)},
+        url: basePath+"/Order/mobileQueryClinicChainList.do",
+        success: function(data){
+            if(data.status == "0"){
+            	var clinicInfo1 = "<ul class='mui-table-view'>" +
+            		"<li class='mui-table-view-cell'>" +
+	            	"<h4><label>"+data.clinicName+"</label> ";
+	            	
+            	var activeCoupon = data.activeCoupon;// 是否有优惠活动
+                var activeInsurance  = data.activeInsurance;// 是否是医保店
+                var activeMember = data.activeMember;// 是否是会员
+                var favoriteStatus = data.favoriteStatus;// 是否已收藏
+	            if(activeCoupon == 1){
+	            	clinicInfo1 += "<i class='icon_span_quan'>券</i>";
+	            }
+	            if(activeInsurance == 1){
+	            	clinicInfo1 += "<i class='icon_span_bao'>保</i>";
+	            }
+	            if(activeMember == 1){
+	            	clinicInfo1 += "<i class='icon_span_hui'>会</i>";
+	            }
+	            if(favoriteStatus == 1){
+	            	clinicInfo1 += "<small class='page-bg-green page-color-white mui-pull-right page-hospital--collection-tag'>" +
+                    "<i class='mui-icon mui--new-icon-collection'></i>已收藏" +
+                    "</small>";
+	            }else{
+	            	clinicInfo1 += "<small class='page-bg-gray page-color-white mui-pull-right page-hospital--collection-tag'>" +
+                    "<i class='mui-icon mui--new-icon-collection'></i>收藏" +
+                    "</small>";
+	            }
+	            clinicInfo1 += "</h4>" + "<p>"+data.clinicLevel+"</p>" + "</ul>";
+            	$("#clinicInfo1").append(clinicInfo1);// 渲染诊所信息
+            	
+            	var clinicInfo2 = "<ul class='mui-table-view icon-list' style='margin-top: 15px;'>" +
+            		"<li class='mui-table-view-cell no_bgcolor'>" +
+	            	"<a class='mui-navigate-right'><i class='icon_book'></i>诊所简介</a>" +
+	            	"</li>" +
+	            	"<li class='mui-table-view-cell color_gray'>" +
+	            	"<div class='clinic_info'>"+data.clinicAbstract+"</div>" +
+	            	"</li>" +
+	            	"</ul>";
+                $("#clinicInfo2").append(clinicInfo2);// 渲染诊所简介
+                // 处理诊所下医生列表
+                var chainList = data.chainList;
+                if(chainList != undefined){
+                    var chainListLength = chainList.length;
+                    var initLi = "";
+                    for(var i=0;i<chainListLength;i++){
+                        initLi += "<li class='mui-table-view-cell mui-media'>" +
+                       	"<a href='bookings-no4.html?clinicID="+chainList[i].clinicID+"'>" +
+                        "<img class='mui-media-object mui-pull-left' src='"+chainList[i].clinicICON+"'>" +
+                        "<div class='mui-media-body'>" +
+                        "<h4 class='page-color-black'>" + chainList[i].clinicName;
+                        var chainActiveCoupon = chainList[i].activeCoupon;
+                        var chainActiveInsurance = chainList[i].activeInsurance;
+                        var chainActiveMember = chainList[i].activeMember;
+                        var chainFavoriteStatus = chainList[i].favoriteStatus;
+                        if(chainActiveCoupon == 1){
+                        	initLi += "<i class='icon_span_quan'>券</i>";
+                        }
+                        if(chainActiveInsurance == 1){
+                        	initLi += "<i class='icon_span_bao'>保</i>";
+                        }
+                        if(chainActiveMember == 1){
+                        	initLi += "<i class='icon_span_hui'>会</i>";
+                        }
+                        if(chainFavoriteStatus == 1){
+                        	initLi += "<small class='page-bg-green page-color-white mui-pull-right page-hospital--collection-tag'>" +
+                            "<i class='mui-icon mui--new-icon-collection'></i>已收藏" +
+                            "</small>";
+                        }else{
+                        	initLi += "<small class='page-bg-gray page-color-white mui-pull-right page-hospital--collection-tag'>" +
+                            "<i class='mui-icon mui--new-icon-collection'></i>收藏" +
+                            "</small>";
+                        }
+                        
+                        initLi += "</h4>" +
+                        "<p class='mui-ellipsis page-color-black'>"+chainList[i].clinicLevel+"</p>" +
+                        "<div class='page-hospital-tag page-color-blue'>" +
+                        "<p class='mui-pull-right page-color-black'><i class='mui-icon mui--new-icon-map'></i>距离"+chainList[i].distance+"m</p>";
+                        var clinicProperty = chainList[i].clinicProperty;
+                        if(clinicProperty != null && clinicProperty != ""){
+                        	clinicProperty = clinicProperty.split(",");
+                            for(var j=0;j<clinicProperty.length;j++){
+                            	initLi += "<span>"+clinicProperty[j]+"</span>";
+                            }
+                        }
+                        initLi += "</div>" +
+                        "<p class='page-hospital-hr'></p>" +
+                        "<p class='mui-ellipsis page-color-black'>地址："+chainList[j].clinicAddress+"</p>" +
+                        "</div>" +
+                        "</a>" +
+                        "</li>";
+                    }
+                    $("#chainList").append(initLi);
+                }
+            }else if(data.status == "1"){
+                mui.alert("用户登录超时,请重新登录.", function(){
+                    window.location.href = basePath + "/oa/Login/login.html";
+                }); 
+            }else if(data.status == "2"){
+                mui.alert("系统异常."); 
+            }
+        }
+    });
+}
+</script>
+</body>
+
+</html>

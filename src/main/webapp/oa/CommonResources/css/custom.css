@@ -1,0 +1,751 @@
+/*图片宽度最大不超过100%*/
+img {
+    max-width: 100%;
+}
+
+/*字体颜色*/
+.page-color-default, .page-color-default:after {
+    color: #7f7d7d !important;
+}
+
+.page-color-black, .page-color-black:after {
+    color: #3e3a39 !important;
+}
+
+.page-color-white, .page-color-white:after {
+    color: #ffffff !important;
+}
+
+.page-color-blue, .page-color-blue:after {
+    color: #6acee3 !important;
+}
+
+.page-color-rad, .page-color-rad:after {
+    color: #ed4848 !important;
+}
+
+/*背景颜色*/
+.page-bg-white {
+    background-color: #ffffff !important;
+}
+
+.page-bg-yellow, .mui-badge-warning, .mui-badge-yellow {
+    background-color: #fe9001 !important;
+}
+
+.page-bg-rad {
+    background-color: #ed4848 !important;
+}
+
+.page-bg-blue, .mui-badge-blue, .mui-badge-primary {
+    background-color: #6acee3 !important;
+}
+
+.page-bg-green, .mui-badge-green, .mui-badge-success {
+    background-color: #22c33a !important;
+}
+
+.page-bg-gray {
+    background-color: #b5b5b6 !important;
+}
+
+/*按妞*/
+.mui-btn-new-blue {
+    color: #fff;
+    border: 1px solid #6acee3;
+    background-color: #6acee3;
+}
+
+/*ICON*/
+.mui--new-icon-tooth {
+    background: url(../images/icon-tooth.png) 50% 50% no-repeat;
+    background-size: 100%;
+}
+
+.mui-active .mui--new-icon-tooth {
+    background: url(../images/icon-active-tooth.png) 50% 50% no-repeat;
+    background-size: 100%;
+}
+
+.mui--new-icon-gift {
+    background: url(../images/icon-gift.png) 50% 50% no-repeat;
+    background-size: 100%;
+}
+
+.mui-active .mui--new-icon-gift {
+    background: url(../images/icon-active-gift.png) 50% 50% no-repeat;
+    background-size: 100%;
+}
+
+.mui--new-icon-user {
+    background: url(../images/icon-user.png) 50% 50% no-repeat;
+    background-size: 100%;
+}
+
+.mui-active .mui--new-icon-user {
+    background: url(../images/icon-active-user.png) 50% 50% no-repeat;
+    background-size: 100%;
+}
+
+/*诊疗&预约*/
+.mui--new-icon-time, .mui--new-icon-clinics, .mui--new-icon-add, .mui--new-icon-complete {
+    width: 30px;
+    height: 30px;
+    vertical-align: bottom;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 75%;
+}
+
+.mui--new-icon-time {
+    background-image: url(../images/icon-time.png);
+}
+
+.mui-icon-min.mui--new-icon-time {
+    width: 15px;
+    height: 15px;
+    background-size: 100%;
+    vertical-align: middle;
+}
+
+.mui--new-icon-clinics {
+    background-image: url(../images/icon-clinics.png);
+}
+
+.mui--new-icon-add {
+    width: 25px;
+    height: 25px;
+    background-size: 90%;
+    background-image: url(../images/icon-add.png);
+}
+
+.mui--new-icon-complete {
+    background-image: url(../images/icon-complete.png);
+}
+
+.mui--new-icon-treat, .mui--new-icon-case, .mui--new-icon-msg, .mui--new-icon-collection-red, .mui--new-icon-news, .mui--new-icon-discount, .mui--new-icon-setup, .mui--new-icon-time-blue-afternoon, .mui--new-icon-time-blue-morning, .mui-new-icon-map-gray, .mui--new-icon-calendar, .mui--new-icon-edit, .mui--new-icon-users {
+    width: 25px;
+    height: 25px;
+    vertical-align: bottom;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 90%;
+}
+
+.mui--new-icon-treat {
+    background-image: url(../images/icon-treat.png);
+}
+
+.mui--new-icon-case {
+    background-image: url(../images/icon-case.png);
+}
+
+.mui--new-icon-msg {
+    background-image: url(../images/icon-msg.png);
+}
+
+.mui--new-icon-collection-red {
+    background-image: url(../images/icon-collection-red.png);
+}
+
+.mui--new-icon-news {
+    background-image: url(../images/icon-news.png);
+}
+
+.mui--new-icon-discount {
+    background-image: url(../images/icon-discount.png);
+}
+
+.mui--new-icon-setup {
+    background-image: url(../images/icon-setup.png);
+}
+
+.mui--new-icon-time-blue-afternoon {
+    background-image: url(../images/icon-time-blue-afternoon.png);
+}
+
+.mui--new-icon-time-blue-morning {
+    background-image: url(../images/icon-time-blue-morning.png);
+}
+
+.mui-new-icon-map-gray {
+    background-image: url(../images/icon-map-gray.png);
+}
+
+.mui--new-icon-calendar {
+    background-image: url(../images/icon-calendar.png);
+}
+
+.mui--new-icon-users {
+    background-image: url(../images/icon-users.png);
+}
+
+.mui--new-icon-map, .mui--new-icon-collection, .mui--new-icon-home-blue, .mui--new-icon-map-blue {
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 90%;
+}
+
+.mui--new-icon-map {
+    background-image: url(../images/icon-map.png);
+}
+
+.mui--new-icon-collection {
+    background-image: url(../images/icon-collection.png);
+}
+
+.mui--new-icon-home-blue {
+    background-image: url(../images/icon-home-blue.png);
+}
+
+.mui--new-icon-map-blue {
+    background-image: url(../images/icon-map-blue.png);
+}
+
+.mui--new-icon-edit {
+    background-image: url(../images/icon-edit.png);
+}
+
+/*站点logo*/
+.mui-bar-nav.mui-bar, .mui-bar-nav.mui-bar a {
+    color: #6acee3;
+}
+
+.mui-new-icon-left-nav {
+    background-image: url(../images/logo.png);
+    background-position: 30% 50%;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    width: 170px;
+    height: 44px;
+}
+
+/*顶部菜单按妞*/
+.mui-bar-nav.mui-bar .mui-icon {
+    padding-right: 15px;
+    /*margin-right: -15px;*/
+}
+
+/*轮播图片（小点点的样式重写）*/
+.mui-slider-indicator .mui-indicator {
+    background: #fff;
+}
+
+.mui-slider-indicator .mui-active.mui-indicator {
+    background: #6acee3;
+}
+
+/*底部样式重写*/
+.mui-bar-tab .mui-tab-item {
+    background-color: #0d8ca7;
+    color: #6acee3;
+    padding: 5px 0;
+}
+
+.mui-bar-tab .mui-tab-item.mui-active {
+    background-color: #6acee3;
+    color: #ffffff;
+}
+
+/*页面头部*/
+.mui-content > .mui-table-view.mui-page-header:first-child, .mui-page-header {
+    margin: 0;
+    background-color: #6acee3;
+    color: #ffffff;
+}
+
+.mui-page-header.mui-table-view-chevron .mui-table-view-cell {
+    padding: 10px 15px;
+}
+
+.mui-page-header.mui-table-view-chevron .mui-table-view-cell.mui-table-view-cell > a:not(.mui-btn) {
+    margin: -10px -15px;
+}
+
+/*用户帐户*/
+.page-user-account {
+    position: absolute;
+    right: 15px;
+    top: 25px !important;
+    padding: 5px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/*用户头像*/
+.page-user-info {
+    margin-right: -50px;
+    /*padding: 8px 0;*/
+}
+
+/*.page-user-info.mui-table-view-chevron .mui-table-view-cell {
+    padding-right: 15px;
+}
+
+.page-user-info.mui-table-view-chevron .mui-table-view-cell > a:not(.mui-btn) {
+    margin-right: -15px;
+}*/
+
+.page-user-img {
+    width: 80px !important;
+    height: 80px !important;
+    max-width: 80px !important;
+    border-radius: 50%;
+    border: 1px solid #dddddd;
+}
+
+/*列表标题行*/
+.mui-table-view-cell-title {
+    line-height: 25px;
+}
+
+.page-table-title {
+    margin: 10px 15px 7px;
+}
+
+/*列表*/
+.mui-table-view-cell {
+    padding: 13px 15px;
+}
+
+.mui-table-view-cell > a:not(.mui-btn) {
+    margin: -13px -15px;
+}
+
+.mui-table-view-cell:after {
+    left: 0;
+}
+
+/*列表数据带连接*/
+.mui-navigate-right .mui-pull-right {
+    margin-right: -25px;
+}
+
+/*列表数据行*/
+.mui-table-view-chevron .mui-table-view-cell.mui-table-view-cell-data {
+    padding: 8px 15px;
+}
+
+.mui-table-view-cell-data:after {
+    height: 0;
+}
+
+.mui-table-view-cell-data label {
+    display: inline-block;
+    float: left;
+    width: 35%;
+}
+
+/*医院数据中的横线*/
+.page-hospital-hr {
+    margin-bottom: 8px !important;
+    border-bottom: 1px solid #ebebeb;
+}
+
+/*医院标签*/
+.page-hospital-tag {
+    display: block;
+    position: relative;
+    padding: 8px 0 10px 0;
+    /*margin-bottom: 8px;*/
+    /*border-bottom: 1px solid #ebebeb;*/
+    font-size: 13px;
+}
+
+.page-hospital-tag span {
+    display: inline-block;
+    padding: 0 5px;
+    border: 1px solid #6acee3;
+    border-radius: 10px;
+}
+
+.page-hospital-title-tag {
+    font-size: 13px;
+    padding: 2px 4px;
+    font-weight: normal;
+}
+
+.page-hospital--collection-tag {
+    font-size: 13px;
+    padding: 2px 5px;
+    font-weight: normal;
+    line-height: 18px;
+    border-radius: 8px;
+}
+
+/*人员名单&通讯录*/
+.oa-contact-cell.mui-table .mui-table-cell {
+    padding: 11px 0;
+    vertical-align: middle;
+}
+
+.oa-contact-cell {
+    position: relative;
+    margin: -11px 0;
+}
+
+.oa-contact-avatar {
+    width: 75px;
+}
+
+.oa-contact-avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.oa-contact-content {
+    width: 100%;
+}
+
+.oa-contact-name {
+    margin-right: 20px;
+}
+
+.oa-contact-name, .oa-contact-position {
+    float: left;
+}
+
+/*对话沟通记录*/
+.page-msg-box {
+    position: relative;
+    width: 60%;
+    max-width: 500px;
+    margin: 15px 0;
+}
+
+.page-msg-triangle {
+    position: absolute;
+    width: 16px;
+    height: 15px;
+    z-index: 10;
+}
+
+.mui-pull-left .page-msg-triangle {
+    left: 1px;
+    background: url(../images/icon-triangle-left.png) 0% 0% no-repeat;
+}
+
+.mui-pull-right .page-msg-triangle {
+    right: 1px;
+    background: url(../images/icon-triangle-right.png) 0% 0% no-repeat;
+}
+
+.page-msg-content {
+    padding: 5px;
+    border: 1px solid #c9caca;
+    line-height: 22px;
+}
+.mui-pull-right .page-msg-content, .page-msg-box.mui-pull-right > .mui-pull-right {
+    margin-right: 15px;
+}
+
+.mui-pull-left .page-msg-content, .page-msg-box.mui-pull-left > .mui-pull-left {
+    margin-left: 15px;
+}
+
+/*滑动选择样式*/
+.mui-switch-blue.mui-active {
+    background-color: #6acee3 !important;
+    border-color: #6acee3 !important;
+}
+
+.mui-switch .mui-switch-handle {
+    background-color: #9fa0a0 !important;
+}
+
+.mui-switch.mui-active .mui-switch-handle {
+    background-color: #ffffff !important;
+}
+
+/*就诊者状态*/
+.page-user-visit-state {
+    top: 50% !important;
+}
+
+/*日历*/
+.cal-month-day {
+    height: 50px !important;
+}
+
+.cal-year-box [class*="span"], .cal-month-box [class*="cal-cell"] {
+    min-height: 50px !important;
+}
+
+.cal-day-today {
+    background-color: #6acee3 !important;
+}
+
+.cal-day-weekend span[data-cal-date] {
+    color: inherit;
+}
+
+.cal-month-box .cal-day-today span[data-cal-date] {
+    font-size: 1.2em;
+    color: #ffffff !important;
+}
+
+.cal-row-head [class*="cal-cell"]:first-child, .cal-row-head [class*="cal-cell"] {
+    font-weight: normal;
+    padding: 12px 0;
+}
+
+.cal-year-box [class*="span"], .cal-month-box [class*="cal-cell"] {
+    border-right: none;
+}
+
+.cal-month-day.active {
+    background-color: #fe9001 !important;
+}
+
+/*时间*/
+.page-time-row {
+    position: relative;
+    padding: 13px 15px;
+}
+
+.page-time-box {
+    display: inline-block;
+    border: 1px solid #e1e1e1;
+    padding: 3px 10px;
+    border-radius: 50px;
+    margin: 0px 0px 10px 0;
+}
+
+.page-time-box.active {
+    background-color: #6acee3 !important;
+}
+
+/*搜索框*/
+input.page-input-search {
+    padding-left: 28px;
+    width: 80%;
+    max-width: 500px;
+    margin: 0;
+    height: 30px;
+    border-radius: 100px;
+    color: #000000;
+    background: #ffffff url(../images/icon-search.png) 3px 50% no-repeat;
+}
+
+/*表格样式*/
+.page-table {
+    width: 100%;
+    position: relative;
+    display: table;
+    padding: 0;
+}
+
+.page-table-item {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/*筛选*/
+.page-screen {
+    height: 45px;
+    padding: 8px 0;
+    border-bottom: 1px solid #dcdddd;
+    border-top: none;
+    background-color: #ffffff;
+}
+
+.page-screen.mui-segmented-control .mui-control-item {
+    color: #595757;
+    border-left: 1px solid #dcdddd;
+}
+
+.page-screen.mui-segmented-control .mui-control-item.mui-active {
+    color: #6acee3;
+    background-color: #ffffff;
+}
+
+.page-screen .page-arrow-down {
+    margin-right: 8px;
+    margin-top: 15px;
+    border-top: 8px solid #595757;
+}
+
+.page-screen .mui-active .page-arrow-down {
+    border-top: 8px solid #6acee3;
+}
+
+.page-screen .page-table-item {
+    padding: 3px 0;
+    border-right: 1px solid #dcdddd;
+}
+
+.page-screen .page-table-item.active {
+    color: #6acee3;
+}
+
+.mui-control-content.page-screen-content {
+    width: 100%;
+    position: absolute;
+    top: 55px;
+    left: 0%;
+    color: #595757;
+    z-index: 10;
+    padding-bottom: 30px;
+}
+
+/*向下箭头*/
+.page-arrow-down {
+    width: 0px;
+    height: 0px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #dcdddd;
+    font-size: 0px;
+    line-height: 0px;
+}
+
+/*选项卡*/
+.page-tab {
+    border: none;
+}
+
+.page-tab .mui-control-item {
+    line-height: 50px;
+    background-color: #6acee3;
+    color: #ffffff;
+
+}
+
+.page-tab .mui-control-item.mui-active {
+    background-color: #0d8ca7;
+    color: #ededed;
+}
+
+/*标签*/
+.page-item-tag {
+    margin: 5px;
+    display: inline-block;
+    padding: 5px 8px;
+    border: 1px solid #d1d1d1;
+    border-radius: 50px;
+    font-size: 14px;
+}
+
+.page-item-tag.active {
+    background-color: #6acee3;
+    color: #ffffff;
+}
+
+
+/*首页底部菜单*/
+.mui-new-tab-item,.mui-bar-tab .mui-new-tab-item{
+    display: table-cell;
+    overflow: hidden;
+    width: 1%;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #929292;
+    background-color: #0d8ca7;
+    color: #6acee3;
+    padding: 5px 0;
+}
+.mui-bar-tab .mui-new-tab-item .mui-icon{
+    top: 3px;
+    width: 24px;
+    height: 24px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.mui-bar-tab .mui-new-tab-item .mui-icon~.mui-tab-label{
+    font-size: 11px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mui-bar-tab .mui-new-tab-item.mui-active{
+    background-color: #6acee3;
+    color: #ffffff;
+}
+
+/*分享*/
+.mui-bar-tab .mui-new-tab-item .mui-icon.mui-new-icon-share{
+    top: 5px;
+    background: url(../images/icon-share.png) 50% 50% no-repeat;
+    background-size: 80%;
+}
+
+/*页面标题*/
+.page-content-title{
+    margin:15px 15px 8px 15px;
+}
+
+/*支付*/
+.mui-new-icon-pay-wechat,.mui-new-icon-pay-alipay,.mui-new-icon-pay-unionpay,.mui-new-icon-pay-visa,.mui-new-icon-pay-mastercard,.mui-new-icon-pay-jcb{
+    width: 25px;
+    height: 25px;
+    vertical-align: bottom;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.mui-new-icon-pay-wechat{
+    background-image: url(../images/icon-pay-wechat.png);
+}
+.mui-new-icon-pay-alipay{
+    background-image: url(../images/icon-pay-alipay.png);
+}
+.mui-new-icon-pay-unionpay{
+    background-image: url(../images/icon-pay-unionpay.png);
+}
+.mui-new-icon-pay-visa{
+    background-image: url(../images/icon-pay-visa.png);
+}
+.mui-new-icon-pay-mastercard{
+    background-image: url(../images/icon-pay-mastercard.png);
+}
+.mui-new-icon-pay-jcb{
+    background-image: url(../images/icon-pay-jcb.png);
+}
+
+.mui-table-view-radio.mui-table-view-pay .mui-table-view-cell .mui-navigate-right:after{
+    width:30px;
+    height:30px;
+    background:url(../images/icon-box.png) 100% 50% no-repeat;
+    background-size:90%;
+}
+.mui-table-view-radio.mui-table-view-pay .mui-table-view-cell.mui-selected .mui-navigate-right:after{
+    content:'';
+    background:url(../images/icon-box-active.png) 100% 50% no-repeat;
+    background-size:90%;
+}
+
+
+
+/*bug更新*/
+.mui-content.page-fixed{
+    position: fixed;
+    top: 44px;
+    width: 100%;
+    padding-top: 0;
+    z-index: 99;
+}
+.mui-control-content.page-screen-content{
+    position:fixed;
+    top: 150px;
+    bottom:0px;
+    padding-bottom:0;
+    z-index: 99;
+    background: rgba(0,0,0,0.6);
+}
+.mui-control-content.page-screen-content .page-trigger-bg{
+    position: absolute;
+    width: 100%;
+    bottom: 0%;
+    top: 0%;
+    z-index:-1;
+}

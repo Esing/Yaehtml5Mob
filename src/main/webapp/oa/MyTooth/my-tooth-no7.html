@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-bars mui-pull-right"></a> <a
+			class="mui-icon mui-new-icon-left-nav mui-pull-left"
+			href="" id="index"></a>
+	</header>
+	<div class="mui-content">
+		<!--页面头部-->
+		<ul class="mui-table-view mui-table-view-chevron mui-page-header">
+			<li class="mui-table-view-cell mui-text-center"><a
+				class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h4>就诊者信息</h4></li>
+		</ul>
+
+		<!--页面内容-->
+		<ul class="mui-table-view mui-table-view-chevron page-bg-white">
+			<li class="mui-table-view-cell mui-media"><a
+				class="mui-navigate-right" href="#account">
+					<div class="mui-text-center page-user-info" style="padding: 8px 0;">
+						<img class="page-user-img" id="hredImg"
+							src="http://img5.duitang.com/uploads/item/201410/03/20141003114818_n4mE5.jpeg">
+					</div>
+			</a></li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">姓名<span
+					class="page-color-rad">*</span><span
+					class="mui-pull-right page-color-blue" id="username">黄锦</span></a></li>
+			<li class=" mui-table-view-cell"><a class="mui-navigate-right">性别<span
+					class="page-color-rad">*</span><span
+					class="mui-pull-right page-color-blue" id="gender">女</span></a></li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">生日<span
+					class="page-color-rad">*</span><span
+					class="mui-pull-right page-color-blue" id="birDay">1990-12-12</span></a>
+			</li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">年龄<span
+					class="mui-pull-right page-color-blue" id="age">27</span></a></li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">身份证号<span
+					class="mui-pull-right page-color-blue" id="cardId">32062319901212****</span></a>
+			</li>
+		</ul>
+
+		<ul class="mui-table-view mui-table-view-chevron page-bg-white"
+			style="margin-top: 20px;">
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">QQ<span
+					class="mui-pull-right page-color-blue" id="qq">60258888</span></a></li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">邮箱<span
+					class="mui-pull-right page-color-blue" id="eamil">60258888@qq.com</span></a>
+			</li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">联系地址<span
+					class="mui-pull-right page-color-blue" id="adder">上海市长宁区凯旋路369号</span></a>
+			</li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">备用联系人<span
+					class="mui-pull-right page-color-blue" id="spareMan">圣安东</span></a></li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right">备用联系电话<span
+					class="mui-pull-right page-color-blue" id="sparePhone">186****8888</span></a>
+			</li>
+		</ul>
+
+		<ul class="mui-table-view mui-table-view-chevron page-bg-white"
+			style="margin-top: 20px;">
+			<li class="mui-table-view-cell"><a class="mui-navigate-right"
+				id="history">重大病史</a></li>
+			<li class="mui-table-view-cell"><a class="mui-navigate-right"
+				id="allergy">过敏药物</a></li>
+		</ul>
+		<div style="margin-top: 20px; padding: 0 30px;"
+			class="mui-text-center">
+			<button type="button"
+				class="mui-btn mui-btn-primary mui-btn-block mui-btn-new-blue">保
+				存</button>
+		</div>
+	</div>
+	<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+	<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+	<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" src="../CommonResources/js/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+    });
+
+</script>
+	<script type="text/javascript">
+	
+	
+	var basePath = getContextPath();
+	var Request = new Object();
+	Request = getRequest();
+	var userID = Request["userID"];
+	var patientID = Request["patientID"];
+	$("#index").attr("href",basePath+"/oa/Order/index.html");
+ 	$.ajax({   
+	    url:basePath+"/accountTooth/queryPatient.do",   
+	    type:'POST',   
+	    data:"patientID="+patientID+"&userID="+userID, 
+	    async : true, //默认为true 异步   
+	    error:function(){   
+	   	 mui.alert("系统异常."); 
+	    },   
+	    success:function(data){  
+	   	 switch(data.code)
+	   	 {
+	   		 case 0:{
+	   			 initHtml(data.date);
+	   			 }
+	   		 case 1:{
+	   			 mui.alert("登陆超时.",back_to_index()); 
+	   			break;
+	   		 }
+	   	 	default:{
+	   	 		 mui.alert("系统异常."); 
+	   	 	}	 
+	   	 }
+	    }
+	});
+ function initHtml(date)	{
+	$("#username").html(date.patientName);
+	$("#hredImg").attr(date.patientICON)
+	$("#gender").html(date.patientGender);	
+	$("#birDay").html(date.patientBirthday);	
+	$("#age").html(date.patientAge);
+	$("#cardId").html(date.patientCitizenID);	
+	$("#qq").html(date.patientQQ);
+	$("#eamil").html(date.patientEmail);	
+	$("#adder").html(date.patientAddress);	
+	$("#spareMan").html(date.contactName);
+	$("#sparePhone").html(date.contactPhone);	
+	$("#history").attr("href",date.allergicDrug); // 需要确定是否是URL页面
+	$("#allergy").attr("href",date.diseaseHostory);
+	} 
+ 
+ function back_to_index()
+ {
+	 location.href=basePath+"/client/Login/login.html";
+ }
+</script>
+</body>
+</html>

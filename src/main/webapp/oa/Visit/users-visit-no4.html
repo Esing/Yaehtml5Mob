@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="returnBack"></a>
+            <h4>预约信息</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell mui-media">
+            <a>
+                <span class="mui-badge mui-badge-primary mui-pull-right page-user-account" id="updatePatient">编辑资料</span>
+
+                <div class="mui-text-center">
+                    <img class="page-user-img"
+                         src="http://img5.duitang.com/uploads/item/201410/03/20141003114818_n4mE5.jpeg">
+                    <h4><span name="patientName"></span>
+                        <small class="page-color-default">&nbsp;&nbsp;<span name="patientGender"></span>/<span name="patientAge"></span></small>
+                    </h4>
+                </div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell">
+        	<input type="hidden" name="patientID">
+            <a>备用联系人<span class="mui-pull-right" name="contactName"></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a>备用联系电话<span class="mui-pull-right" name="contactPhone"></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="#" style="line-height: 45px;">
+            	<input type="hidden" name="clinicID">
+            	<span name="clinicICON"></span>
+                <span name="clinicName"><!-- 郎朗口腔旗舰店 --></span>（<span name="clinicLevel"><!-- 三甲医院 --></span>）
+                <span class="mui-pull-right" name="clinicDiv">
+                    <!-- <small class="page-bg-yellow page-color-white page-hospital-title-tag">券</small>
+                    <small class="page-bg-blue page-color-white page-hospital-title-tag">保</small>
+                    <small class="page-bg-green page-color-white page-hospital-title-tag">会</small> -->
+                </span>
+            </a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a>预约时间<span class="mui-pull-right" name="oderBookedTime"><!-- 2016年03月22日 10:30 --></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+        	<input type="hidden" name="treatSubjectID">
+            <a>预约项目<span class="mui-pull-right" name="patientTreatSubject"></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a>症状描述<span class="mui-pull-right" name="patientSymptom"></span></a>
+        </li>
+
+    </ul>
+
+    <div style="margin-top: 20px;padding:0 30px;" class="mui-text-center">
+        <button id="save" type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-new-blue">保 存</button>
+    </div>
+</div>
+<script src="../CommonResources/js/zepto.min.js"></script>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/jquery.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var Request = new Object();
+Request = getRequest();
+var orderID = Request["orderID"];
+var patientID = Request["patientID"];
+var bookday = Request["bookday"];
+var bookTime = Request["bookTime"];
+var day = bookday.split("-"); ;
+$("span[name='oderBookedTime']").text(day[0]+"年"+day[1]+"月"+day[2]+"日  "+bookTime)
+$("input[name='contactName']").val(Request["contactName"]);
+    /* $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+    }); */
+$("#returnBack").click(function() {
+	var url =basePath +"/oa/Visit/users-visit-no3.html?patientID="+patientID+"&orderID="+orderID;
+	location.href=url;
+}); 
+$("#updatePatient").click(function(){
+	var url = basePath+"/oa/Regiter/account_add_patient1.html?patientID="+patientID;
+	location.href=url;
+});   
+    
+$(document).ready(function () {
+	initPatient();
+	initOrder();
+	initOrderBase();
+});
+
+var initPatient = function(){
+	$.ajax({
+		   type: "POST",
+		   url: basePath+"/Regiter/mobileQueryUserContactPatientdetail.do",
+		   dataType:"json",
+		   data:{"patientID":patientID},
+		   success: function(data){
+			   if(data!=null){
+				   if(data.status==1){
+					   mui.alert("登录超时，请重新登录！",function(){
+						   var url =basePath +"/oa/Login/login.html";
+						   location.href=url;
+					   });
+			   		}else if(data.status==2){
+			   			mui.alert("系统异常."); 
+					}else if(data.status==3){
+					    mui.alert("接口返回数据为空."); 
+					}else{
+				   	    if(data.status==0 && data.patientName!=null){
+				   	    	$("span[name='patientName']").text(data.patientName);
+				   	    	$("span[name='patientGender']").text(data.patientGender);
+				   	    	$("span[name='patientAge']").text(data.patientAge);
+				   	    	$("span[name='contactName']").text(data.contactName);
+				   	    	$("span[name='contactPhone']").text(data.contactPhone);
+				   		}
+			   		}
+			   }  
+		   }
+	});
+}
+    
+var initOrder = function(){
+	$.ajax({
+		   type: "POST",
+		   url: basePath+"/Regiter/mobileQueryPatientTreatOrderDetail.do",
+		   dataType:"json",
+		   data:{"orderID":orderID,"patientID":patientID},
+		   success: function(data){
+			   if(data!=null){
+				   if(data.status==1){
+					   mui.alert("登录超时，请重新登录！",function(){
+						   var url =basePath +"/oa/Login/login.html";
+						   location.href=url;
+					   });
+			   		}else if(data.status==2){
+			   			mui.alert("系统异常."); 
+					}else if(data.status==3){
+					    mui.alert("接口返回数据为空."); 
+					}else{
+				   	    if(data.status==0 && data.treatOrder!=null){
+				   	    	var treatOrder = data.treatOrder;
+				   	    	$("input[name='clinicID']").val(treatOrder.clinicID);
+				   	    	$("span[name='clinicName']").text(treatOrder.clinicName); 
+				   	    	$("span[name='clinicLevel']").text(treatOrder.clinicLevel);
+				   	    	var clinicMessage ="" ;
+				   	    	if(treatOrder.activeCoupon==0){
+				   	    		clinicMessage+="<small class='page-bg-yellow page-color-white page-hospital-title-tag'>券</small>";
+				   	    	}
+				   	    	
+				   	    	if(treatOrder.activeInsurance==0){
+				   	    		clinicMessage+="<small class='page-bg-blue page-color-white page-hospital-title-tag'>保</small>";
+				   	    	}
+				   	    	
+				   	    	if(treatOrder.activeMember==0){
+				   	    		clinicMessage+="<small class='page-bg-green page-color-white page-hospital-title-tag'>会</small>";
+				   	    	}
+				   	    	$("span[name='clinicDiv']").html(clinicMessage);
+				   	    	$("span[name='clinicICON']").html("<img class='mui-media-object mui-pull-right' src='"+data.clinicICON+"' style='margin-right: 15px;'>");
+				   		}
+			   		}
+			   }  
+		   }
+	});
+}
+    
+    
+var initOrderBase = function(){
+	$.ajax({
+		   type: "POST",
+		   url: basePath+"/Regiter/mobileQueryPatientOrderBaseInfo.do",
+		   dataType:"json",
+		   data:{"orderID":orderID,"patientID":patientID},
+		   success: function(data){
+			   if(data!=null){
+				   if(data.status==1){
+					   mui.alert("登录超时，请重新登录！",function(){
+						   var url =basePath +"/oa/Login/login.html";
+						   location.href=url;
+					   });
+			   		}else if(data.status==2){
+			   			mui.alert("系统异常."); 
+					}else if(data.status==3){
+					    mui.alert("接口返回数据为空."); 
+					}else{
+				   	    if(data.status==0 && data.orderID!=null){
+				   	    	$("input[name='treatSubjectID']").val(data.treatSubjectID);
+				   	    	$("span[name='patientTreatSubject']").text(data.patientTreatSubject); 
+				   	    	$("span[name='patientSymptom']").text(data.patientSymptom);
+				   	    	
+				   		}
+			   		}
+			   }  
+		   }
+	});
+}
+
+    
+$("#save").click(function(){
+	var clinicID = $("input[name='clinicID']").val();
+	var treatSubjectID = $("input[name='treatSubjectID']").val();
+	var patientSymptom = $("input[name='patientSymptom']").text();
+	if(bookTime!=null){
+		var temp = bookTime.split(":");
+		if(temp[0]<10){
+			temp[0] = "0"+temp[0]
+		}
+		bookTime = temp[0]+temp[1];
+	}
+	var oderBookedTime = bookday.replace(/-/gm,'')+bookTime.trim()+"00";
+	var ptientSymptom = $("span[name='ptientSymptom']").text();
+	if(clinicID==null || clinicID==""){
+		mui.alert("获取不到诊所编号，请联系管理员."); 
+		return;
+	}
+	if(patientID==null || patientID==""){
+		mui.alert("获取不到就诊者编号，请联系管理员."); 
+		return;
+	}
+	if(treatSubjectID==null || treatSubjectID==""){
+		mui.alert("获取不到就诊项目编号，请联系管理员."); 
+		return;
+	}
+	if(treatSubjectID==null || treatSubjectID==""){
+		mui.alert("获取不到就诊项目编号，请联系管理员."); 
+		return;
+	}
+	if(oderBookedTime==null || oderBookedTime==""){
+		mui.alert("获取不到预约时间，请联系管理员."); 
+		return;
+	}
+	if(oderBookedTime.length!=14){
+		mui.alert("设置预约时间格式有误，请联系管理员."); 
+		return;
+	}
+	var date = new Date()
+	var year = date.getFullYear()
+	var month = date.getMonth() + 1
+	var day = date.getDate()
+	var HH = date.getHours(); 
+	var MM = date.getMinutes()+10; //提前十分钟
+	var ss = date.getSeconds();
+	if(month<10){
+		month = "0"+month;
+	}
+	if(day<10){
+		day = "0"+day;
+	}
+	if(HH<10){
+		HH = "0"+HH;
+	}
+	if(MM<10){
+		MM = "0"+MM;
+	}
+	if(ss<10){
+		ss = "0"+ss;
+	}
+	var nowTime = year+""+month+""+day+""+HH+""+MM+""+ss;
+	
+	if(parseInt(oderBookedTime)<parseInt(nowTime)){
+		mui.alert("病人预约时间小于当前时间，请重新选择预约时间."); 
+		return;
+	}
+  	
+	$.ajax({
+		   type: "POST",
+		   url: basePath+"/Regiter/mobileSaveBooksOrderContent.do",
+		   dataType:"json",
+		   async: false,
+		   data:{"clinicID":clinicID,"patientID":patientID,"orderProperty":1,
+			   "patientTreatSubject":treatSubjectID,"orderBookedTime":oderBookedTime,"patientSymptom":patientSymptom},
+		   success: function(data){
+			   if(data!=null){
+				   if(data.status==1){
+					   mui.alert("登录超时，请重新登录！",function(){
+						   var url =basePath +"/oa/Login/login.html";
+						   location.href=url;
+					   });
+			   		}else if(data.status==2){
+			   			mui.alert("系统异常."); 
+					}else if(data.status==3){
+					    mui.alert("接口返回数据为空."); 
+					}else{
+				   	    if(data.status==0 && data.resultMSG!=null){
+				   	    	if(data.resultMSG.resultCode!=0){
+				   				mui.alert("提交失败原因："+data.resultMSG.resultValue); 
+				   			}else{
+				   				mui.alert("提交成功",function(){
+					   				var url =basePath+"/oa/Order/bookings-no13.html?orderID="+data.resultMSG.resultValue ;
+								   location.href=url;
+							   });
+				   			}
+				   	    	
+				   		}
+			   		}
+			   }  
+		   }
+	});
+});
+</script>
+</body>
+</html>

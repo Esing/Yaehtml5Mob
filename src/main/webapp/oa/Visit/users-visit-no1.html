@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h4>就诊者主页</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+    <ul class="mui-table-view mui-table-view-chevron page-bg-white">
+        <li class="mui-table-view-cell mui-media">
+            <a class="mui-navigate-right" href="#account">
+                <div class="mui-text-center page-user-info">
+                    <img class="page-user-img"
+                         src="http://img5.duitang.com/uploads/item/201410/03/20141003114818_n4mE5.jpeg">
+
+                    <h4>黄 锦</h4>
+                </div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a id="historyAttendance" class="mui-navigate-right ">就诊记录</a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a id="historySeenClinic" class="mui-navigate-right ">看过的诊所</a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a id="historySeenDoctor" class="mui-navigate-right ">看过的医生</a>
+        </li>
+    </ul>
+
+
+    <ul class="mui-table-view mui-table-view-chevron" style="margin-top: 20px;">
+        <li class="mui-table-view-cell mui-table-view-cell-title page-bg-green ">
+            <a class="mui-navigate-right page-color-white" id="orderHref">
+                <i class="mui-icon mui--new-icon-clinics"></i>
+                <span>诊疗中</span>
+            </a>
+        </li>
+        <li class="mui-table-view-cell mui-table-view-cell-data" style="padding-top: 18px;">
+            <label class="page-color-blue">就诊者</label>
+            <span>黄锦</span>
+        </li>
+        <li class="mui-table-view-cell mui-table-view-cell-data">
+            <label class="page-color-blue">预约时间</label>
+            <span>2016年02月29日 10:22:15</span>
+        </li>
+        <li class="mui-table-view-cell mui-table-view-cell-data">
+            <label class="page-color-blue">治疗项目</label>
+            <span>成人隐形正畸</span>
+        </li>
+        <li class="mui-table-view-cell mui-table-view-cell-data">
+            <label class="page-color-blue">诊所</label>
+            <span>深圳富诚旗舰店</span>
+        </li>
+        <li class="mui-table-view-cell mui-table-view-cell-data"  style="padding-bottom: 18px;">
+            <label class="page-color-blue">就诊医生</label>
+            <span>刘医生</span>
+        </li>
+    </ul>
+
+    <ul class="mui-table-view mui-table-view-chevron" style="margin-top: 20px;">
+        <li class="mui-table-view-cell mui-table-view-cell-title mui-text-center page-color-blue">
+            <a><i class="mui-icon mui--new-icon-add"></i><span>&nbsp;新建预约</span></a>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/jquery.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var Request = new Object();
+Request = getRequest();
+var userID = Request["userID"];
+/*  $(document).ready(function () {
+     mui.init({
+         swipeBack: true //启用右滑关闭功能
+     });
+ }); */
+$("#historyAttendance").click(function(){
+	var url = basePath+"/oa/MyTooth/my-tooth-no2.html?userID="+userID;
+	location.href=url;
+});
+$("#historySeenClinic").click(function(){
+	var url = basePath+"/oa/MyTooth/my-tooth-no3.html?userID="+userID;
+	location.href=url;
+});
+$("#historySeenDoctor").click(function(){
+	var url = basePath+"/oa/MyTooth/my-tooth-no4.html?userID="+userID;
+	location.href=url;
+});  
+$("#orderHref").click(function(){
+	var url = basePath+"/oa/Visit/users-visit-no2.html?userID="+userID;
+	location.href=url;
+});
+</script>
+</html>

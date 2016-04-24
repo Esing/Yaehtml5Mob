@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul id="header" class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h4>授权设置</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+<!--     <ul class="mui-table-view"> -->
+<!--         <li class="mui-table-view-cell mui-media"> -->
+<!--             <a> -->
+<!--                 <img class="mui-media-object mui-pull-left page-user-img" src="../CommonResources/images/img-hospital-logo-1.png"> -->
+
+<!--                 <div class="mui-media-body"> -->
+<!--                     <h4 class="page-color-black" style="padding-top: 15px;">郎朗口腔旗舰店 -->
+<!--                         <small class="page-bg-yellow page-color-white page-hospital-title-tag">券</small> -->
+<!--                         <small class="page-bg-blue page-color-white page-hospital-title-tag">保</small> -->
+<!--                         <small class="page-bg-green page-color-white page-hospital-title-tag">会</small> -->
+<!--                     </h4> -->
+
+<!--                     <p class="mui-ellipsis page-color-black">三甲医院</p> -->
+<!--                 </div> -->
+<!--             </a> -->
+<!--         </li> -->
+<!--         <li  class="mui-table-view-cell"> -->
+<!--             <span>就诊者信息授权该诊所</span> -->
+
+<!--             <div id="basicAuthorized" class="mui-switch mui-switch-blue mui-switch-mini mui-active"> -->
+<!--                 <div class="mui-switch-handle"></div> -->
+<!--             </div> -->
+<!--         </li> -->
+<!--         <li  class="mui-table-view-cell"> -->
+<!--             <span>病历信息授权该诊所</span> -->
+
+<!--             <div id="medicineAuthorized" class="mui-switch mui-switch-blue mui-switch-mini"> -->
+<!--                 <div class="mui-switch-handle"></div> -->
+<!--             </div> -->
+<!--         </li> -->
+<!--     </ul> -->
+     
+    
+</div>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" id="js" src="../CommonResources/js/mui.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+	var basePath = getContextPath();
+    $(document).ready(function () {
+
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+        
+        //加载就诊者所有授权诊所信息
+        $.ajax({
+			type:"POST",
+			url:basePath+"/Account/mobileQueryClinicAuthorizedClinicList.do",
+			dataType:"json",
+			async:true,
+			success: function(data){
+    			 if(data.status == "0"){
+    				var clinicList = data.clinicList ;
+    				var html ='';
+    				for(var i=0;i<clinicList.length;i++){
+    					
+    					html = ' <ul class="mui-table-view">'+
+    							'<li class="mui-table-view-cell mui-media">'+
+    		           			 '<a>'+
+    		                	'<img class="mui-media-object mui-pull-left page-user-img" src="../CommonResources/images/img-hospital-logo-1.png">'+
+    		                	'<div class="mui-media-body">'+
+    		                    '<h4 class="page-color-black" style="padding-top: 15px;">'+clinicList[i].clinicName;
+    					if(clinicList[i].activeCoupon==0){
+								html += '<small class="page-bg-yellow page-color-white page-hospital-title-tag" style="margin-left:5px;">券</small>';
+						}
+						if(clinicList[i].activeInsurance==0){
+							html += '<small class="page-bg-blue page-color-white page-hospital-title-tag" style="margin-left:5px;">保</small>';
+						}
+						if(clinicList[i].activeMember ==0){
+							html += '<small class="page-bg-green page-color-white page-hospital-title-tag" style="margin-left:5px;">会</small>';
+						}
+						html += '<p class="mui-ellipsis page-color-black">'+clinicList[i].clinicLevel+'</p></div></a></li>'+
+							'<li  class="mui-table-view-cell">'+
+							'<span>就诊者信息授权该诊所</span>';
+							if(clinicList[i].basicAuthorized==0){
+								html += '<div id="basicAuthorized" class="mui-switch mui-switch-blue mui-switch-mini" >';
+							}else if(clinicList[i].basicAuthorized==1){
+								html += '<div id="basicAuthorized" class="mui-switch mui-switch-blue mui-switch-mini mui-active" >';
+							}	
+			            	
+							html += '<div class="mui-switch-handle"><input type="hidden" value="'+clinicList[i].clinicID+'"></div>'+
+			            	'</div>'+
+			        		'</li>'+
+			        		'<li  class="mui-table-view-cell">'+
+			            	'<span>病历信息授权该诊所</span>';
+							if(clinicList[i].medicineAuthorized==0){
+			            		html += '<div id="medicineAuthorized" class="mui-switch mui-switch-blue mui-switch-mini" >';
+			            	}else if(clinicList[i].medicineAuthorized==1){
+			            		html += '<div id="medicineAuthorized" class="mui-switch mui-switch-blue mui-switch-mini mui-active" >';
+			            	}
+							html +='<div class="mui-switch-handle"><input type="hidden" value="'+clinicList[i].clinicID+'"></div>'+
+			           		 '</div>'+
+			        		'</li>'+
+			    			'</ul>';
+    				}
+    				$(".mui-content").append(html);
+    				
+    				gettoggle(mui, window, 'toggle');
+    	         }else if(data.status == "1"){
+    	            	 mui.alert("登陆超时，请重新登陆!",function(){
+    	            		 location.href = basePath+"/oa/Login/login.html";
+    	            	 });
+    	         }else if(data.status == "2"){
+    	                mui.alert("系统异常");
+    	         }
+    		}
+		});
+        
+        
+        
+        $('#basicAuthorized').live("toggle",function (event) { //循环所有toggle
+            /**
+             * toggle 事件监听
+             */
+            var status,basicAuthorized,clinicID; 
+        	var medicineAuthorized = $(this).parent().next().find(".mui-switch-mini").attr("class");
+        	if(medicineAuthorized=="mui-switch mui-switch-blue mui-switch-mini mui-active"){
+        		medicineAuthorized = "1";
+        	}else{
+        		medicineAuthorized ="0";
+        	}
+//                 event.detail.isActive //可直接获取当前状态
+//            this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
+              status =  event.detail.isActive;
+              clinicID = $(this).find("input[type='hidden']").val();
+              if(status){
+            	  basicAuthorized ="1";
+              }else{
+            	  basicAuthorized ="0";
+              }
+              $.ajax({
+					type:"POST",
+					url:basePath+"/Account/mobileUpdateClinicAuthorizedStatus.do",
+					dataType:"json",
+					data:{"basicAuthorized":basicAuthorized,"clinicID":clinicID,"medicineAuthorized":medicineAuthorized},
+					success: function(data){
+		    			 if(data.status == "0"){
+		    				 if(data.resultMSG.resultCode!=0){
+		    					 mui.alert(data.resultMSG.resultValue);
+		    				 }
+		    	         }else if(data.status == "1"){
+		    	            	 mui.alert("登陆超时，请重新登陆!",function(){
+		    	            		 location.href = basePath+"/oa/Login/login.html";
+		    	            	 });
+		    	         }else if(data.status == "2"){
+		    	                mui.alert("系统异常");
+		    	         }
+		    		}
+				});
+        });
+		
+        
+        $('#medicineAuthorized').live("toggle",function (event) { //循环所有toggle
+            /**
+             * toggle 事件监听
+             */
+            var status,medicineAuthorized,clinicID; 
+            var basicAuthorized = $(this).parent().prev().find(".mui-switch-mini").attr("class");
+            if(basicAuthorized=="mui-switch mui-switch-blue mui-switch-mini mui-active"){
+            	basicAuthorized = "1";
+        	}else{
+        		basicAuthorized ="0";
+        	}
+//                 event.detail.isActive //可直接获取当前状态
+//            this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
+              status =  event.detail.isActive;
+              clinicID = $(this).find("input[type='hidden']").val();
+              if(status){
+            	  medicineAuthorized ="1";
+              }else{
+            	  medicineAuthorized ="0";
+              }
+              $.ajax({
+					type:"POST",
+					url:basePath+"/Account/mobileUpdateClinicAuthorizedStatus.do",
+					dataType:"json",
+					data:{"basicAuthorized":basicAuthorized,"clinicID":clinicID,"medicineAuthorized":medicineAuthorized},
+					success: function(data){
+		    			 if(data.status == "0"){
+		    				 if(data.resultMSG.resultCode!=0){
+		    					 mui.alert(data.resultMSG.resultValue);
+		    				 }
+		    	         }else if(data.status == "1"){
+		    	            	 mui.alert("登陆超时，请重新登陆!",function(){
+		    	            		 location.href = basePath+"/oa/Login/login.html";
+		    	            	 });
+		    	         }else if(data.status == "2"){
+		    	                mui.alert("系统异常");
+		    	         }
+		    		}
+				});
+        });
+        
+    });
+</script>
+</body>
+</html>

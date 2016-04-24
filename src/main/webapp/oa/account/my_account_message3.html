@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+			<style>
+				body,.mui-content,.mui-table-view:after{background-color: #fff;}
+			</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<input type="hidden" id="msgID">
+				<a class="mui-icon mui-icon-back mui-pull-left" onclick="history.go(-1)"></a>我的消息<a class="input_save" >删除</a></div>
+			<!--页面内容-->
+			<div class="app-article-list">
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					<li class="mui-table-view-cell">
+						<a><h4 class="mui-ellipsis">消息标题消息标题<i class="span_new">new</i></h4></a>
+						<h5 id="time"><span class="color_green">现在</span> 2016-03-15 16:22</h5>
+						<p class="mui-h5">消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容</p>
+					</li>					
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script>
+	$(document).ready(function(){
+		var object = getRequest();
+		var basePath = getContextPath();
+		$.ajax({
+			type:"POST",
+			url:basePath+"/Account/mobileQueryMyMessageDetail.do",
+			dataType:"json",
+			data:{"parameter":JSON.stringify(object)},
+			success: function(data){
+    			 if(data.status == "0"){
+    				$(".mui-ellipsis").text(data.msgName);
+    				$(".mui-h5").text(data.msgContent);
+    				$("#time").text(data.msgSendTime);
+    				$("#msgID").val(data.msgID);
+    	         }else if(data.status == "1"){
+    	        	 mui.alert("登陆超时，请重新登陆!",function(){
+    	        		 location.href = basePath + "/oa/Login/login.html";
+    	        	 });
+    	         }else if(data.status == "2"){
+    	        	 mui.alert("系统异常",function(){
+    	        		 location.href = basePath + "/oa/Login/login.html";
+    	        	 });
+    	         }
+    		}
+		});
+		
+		
+		$(".input_save").click(function(){
+			var msgID = $("#msgID").val();
+			var msgIDs = [];
+			msgIDs.push(msgID);
+			$.ajax({
+				type:"POST",
+				url:basePath+"/Account/mobileChangeMyMessagesStatus.do",
+				dataType:"json",
+				data:{"msgIDs":msgIDs,"changeType":2},
+				success: function(data){
+	    			 if(data.status == "0"){
+	    				if(data.resultMSG.resultCode==0){
+	    					location.href = basePath +"/oa/account/my_account_message.html";
+	    				}else{
+	    					mui.alert(data.resultMSG.resultValue);
+	    				}
+	    	         }else if(data.status == "1"){
+	    	        	 mui.alert("登陆超时，请重新登陆!",function(){
+	    	        		 location.href = basePath + "/oa/Login/login.html";
+	    	        	 });
+	    	         }else if(data.status == "2"){
+	    	        	 mui.alert("系统异常",function(){
+	    	        		 location.href = basePath + "/oa/Login/login.html";
+	    	        	 });
+	    	         }
+	    		}
+			});
+		});
+		
+	});
+</script>

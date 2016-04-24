@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header" style="margin-bottom: 0;">
+				<a class="mui-icon mui-icon-back mui-pull-left" onclick="history.go(-1)"></a>交易详情</div>
+			<!--页面内容-->
+			<ul class="mui-table-view mui-table-view-chevron page-bg-white transaction">
+				<li class="mui-table-view-cell mui-media">
+					<p class="datetime"></p>
+					<p class="money color_red"></p>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="recharge">消费项目
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 20px;">
+				<li class="mui-table-view-cell mui-table-view-cell-title page-bg-yellow">
+					<a class="mui-navigate-right page-color-white">
+						<i class="mui-icon mui--new-icon-complete"></i>
+						<span  id="status"></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-table-view-cell-data" style="padding-top: 18px;">
+					<label class="page-color-blue">就诊者</label>
+					<span id="patientName"></span>
+				</li>
+				<li class="mui-table-view-cell mui-table-view-cell-data">
+					<label class="page-color-blue">预约时间</label>
+					<span id="bookedTime"></span>
+				</li>
+				<li class="mui-table-view-cell mui-table-view-cell-data">
+					<label class="page-color-blue">治疗项目</label>
+					<span id="treatSubjectName"></span>
+				</li>
+				<li class="mui-table-view-cell mui-table-view-cell-data">
+					<label class="page-color-blue">诊所</label>
+					<span id="clinicName"></span>
+				</li>
+				<li class="mui-table-view-cell mui-table-view-cell-data" style="padding-bottom: 18px;">
+					<label class="page-color-blue">就诊医生</label>
+					<span id="doctorName"></span>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script>
+var paramObject = getRequest();
+var basePath = getContextPath();
+$.ajax({
+	type:"POST",
+	url:basePath+"/Account/mobileAccountQueryBillContent.do",
+	dataType:"json",
+	data:{"parameter":JSON.stringify(paramObject)},
+	success: function(data){
+		 if(data.status == "0"){
+			 var arr = data.patientSymptom.split(",");
+			 for(var i=0;i<arr.length;i++){
+				 $(".recharge").append("<span>"+arr[i]+"</span>");
+			 }
+			$(".datetime").text(data.userBillContent.treatBegin);
+			$(".money").text("-￥"+data.userBillContent.payActualAmount);
+			$("#status").text(data.userBillContent.orderStatus);
+			$("#patientName").text(data.userBillContent.patientName);
+			$("#bookedTime").text(data.userBillContent.bookedTime);
+			$("#treatSubjectName").text(data.userBillContent.treatSubjectName);
+			$("#clinicName").text(data.userBillContent.clinicName);
+			$("#doctorName").text(data.userBillContent.doctorName);
+         }else if(data.status == "1"){
+        	 mui.alert("登陆超时,请重新登陆!",function(){
+        		 location.href = basePath + "/oa/Login/login.html";
+        	 });
+               
+         }else if(data.status == "2"){
+        	 mui.alert("系统异常",function(){
+        		 location.href = basePath + "/oa/Login/login.html";
+        	 });
+         }
+	}
+});
+</script>

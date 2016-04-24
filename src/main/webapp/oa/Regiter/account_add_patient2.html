@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>郎朗口腔</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+		<link rel="stylesheet" href="../CommonResources/css/custom.css">
+		<link rel="stylesheet" href="../CommonResources/css/app.css">
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+			<a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+		</header>
+		<div class="mui-content">
+			<!--页面头部-->
+			<div class="app-header">
+				<a class="mui-icon mui-icon-back mui-pull-left" id="returnBack"></a>编辑就诊者</div>
+			<!--页面内容-->
+			<div class="app-list">
+				<ul class="mui-table-view mui-table-view-chevron page-bg-white">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" name="patientICON">
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientNameHref">姓名<span class="page-color-rad">*</span><span
+                    class="mui-pull-right page-color-blue" name="patientName" ></span></a>
+					</li>
+					<li class=" mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientGenderHref">性别<span class="page-color-rad">*</span><span
+                    class="mui-pull-right page-color-blue" name="patientGender"></span></a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientBirthdayHref" >生日<span
+                    class="mui-pull-right page-color-blue" name="patientBirthday"></span></a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientAgeHref">年龄
+							<span class="mui-pull-right page-color-blue" name="patientAge"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientCitizenIDHref">身份证号
+							<input type="hidden" name="patientCitizenID">
+							<span class="mui-pull-right page-color-blue" name="patientCitizenID"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientPhoneHref" >联系电话
+							<span class="mui-pull-right page-color-blue" name="patientPhone"></span>
+						</a>
+					</li>
+				</ul>
+
+				<ul class="mui-table-view mui-table-view-chevron page-bg-white" style="margin-top: 20px;">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientQQHref" >QQ
+							<span class="mui-pull-right page-color-blue" name="patientQQ"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientEmailHref">邮箱
+							<span class="mui-pull-right page-color-blue" name="patientEmail"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="patientAddressHref">联系地址
+							<span class="mui-pull-right page-color-blue" name="patientAddress"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="contactNameHref">备用联系人
+							<span class="mui-pull-right page-color-blue" name="contactName"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="contactPhoneHref">备用联系电话
+							<span class="mui-pull-right page-color-blue" name="contactPhone"></span>
+						</a>
+					</li>
+				</ul>
+
+				<ul class="mui-table-view mui-table-view-chevron page-bg-white" style="margin-top: 20px;">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="diseaseHostoryHref" >重大病史<span class="mui-pull-right page-color-blue" name="diseaseHostory"></span></a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" id="allergicDrugHref">过敏药物<span class="mui-pull-right page-color-blue" name="allergicDrug"></span></a>
+					</li>
+				</ul>
+				<div class="app-btns">
+					<button type="button" class="mui-btn mui-btn-primary mui-btn-new-blue" id="alertBtn">确定</button>
+				</div>
+
+			</div>
+		</div>
+	</body>
+<script src="../CommonResources/js/mui.min.js"></script>
+<script src="../CommonResources/js/zepto.min.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var Request = new Object();
+Request = getRequest();
+var patientID =Request["patientID"]; 
+/* document.getElementById("alertBtn").addEventListener('tap', function() {
+	mui.alert("成功添加就诊者信息！");
+});
+
+$(".mui-navigate-right").click(function(){
+	location.href="account_form_input.html";
+}); */
+$(document).ready(function () {
+	initPatient();
+});
+$("#returnBack").click(function() {
+	var url =basePath +"/oa/MyTooth/my-tooth-no6.html?patientID="+patientID;
+	location.href=url;
+});
+$("#alertBtn").click(function(){
+	var url = basePath+"/oa/MyTooth/my-tooth-no6.html?patientID="+patientID;
+	location.href=url;
+}); 
+
+var initPatient = function(){
+	$.ajax({
+		   type: "POST",
+		   url: basePath+"/Regiter/mobileQueryUserContactPatientdetail.do",
+		   dataType:"json",
+		   data:{"patientID":patientID},
+		   success: function(data){
+			   if(data!=null){
+				   if(data.status==1){
+					   mui.alert("登录超时，请重新登录！",function(){
+						   var url =basePath +"/oa/Login/login.html";
+						   location.href=url;
+					   });
+			   		}else if(data.status==2){
+			   			mui.alert("系统异常."); 
+					}else if(data.status==3){
+					    mui.alert("接口返回数据为空."); 
+					}else{
+				   	    if(data.status==0 && data.patientID!=null){
+				   	    	$("span[name='patientName']").text(data.patientName);
+				   			$("span[name='patientGender']").text(data.patientGender);
+				   			$("span[name='patientBirthday']").text(data.patientBirthday);
+				   			$("span[name='patientAge']").text(data.patientAge);
+				   			var cardID = "";
+				   			if(data.patientCitizenID.length==18){
+				   				cardID = data.patientCitizenID.substring(0,14)+"****";
+				   			}
+				   			$("span[name='patientCitizenID']").text(cardID);
+				   			$("input[name='patientCitizenID']").val(data.patientCitizenID);
+				   			$("span[name='patientPhone']").text(data.patientPhone);
+				   			$("span[name='patientQQ']").text(data.patientQQ);
+				   			$("span[name='patientEmail']").text(data.patientEmail);
+				   			$("span[name='patientAddress']").text(data.patientAddress);
+				   			$("span[name='contactName']").text(data.contactName);
+				   			$("span[name='contactPhone']").text(data.contactPhone);
+				   			$("span[name='diseaseHostory']").text(data.diseaseHostory);
+				   			$("span[name='allergicDrug']").text(data.allergicDrug);
+				   			if(data.patientICON!=null && data.patientICON!=""){
+				   				$("a[name='patientICON']").html("<img src='"+data.patientICON+"' width='50' height='50' />");
+				   			}else{
+				   				$("a[name='patientICON']").html("<img src='../CommonResources/images/user120.png' width='50' height='50' />");
+				   			}
+				   		}
+			   		}
+			   }  
+		   }
+	});
+}
+
+
+$("#updateMore").click(function(){
+	var url = basePath+"/oa/Regiter/account_add_patient2.html?patientID="+patientID;
+	location.href=url;
+}); 
+
+$("#patientNameHref").click(function(){
+	var patientName = $("span[name='patientName']").text();
+	var url = basePath+"/oa/Regiter/account_form_input.html?patientID="+patientID+"&patientName="+encodeURIComponent(patientName);
+	location.href=url;
+}); 
+$("#patientGenderHref").click(function(){
+	var patientGender = $("span[name='patientGender']").text();
+	var url = basePath+"/oa/Regiter/account_form_input2.html?patientID="+patientID+"&patientGender="+encodeURIComponent(patientGender);
+	location.href=url;
+});
+$("#patientBirthdayHref").click(function(){ 
+	var patientBirthday = $("span[name='patientBirthday']").text().replace(/-/gm,'');
+	var url = basePath+"/oa/Regiter/account_form_input3.html?patientID="+patientID+"&patientBirthday="+patientBirthday;
+	location.href=url;
+});
+$("#patientAgeHref").click(function(){ 
+	var patientAge = $("span[name='patientAge']").text();
+	var url = basePath+"/oa/Regiter/account_form_input4.html?patientID="+patientID+"&patientAge="+patientAge;
+	location.href=url;
+});
+$("#patientCitizenIDHref").click(function(){ 
+	var patientCitizenID = $("input[name='patientCitizenID']").val();
+	var url = basePath+"/oa/Regiter/account_form_input5.html?patientID="+patientID+"&patientCitizenID="+patientCitizenID;
+	location.href=url;
+});
+$("#patientPhoneHref").click(function(){
+	var patientPhone = $("span[name='patientPhone']").text();
+	var url = basePath+"/oa/Regiter/account_form_input6.html?patientID="+patientID+"&patientPhone="+patientPhone;
+	location.href=url;
+});
+
+$("#patientQQHref").click(function(){
+	var patientQQ = $("span[name='patientQQ']").text();
+	var url = basePath+"/oa/Regiter/account_form_input7.html?patientID="+patientID+"&patientQQ="+patientQQ;
+	location.href=url;
+});
+$("#patientEmailHref").click(function(){
+	var patientEmail = $("span[name='patientEmail']").text();
+	var url = basePath+"/oa/Regiter/account_form_input8.html?patientID="+patientID+"&patientEmail="+patientEmail;
+	location.href=url;
+});
+$("#patientAddressHref").click(function(){
+	var patientAddress = $("span[name='patientAddress']").text();
+	var url = basePath+"/oa/Regiter/account_form_input9.html?patientID="+patientID+"&patientAddress="+encodeURIComponent(patientAddress);
+	location.href=url;
+});
+$("#contactNameHref").click(function(){
+	var contactName = $("span[name='contactName']").text();
+	var url = basePath+"/oa/Regiter/account_form_input10.html?patientID="+patientID+"&contactName="+encodeURIComponent(contactName);
+	location.href=url;
+});
+$("#contactPhoneHref").click(function(){
+	var contactPhone = $("span[name='contactPhone']").text();
+	var url = basePath+"/oa/Regiter/account_form_input11.html?patientID="+patientID+"&contactPhone="+contactPhone;
+	location.href=url;
+});
+
+
+$("#diseaseHostoryHref").click(function(){
+	var diseaseHostory = $("span[name='diseaseHostory']").text();
+	var url = basePath+"/oa/Regiter/account_form_input12.html?patientID="+patientID+"&diseaseHostory="+encodeURIComponent(diseaseHostory);
+	location.href=url;
+});
+$("#allergicDrugHref").click(function(){
+	var allergicDrug = $("span[name='allergicDrug']").text();
+	var url = basePath+"/oa/Regiter/account_form_input13.html?patientID="+patientID+"&allergicDrug="+encodeURIComponent(allergicDrug);
+	location.href=url;
+});
+
+</script>
+</html>

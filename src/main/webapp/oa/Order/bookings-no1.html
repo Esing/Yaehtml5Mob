@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>郎朗口腔</title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+<link rel="stylesheet" href="../CommonResources/css/custom.css">
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="index.html"></a>
+</header>
+<div class="mui-content">
+    <div id="slider" class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+            <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                    <img src="../CommonResources/images/banner01.jpg">
+                </a>
+            </div>
+            <!-- 第一张 -->
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="../CommonResources/images/banner02.jpg">
+                </a>
+            </div>
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="../CommonResources/images/banner03.jpg">
+                </a>
+            </div>
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="../CommonResources/images/banner01.jpg">
+                </a>
+            </div>
+            <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                    <img src="../CommonResources/images/banner03.jpg">
+                </a>
+            </div>
+        </div>
+        <div class="mui-slider-indicator">
+            <div class="mui-indicator mui-active"></div>
+            <div class="mui-indicator"></div>
+            <div class="mui-indicator"></div>
+        </div>
+    </div>
+    <div id="orderInfo">
+    </div>
+</div>
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-new-tab-item" href="../MyTooth/my-tooth-no1.html" target="_self">
+        <span class="mui-icon mui--new-icon-tooth"></span>
+        <span class="mui-tab-label">我的牙医</span>
+    </a>
+    <a class="mui-new-tab-item" href="#" target="_self">
+        <span class="mui-icon mui--new-icon-gift"></span>
+        <span class="mui-tab-label">活动</span>
+    </a>
+    <a class="mui-new-tab-item" href="../account/my-account-no1.html" target="_self">
+        <span class="mui-icon mui--new-icon-user"></span>
+        <span class="mui-tab-label">我的帐户</span>
+    </a>
+</nav>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+$(document).ready(function () {
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    mui("#slider").slider({
+        interval: 1000
+    });
+    initData();
+    
+    $("#hrefNode").live("click",function(){
+    	window.location.href = "bookings-no2.html";
+    });
+});
+
+var initData = function(){
+    $.ajax({
+         type: "POST",
+         dataType:"json",
+         url: basePath+"/Order/mobileQueryAccountOrderList.do",
+         success: function(data){
+             if(data.status == "0"){
+            	 var orderList = data.orderList;
+            	 if(orderList != undefined){
+            		 var initUl = "";
+            		 var orderListLength = orderList.length;
+            		 for(var i=0;i<orderListLength;i++){
+            			 var orderStatus = orderList[i].orderStatus;//订单状态
+            			 if(orderStatus <= 30){
+            				 orderStatus = "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-rad'>" +
+	                         "<a class='mui-navigate-right page-color-white' href='bookings-no13.html?orderID="+orderList[i].orderID+"'>" +
+                             "<i class='mui-icon mui--new-icon-time'></i>" +
+                             "<span>预约中</span>" +
+	                         "</a>" +
+		                     "</li>";
+            			 }else{
+            				 orderStatus = "<li class='mui-table-view-cell mui-table-view-cell-title page-bg-green '>" +
+                             "<a class='mui-navigate-right page-color-white' href='bookings-no13.html?orderID="+orderList[i].orderID+"'>" +
+                             "<i class='mui-icon mui--new-icon-clinics'></i>" +
+                             "<span>诊疗中</span>" +
+                             "</a>" +
+                             "</li>";
+            			 }
+            			 if(i == 0){
+            				 var expiredTime = orderList[i].expiredTime;
+            				 var day = 0,hours = 0,minut=0;
+            				 if(expiredTime != null && expiredTime != ""){
+	            				 var temp1 = expiredTime.split("天")
+	            				 var temp2 = temp1[1];
+	            				 var temp3 = temp2.split("时");
+	            				 var temp4 = temp3[1];
+	            				 var temp5 = temp4.split("分");
+	            				 
+	            				 day = temp1[0];
+	            				 hours = temp3[0];
+	            				 minut = temp5[0];
+            				 }
+            				 initUl += "<ul class='mui-table-view mui-table-view-chevron page-bg-white'>" +
+            				 "<li class='mui-table-view-cell'>" +
+            				 "<span class='mui-badge mui-badge-danger mui-pull-right page-user-account' id='hrefNode'><i class='mui-icon mui-icon-min mui--new-icon-time'></i>新预约</span>" +
+            				 "<div class='mui-text-center page-user-info'>" +
+            				 "<div style='padding: 3px 0;'>离我的预约还有</div>" +
+            				 "<div style='padding-top: 20px;'>" +
+            				 "<span class='page-color-blue' style='font-size: 45px;'>"+day+"</span>天" +
+            				 "<span class='page-color-blue' style='font-size: 45px;'>"+hours+"</span>时" +
+            				 "<span class='page-color-blue' style='font-size: 45px;'>"+minut+"</span>分" +
+            				 "</div>" +
+            				 "</div>" +
+            				 "</li>" +
+            				 "<li class='mui-table-view-cell'>" +
+            				 "<a href='bookings-no13.html?orderID="+orderList[i].orderID+"'>"+
+            				 "<div class='mui-text-center page-user-info'>" +
+            				 "<div>"+orderList[i].patientName+"</div>" +
+            				 "<p class='mui-ellipsis page-color-black'><i class='mui-icon mui--new-icon-home-blue'></i>"+orderList[i].clinicName+"</p>" +
+            				 "<p class='mui-ellipsis page-color-black'><i class='mui-icon mui--new-icon-map-blue'></i>"+orderList[i].clinicAddress+"</p>" +
+            				 "</div>" +
+            				 "</a>" +
+            				 "</li>" +
+            				 "</ul>";
+            			 }else{
+            				 initUl += "<ul class='mui-table-view mui-table-view-chevron' style='margin-top: 20px;'>" + orderStatus +
+                             "<li class='mui-table-view-cell mui-table-view-cell-data' style='padding-top: 18px;'>" +
+                             "<label class='page-color-blue'>就诊者</label>" +
+                             "<span>"+orderList[i].patientName+"</span>" +
+                             "</li>" +
+                             "<li class='mui-table-view-cell mui-table-view-cell-data'>" +
+                             "<label class='page-color-blue'>预约时间</label>" +
+                             "<span>"+orderList[i].bookedTime+"</span>" +
+                             "</li>" +
+                             "<li class='mui-table-view-cell mui-table-view-cell-data'>" +
+                             "<label class='page-color-blue'>治疗项目</label>" +
+                             "<span>"+orderList[i].treatSubjectName+"</span>" +
+                             "</li>" +
+                             "<li class='mui-table-view-cell mui-table-view-cell-data'>" +
+                             "<label class='page-color-blue'>诊所</label>" +
+                             "<span>"+orderList[i].clinicName+"</span>" +
+                             "</li>" +
+                             "<li class='mui-table-view-cell mui-table-view-cell-data' style='padding-bottom: 18px;'>" +
+                             "<label class='page-color-blue'>就诊医生</label>" +
+                             "<span>"+orderList[i].doctorName+"</span>" +
+                             "</li>" +
+                             "</ul>";
+            			 }
+            		 }
+            		 $("#orderInfo").append(initUl);
+            	 }
+             }else if(data.status == "1"){
+                 mui.alert("用户登录超时,请重新登录.", function(){
+                     window.location.href = basePath + "/oa/Login/login.html";
+                 }); 
+             }else if(data.status == "2"){
+                 mui.alert("系统异常."); 
+             }
+         }
+     });
+}
+</script>
+
+
+</body>
+</html>

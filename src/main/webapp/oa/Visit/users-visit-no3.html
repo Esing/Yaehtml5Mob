@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <!--bootstrap3日历-->
+    <link rel="stylesheet" href="../CommonResources/bootstrap3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../CommonResources/bootstrap3/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/calendar.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="returnBack"></a>
+            <h4>预约时间</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell mui-text-center">
+            <span id="calendar-today"
+                  class="mui-badge mui-badge-primary mui-pull-right page-user-account page-user-visit-state">今天</span>
+            <h4><span id="calendar-show-month">2016年3月</span><i id="calendar-next-month"
+                                                                class="mui-icon mui-icon-arrowdown page-color-blue"></i>
+            </h4>
+        </li>
+    </ul>
+    <!--日历-->
+    <div id="calendar" class="page-bg-white"></div>
+
+    <div class="page-time-row page-bg-white" style="margin-top: 20px;">
+        <div class="mui-pull-left" style="width: 25%;">
+            <i class="mui-icon mui--new-icon-time-blue-morning"></i>&nbsp;上午
+        </div>
+        <div class="mui-pull-left" style="width: 70%;">
+            <span class="page-time-box active">8:00</span>
+            <span class="page-time-box">9:00</span>
+            <span class="page-time-box">10:00</span>
+            <span class="page-time-box">11:00</span>
+        </div>
+        <div class="mui-clearfix"></div>
+    </div>
+    <div class="page-time-row page-bg-white">
+        <div class="mui-pull-left" style="width: 25%;">
+            <i class="mui-icon mui--new-icon-time-blue-afternoon"></i>&nbsp;下午
+        </div>
+        <div class="mui-pull-left" style="width: 70%;">
+            <span class="page-time-box">12:00</span>
+            <span class="page-time-box">13:00</span>
+            <span class="page-time-box">14:00</span>
+            <span class="page-time-box">15:00</span>
+            <span class="page-time-box">16:00</span>
+            <span class="page-time-box">17:00</span>
+            <span class="page-time-box">18:00</span>
+            <span class="page-time-box">19:00</span>
+            <span class="page-time-box">20:00</span>
+        </div>
+        <div class="mui-clearfix"></div>
+    </div>
+
+    <div style="margin-top: 20px;padding:0 30px;" class="mui-text-center">
+        <button id="save" type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-new-blue">预 约</button>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+
+<!--bootstrap3&日历-->
+<script src="../CommonResources/js/jquery.min.js"></script>
+<script src="../CommonResources/bootstrap3/js/bootstrap.min.js"></script>
+<script src="../CommonResources/js/underscore/underscore-min.js"></script>
+<script src="../CommonResources/js/jstimezonedetect/jstz.min.js"></script>
+<script src="../CommonResources/js/language/zh-TW.js"></script>
+<script src="../CommonResources/js/calendar.js"></script>
+<script src="../CommonResources/js/basePath.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+var basePath = getContextPath();
+var Request = new Object();
+Request = getRequest();
+var patientID = Request["patientID"];
+var orderID = Request["orderID"];
+$("#returnBack").click(function() {
+	var url =basePath +"/oa/Visit/users-visit-no2.html?patientID="+patientID+"&orderID="+orderID;
+	location.href=url;
+});
+    $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+
+        var options = {
+            events_source: '../CommonResources/events.json.php',//日历事件数据源
+            language: 'zh-TW',
+            views: {
+                day: {
+                    enable: 0
+                }
+            },
+            onAfterEventsLoad: function (events) {
+                if (!events) {
+                    return;
+                }
+                //日历事件数据
+            },
+            onAfterViewLoad: function (view) {
+                $('#calendar-show-month').text(this.getTitle());
+//                console.log($('.cal-month-day'))
+                $('.cal-month-day').click(function () {
+                    $('.cal-month-day.active').removeClass('active');
+                    $(this).addClass('active')
+                });
+            },
+        };
+
+        var calendar = $('#calendar').calendar(options);
+
+        //今天
+        $('#calendar-today').click(function () {
+            calendar.navigate('today');
+        });
+        //下个月
+        $('#calendar-next-month').click(function () {
+            calendar.navigate('next');
+        });
+        //时间(小时)
+        $('.page-time-box').click(function () {
+            $('.page-time-box.active').removeClass('active');
+            $(this).addClass('active')
+        });
+        $('#save').click(function () {
+            console.log(calendar.options.day);//日期
+            console.log($('.page-time-box.active').text())//时间
+            var bookday = calendar.options.day;
+            if(bookday=="now"){
+            	bookday = $(".cal-day-today").children().attr("data-cal-date");
+            }
+            var bookTime = $('.page-time-box.active').text();
+            var url = basePath+"/oa/Visit/users-visit-no4.html?orderID="+orderID+"&patientID="+patientID+"&bookday="+bookday+"&bookTime="+bookTime;
+        	location.href=url; 
+        });
+    });
+
+</script>
+</html>

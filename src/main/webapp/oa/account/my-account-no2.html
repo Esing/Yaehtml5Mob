@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>郎朗口腔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../CommonResources/css/mui.min.css">
+    <link rel="stylesheet" href="../CommonResources/css/custom.css">
+
+
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    <a class="mui-icon mui-new-icon-left-nav mui-pull-left" href="../Order/index.html"></a>
+</header>
+<div class="mui-content">
+    <!--页面头部-->
+    <ul class="mui-table-view mui-table-view-chevron mui-page-header">
+        <li class="mui-table-view-cell mui-text-center">
+            <a class="mui-left mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="my-account-no1.html"></a>
+            <h4>编辑用户信息</h4>
+        </li>
+    </ul>
+
+    <!--页面内容-->
+    <ul class="mui-table-view mui-table-view-chevron page-bg-white">
+        <li class="mui-table-view-cell mui-media">
+            <a class="mui-navigate-right" href="#account">
+                <div class="mui-text-center page-user-info">
+                    <img class="page-user-img"
+                         src="">
+                </div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="account_update_name.html" class="mui-navigate-right">姓名<span class="page-color-rad">*</span><span
+                 id="userName"   class="mui-pull-right page-color-blue"></span></a>
+        </li>
+        <li class=" mui-table-view-cell">
+            <a href="account_update_gender.html" class="mui-navigate-right">性别<span class="page-color-rad">*</span><span
+                id="gender"    class="mui-pull-right page-color-blue">女</span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a  class="mui-navigate-right" id="a_modify_mobile">手机<span id="mobile" class="mui-pull-right page-color-blue"></span></a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="account_update_address.html" class="mui-navigate-right">联系地址<span id="address" class="mui-pull-right page-color-blue"></span></a>
+        </li>
+    </ul>
+
+</div>
+<script type="text/javascript" src="../CommonResources/js/zepto.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/mui.min.js"></script>
+<script type="text/javascript" src="../CommonResources/js/basePath.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+        
+        $("#a_modify_mobile").click(function(){
+        	var userMobile = $("#mobile").text();
+        	location.href="my_account_mobile1.html?userMobile="+userMobile;
+        });
+        var basePath = getContextPath();
+        initInfo(basePath);
+    });
+
+    var initInfo = function(basePath){
+    	$.ajax({
+    		type:"POST",
+    		url:basePath+"/Account/viewPersonInfo.do",
+    		dataType:"json",
+    		success: function(data){
+    			 if(data.status == "0"){
+    				   $(".page-user-img").attr("src",data.userIcon)
+    	               $("#userName").text(data.userName);
+    	               $("#mobile").text(data.mobile);
+    	               $("#address").text(data.address);
+    	               $("#gender").text(data.gender);
+    	            }else if(data.status == "1"){
+    	            	mui.alert("登陆超时，请重新登陆!",function(){
+    	            		 location.href = basePath + "/oa/Login/login.html";
+    	            	});
+    	               
+    	            }else if(data.status == "2"){
+    	                $("#text").text("系统异常");
+    	                $("#alert").modal('show');
+    	            }
+    		}
+    	});
+    }
+    
+   
+</script>
+
+
+</body>
+</html>
